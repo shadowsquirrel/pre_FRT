@@ -1,0 +1,13 @@
+.AIWrap
+{
+    opacity:0;
+    display:flex;
+    flex-direction: column;
+    margin-left:-20px;
+    margin-right:20px;
+}
+.AIDecisionWrap
+{
+    display:flex;
+    flex-direction: column;
+}

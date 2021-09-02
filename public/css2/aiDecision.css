@@ -1,0 +1,145 @@
+.AIDecision
+{
+    margin-left: -135px;
+    margin-top: -35px;
+    opacity:1;
+    transform:scale(1);
+}
+.AIdecisionImageWrap
+{
+    display:flex;
+    flex-direction: column;
+}
+.AImatch
+{
+    position:absolute;
+    height:100px;
+    width:110px;
+    opacity:0;
+    transition: all 0.5s ease 0s;
+    transform: scale(0.8);
+    border: 9px black solid;
+    border-radius: 31px;
+    background: black;
+    margin-left: -4px;
+}
+.AIdeny
+{
+    position:absolute;
+    height:100px;
+    width:110px;
+    opacity:0;
+    transition: all 0.5s ease 0s;
+    transform: scale(0.8);
+    border: 9px black solid;
+    border-radius: 31px;
+    background: black;
+    margin-left: -4px;
+}
+.AIbackground
+{
+    opacity:0.8;
+    transform: scale(1);
+    margin-top: -41px;
+    margin-left: -92px;
+    position:absolute;
+    height: 230px;
+    width: 230px;
+    /* margin-top: -63px;
+    margin-left: -64px; */
+    height: 230px;
+    width: 250px;
+    margin-top: -63px;
+    margin-left: -74px;
+    filter: grayscale(1) drop-shadow(0px 7px 3px black);
+}
+/*-----------------------------------------*/
+.ConfidenceWrap-AI
+{
+    opacity:0;
+    position: absolute;
+    margin-top: 218px;
+    margin-left: -343px;
+    transform: scale(0.6);
+}
+.confidenceSliderWrapWrap-AI
+{
+    transform-origin: center;
+    transform:scale(1);
+    opacity:1;
+    height:116px;
+    transition: 0.5s;
+    text-align: center;
+    flex-grow: 1;
+    border-top-left-radius: 45px;
+    border-top-right-radius: 45px;
+    /* background: linear-gradient(180deg, rgba(180,180,180,1) -26%, black 24%); */
+    background: transparent;
+}
+.confidenceSliderTextWrap-AI
+{
+    font-weight: 100;
+    font-size: 25px;
+    margin-top: -10px;
+    margin-bottom: -2px;
+}
+.confidenceSliderText-AI
+{
+    opacity:1;
+    color:black;
+    font-size:40px;
+    font-weight:700;
+}
+.sliderBar-AI
+{
+    padding-top: 10px;
+    margin-top: -7px;
+    display: flex;
+    justify-content: center;
+}
+.confidenceSlider-AI
+{
+    cursor: pointer;
+    z-index: 1;
+    position: absolute;
+    -webkit-appearance: none;
+    appearance: none;
+    opacity: 0;
+    transition: 0.35s;
+    width: 437px;
+    background: gray;
+    margin-top: 35px;
+    margin-left: -1px;
+    height: 5px;
+}
+.confidenceBar-AI
+{
+    z-index: 0;
+    position: relative;
+}
+.confidenceSlider-AI::-webkit-slider-thumb
+{
+    z-index: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    opacity: 0;
+    transition: 0.35s;
+    width: 4px;
+    background: lime;
+    height: 56px;
+    margin-top: 13px;
+}
+.confidenceSlider::-moz-range-thumb
+{
+    z-index: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    opacity: 0;
+    transition: 0.35s;
+    width: 4px;
+    background: lime;
+    height: 56px;
+    margin-top: 13px;
+}

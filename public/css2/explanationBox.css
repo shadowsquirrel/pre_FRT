@@ -1,0 +1,106 @@
+.debugInfoBoxText
+{
+    position:absolute;
+    opacity:1;
+    font-size:25px;
+    margin-left:-1222px;
+}
+.boxStorage
+{
+    display:none;
+}
+.reviewBox
+{
+    display:none;
+    margin-bottom:20px;
+    margin-top:20px;
+    position:relative;
+}
+.boxbox
+{
+    transition:0.5s;
+    margin-bottom:20px;
+    margin-top:20px;
+    position:relative;
+    z-index:100;
+}
+.boxwrap
+{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    transition:0.5s;
+}
+.box
+{
+    display:flex;
+    flex-direction: row;
+    width:1000px;
+    background-color:rgb(255, 254, 198);
+    box-shadow: 0px 2px 5px 1px black;
+    border:4px inset gray;
+    transform-origin: top left;
+    transition:0.5s;
+    position:absolute;
+    transform:scale(0);
+}
+.text
+{
+    padding:10px;
+    padding-left:20px;
+    padding-top:20px;
+    width:900px;
+    font-size:25px;
+    font-weight:400;
+    text-align: left;
+    display:flex;
+    flex-direction:column;
+    justify-content: center;
+}
+.buttonWrap
+{
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+.button
+{
+    transition:0.1s;
+    margin-top:20px;
+    margin-left:20px;
+    margin-bottom:20px;
+    margin-right:20px;
+    height:60px;
+    width:80px;
+    background-color:darkgreen;
+    box-shadow:0px 3px 4px 2px black;
+    cursor:pointer;
+    border:solid 2px black;
+    color:white;
+    font-size:38px;
+    font-weight:800;
+
+}
+.button:hover
+{
+    color:white;
+    background-color:darkred;
+    border:solid 2px black;
+
+}
+.button:active
+{
+    box-shadow:0px 1px 2px 1px black;
+    transform: translateY(2px);
+
+}
+.box1
+{
+    display:flex;
+
+}
+.box2
+{
+    display:none;
+
+}

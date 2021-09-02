@@ -1,0 +1,117 @@
+.decisionWrap
+{
+    margin-top:20px;
+}
+.confidenceSliderWrapWrap
+{
+    transform-origin: center;
+    transform:scale(0);
+    opacity:0;
+    height:116px;
+    transition: 0.5s;
+    text-align: center;
+    flex-grow: 1;
+    border-top-left-radius: 45px;
+    border-top-right-radius: 45px;
+    background: linear-gradient(180deg, rgba(180,180,180,1) -26%, black 24%);
+}
+.confidenceSliderTextWrap
+{
+    font-weight: 100;
+    font-size: 25px;
+    margin-top: -10px;
+    margin-bottom: -2px;
+}
+.confidenceSliderText
+{
+    opacity:1;
+    color:white;
+}
+.sliderBar
+{
+    padding-top: 10px;
+    margin-top: -7px;
+    display: flex;
+    justify-content: center;
+}
+.confidenceSlider
+{
+    cursor: pointer;
+    z-index: 1;
+    position: absolute;
+    -webkit-appearance: none;
+    appearance: none;
+    opacity: 0;
+    transition: 0.35s;
+    width: 437px;
+    background: gray;
+    margin-top: 35px;
+    margin-left: -1px;
+    height: 5px;
+}
+.confidenceBar-1
+{
+    z-index: 0;
+    position: relative;
+}
+.confidenceSlider::-webkit-slider-thumb
+{
+    z-index: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    opacity: 0;
+    transition: 0.35s;
+    width: 4px;
+    background: lime;
+    height: 56px;
+    margin-top: 13px;
+}
+.confidenceSlider::-moz-range-thumb
+{
+    z-index: 1;
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+    opacity: 0;
+    transition: 0.35s;
+    width: 4px;
+    background: lime;
+    height: 56px;
+    margin-top: 13px;
+}
+.confidenceSliderOKButton
+{
+    transform-origin: left;
+    transition:0.2s;
+    transform:scale(0);
+    background-color:yellow;
+    color:black;
+    border-bottom-right-radius: 75px;
+    border-top-right-radius: 75px;
+    position: absolute;
+    height: 70px;
+    width: 43px;
+    margin-left: 543px;
+    box-shadow: 2px 0 4px 1px black;
+    margin-top: 4px;
+    cursor:pointer;
+    z-index:1;
+}
+.confidenceSliderOKButtonText
+{
+    font-size:25px;
+    font-weight:700;
+    display: block;
+    margin-top: 15px;
+    margin-left: -3px;
+}
+.confidenceSliderOKButton:hover
+{
+    filter:hue-rotate(100deg);
+}
+.confidenceSliderOKButton:active
+{
+    box-shadow: 0px 0 2px 0px black;
+    transform:translateX(2px);
+}

@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <link rel="stylesheet" href="css/frame.css">
+    <link rel="stylesheet" href="css/explanationBox.css">
+
+    <link rel="stylesheet" href="css/generalArrangement.css">
+
+    <link rel="stylesheet" href="css/dmArrangement.css">
+    <link rel="stylesheet" href="css/facePictures.css">
+    <link rel="stylesheet" href="css/decisionButtons.css">
+    <link rel="stylesheet" href="css/confidenceSlider.css">
+    <link rel="stylesheet" href="css/submitButton.css">
+
+    <link rel="stylesheet" href="css/aiArrangement.css">
+    <link rel="stylesheet" href="css/aiDecision.css">
+    <link rel="stylesheet" href="css/aiPerformance.css">
+    <link rel="stylesheet" href="css/gear.css">
+
+    <link rel="stylesheet" href="css/secondDecision.css">
+
+
+
+
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+
+
+    <title>Decision Screen</title>
+
+</head>
+<body>
+    <div id=start></div>
+
+
+
+    <div class = 'wrap  noselect'>
+
+
+
+        <div class='debugInfoBoxText'>
+            <p>
+                <span id=debugInfoBoxText></span>
+            </p>
+        </div>
+
+
+
+        <div class = 'all'>
+
+
+            <div class=generalWrap>
+
+
+                <div class='AIWrap'>
+
+                    <div class=AIDecisionWrap>
+
+                        <div class=gearWrapWrap>
+
+                            <div class=gearWrap>
+
+                                <img class='myGear1 someGear' src='images/decisionIcons/gear.png'/>
+                                <img class='myGear2 someGear' src='images/decisionIcons/gear.png'/>
+                                <img class='myGear3 someGear' src='images/decisionIcons/gear.png'/>
+                                <img class='myGear4 someGear' src='images/decisionIcons/gear.png'/>
+                                <img class='myGear7 someGear' src='images/decisionIcons/gear.png'/>
+                                <img class='myGear9 someGear' src='images/decisionIcons/gear.png'/>
+
+                            </div>
+
+                        </div>
+
+                        <div class=AIDecision>
+
+                            <div class=AIdecisionImageWrap>
+                                <img class='AIbackground' src='images/decisionIcons/AI2.png'/>
+                                <img class='AImatch' src='images/decisionIcons/false.png'/>
+                                <img class='AIdeny' src='images/decisionIcons/true.png'/>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class=ConfidenceWrap-AI>
+
+                        <div class = confidenceSliderWrapWrap-AI>
+
+                            <svg height="50" width="500" class=confidenceSliderTextWrap-AI>
+
+                                <text x="50%" y="70%" dominant-baseline='middle'
+                                text-anchor='middle' fill="black" class='confidenceSliderText-AI'><tspan id='confidenceText-AI'></tspan></text>
+
+                            </svg>
+
+                            <div class = 'sliderBar-AI'>
+                                <input type='range' min = '0' max = '5' class = 'confidenceSlider-AI' value = '0' id = 'confidenceSlider-AI' />
+                                <div id = 'confidenceBar-AI' class = 'confidenceBar-AI'></div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+                <div class='DMWrap'>
+
+                    <div class=faceWrap>
+
+                        <div class=face1Wrap>
+
+                            <div class=face1Text>
+
+                            </div>
+
+                            <div class=scanLine1>
+
+                            </div>
+
+                            <div class=face1>
+                                <img class='faceImage' src='faces/exp/3a.jpg'/>
+                            </div>
+
+                        </div>
+
+                        <div class=face2Wrap>
+
+                            <div class=face2Text>
+
+                            </div>
+
+                            <div class=scanLine2>
+
+                            </div>
+
+                            <div class=face2>
+                                <img class='faceImage' src='faces/exp/3b.jpg'/>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class='decisionWrap'>
+
+                        <div class=decisionButtonsWrap>
+                            <div class='individualButtonWrap denyWrap'>
+                                <img class='DMdeny' src='images/decisionIcons/false.png'/>
+                            </div>
+                            <div class='individualButtonWrap matchWrap'>
+                                <img class='DMmatch' src='images/decisionIcons/true.png'/>
+                            </div>
+                        </div>
+
+                        <div class = confidenceSliderWrapWrap>
+
+                            <svg height="50" width="500" class=confidenceSliderTextWrap>
+
+                                <text x="50%" y="70%" dominant-baseline='middle'
+                                text-anchor='middle' fill="white" class='confidenceSliderText'><tspan id='confidenceText'></tspan></text>
+
+                            </svg>
+
+                            <div class = 'sliderBar'>
+                                <input type='range' min = '0' max = '5' class = 'confidenceSlider' value = '0' id = 'confidenceSlider-1' />
+                                <div id = 'confidenceBar-1' class = 'confidenceBar-1'></div>
+
+                                <div class=confidenceSliderOKButton>
+                                    <p class=confidenceSliderOKButtonText>
+                                        OK
+                                    </p>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class=submitButtonWrap>
+
+                        <div class='button submitButton' style='
+                        width:420px;
+                        font-weight:600;
+                        opacity:0; transform:scale(0);' id='showAIDecisionButton'>
+                            <p>
+                                SHOW AI DECISION
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div class='decisionWrap-2'>
+
+                        <div class=decisionButtonsWrap-2>
+                            <div class='individualButtonWrap-2 denyWrap-2'>
+                                <img class='DMdeny-2' src='images/decisionIcons/false.png'/>
+                            </div>
+                            <div class='individualButtonWrap-2 matchWrap-2'>
+                                <img class='DMmatch-2' src='images/decisionIcons/true.png'/>
+                            </div>
+                        </div>
+
+                        <div class = confidenceSliderWrapWrap-2>
+
+                            <svg height="50" width="500" class=confidenceSliderTextWrap-2>
+
+                                <text x="50%" y="70%" dominant-baseline='middle'
+                                text-anchor='middle' fill="white" class='confidenceSliderText-2'><tspan id='confidenceText-2'></tspan></text>
+
+                            </svg>
+
+                            <div class = 'sliderBar-2'>
+                                <input type='range' min = '0' max = '5' class = 'confidenceSlider-2' value = '0' id = 'confidenceSlider-2' />
+                                <div id = 'confidenceBar-2' class = 'confidenceBar-2'></div>
+                            </div>
+
+
+                            <div class=finalSubmitButtonWrap>
+                                <div class=finalSubmitButton>
+                                    <p>
+                                        SUBMIT
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+                <div class='madeDecision'>
+
+                    <p class='yourDecisionText'>
+                        YOUR <br /> INITIAL DECISION
+                    </p>
+
+                </div>
+
+        </div>
+
+            <div class='boxbox' id='boxbox-A'></div>
+
+
+        </div>
+
+    </div>
+
+
+    <div id=end></div>
+
+
+
+    <div class=boxStorage>
+
+
+        <div class=boxwrap id='boxwrap-A-1'>
+
+            <div class='box' id='box-A-1'>
+
+                <div class=text>
+
+                    <p>
+                        Some text 1.
+                    </p>
+
+                </div>
+
+                <div class=buttonWrap>
+                    <div class=button id='btn-A-1'>
+                        <p>
+                            OK
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class='box' id='box-A-2'>
+
+                <div class=text>
+
+                    <p>
+                        Some text 2.
+                    </p>
+
+                </div>
+
+                <div class=buttonWrap>
+                    <div class=button id='btn-A-2'>
+                        <p>
+                            OK
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="js/mediaQ_leader.js"></script>
+    <script src="js/box.js"></script>
+    <script src="js/gear.js"></script>
+    <script src="js/scan.js"></script>
+    <script src="js/confidence.js"></script>
+    <script src="js/confidence-2.js"></script>
+    <script src="js/decision.js"></script>
+    <script src="js/decision-2.js"></script>
+
+</body>
+</html>

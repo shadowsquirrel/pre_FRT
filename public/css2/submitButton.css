@@ -1,0 +1,11 @@
+.submitButtonWrap
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.submitButton
+{
+    width: 206px;
+    border-radius: 100px;
+}

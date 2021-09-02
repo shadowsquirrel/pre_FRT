@@ -1,0 +1,16 @@
+.generalWrap
+{
+    margin-top:20px;
+    display:flex;
+    flex-direction:row;
+
+    /* SMART PHONE SETUP */
+    
+    /* margin-left: -20px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    transform: scale(0.9);
+    transform-origin: top; */
+
+}
