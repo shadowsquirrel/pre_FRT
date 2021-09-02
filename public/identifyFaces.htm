@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <link rel="stylesheet" href="css/frame.css">
+    <link rel="stylesheet" href="css/if_frame.css">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+
+    <title>Face Test</title>
+
+</head>
+<body>
+
+    <!-- <buttton type='button' class='myButton0' id='disconnectButton'>Disconnect</buttton> -->
+
+    <div id=start></div>
+
+    <div class = 'wrap  noselect' style='margin-top:10px;'>
+
+
+        <div class = 'all'>
+
+
+            <div class='frame-A'>
+
+                <div class='frame-A-0' id='frame-0'>
+
+                    <div class='frame-A-0-0' id='frame-0-0'>
+
+                        <div class='innerWrap'>
+                            <img id='lF' class='leftFace facePicture' src='faces/exp/1a.jpg'/>
+                        </div>
+
+                        <div class='innerWrap'>
+                            <img id='rF' class='rightFace facePicture' src='faces/exp/1b.jpg'/>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class='frame-B'>
+
+                <div class='frame-B-0'>
+
+                    <div class='frame-B-0-0'>
+
+                        <div class='leftButton buttonWrap'>
+                            <img id='lB' class='iconButton' src='images/decisionIcons/false.png'/>
+                        </div>
+
+                        <div class='rightButton buttonWrap'>
+                            <img id='rB' class='iconButton' src='images/decisionIcons/true.png'/>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+    <div id=end></div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="js/identifyFaces.js"></script>
+
+</body>
+</html>

@@ -63,19 +63,22 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         ]
 
         node.game.correctAnswerList = [
-            // 0,0,0,1,1,1,0,0,1,1 ,1 ,1 ,1 ,1, 0 ,1 ,0 ,1 ,1 ,0 ,0 ,1 ,1 ,1
-            0,1,0,1,0,1,0,1,0,1 ,0 ,1 ,0 ,1, 1, 0 ,1 ,0 ,0 ,1 ,0 ,1 ,0 ,0
+            0,0,0,1,1,1,0,0,1,1 ,1 ,1 ,1 ,1, 0 ,1 ,0 ,1 ,1 ,0 ,0 ,1 ,1 ,1
+            // 0,1,0,1,0,1,0,1,0,1 ,0 ,1 ,0 ,1, 1, 0 ,1 ,0 ,0 ,1 ,0 ,1 ,0 ,0
         ]
 
 
         // for a quick debug
-        node.game.pairIndexList = [
-            1,2,3
-        ]
+        // node.game.pairIndexList = [
+        //     1,2,3
+        // ]
+        //
+        // node.game.correctAnswerList = [
+        //     0,1,0
+        // ]
 
-        node.game.correctAnswerList = [
-            0,1,0
-        ]
+        // -------------- //
+
 
         node.game.initPlayer = function() {
 
@@ -143,9 +146,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         }
 
 
-
-
         // -------------- //
+
 
         node.game.reIntroducePlayer = function(player) {
 
@@ -156,6 +158,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             // player.count = player.cid();
 
         }
+
 
         // -------------- //
 
@@ -171,6 +174,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             console.log('PLAYER INDEX AFTER UPDATE: ' + player.cpx);
 
         }
+
+
+        // -------------- //
 
 
         node.game.checkEnd = function(player) {
@@ -197,6 +203,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             }
 
         }
+
+
+        // -------------- //
 
 
         node.on.data('diffPerson-LOGIC', function(msg) {
@@ -277,6 +286,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
 
+
+        // -------------- //
+
+
         node.on.data('calculateScore-LOGIC', function(msg) {
 
             let player = node.game.pl.get(msg.from);
@@ -310,6 +323,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         })
 
 
+        // -------------- //
+
+
         node.on.data('requestFirstIndex-LOGIC', function(msg) {
 
             // initializing the player
@@ -326,6 +342,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             node.say('LOGIC-firstPicture', player.id, currentIndex);
 
         })
+
 
 
     });
