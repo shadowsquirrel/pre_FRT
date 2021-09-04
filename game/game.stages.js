@@ -23,7 +23,7 @@ module.exports = function(stager, settings) {
     stager.skip('instructions');
     stager.skip('quiz');
     // stager.skip('identifyFaces');
-    stager.skip('results');
+    // stager.skip('results');
     stager.skip('end');
 
     // To skip a step within a stage use:

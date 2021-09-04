@@ -1,6 +1,7 @@
 
 var picture = {};
 var button = {};
+var go = {};
 
 
 window.onload = function() {
@@ -10,6 +11,42 @@ window.onload = function() {
 
     button.isClicked = false;
 
+
+    go.show = function() {
+
+        // show the go button
+        $('.frame-C').css({'transition':'0s',
+        'z-index':'1', 'transform':'scale(1)'});
+        setTimeout(()=>{
+            $('.frame-C').css({'transition':'0.2s',
+            'opacity':'1'});
+        }, 10)
+
+    }
+
+    go.hide = function() {
+
+        // hide the go button
+        $('.frame-C').css({'transition':'0.1s',
+        'opacity':'0', 'z-index':'0'});
+        setTimeout(()=>{
+            $('.frame-C').css({'transform':'scale(0)'});
+        }, 110)
+
+        // show the pictures
+        setTimeout(()=>{
+            picture.show();
+        }, 100)
+
+        // show the buttons
+        setTimeout(()=>{
+            button.show();
+            node.emit('startTimer');
+        }, 100)
+
+
+
+    }
 
     picture.set = function(index) {
 
@@ -27,7 +64,7 @@ window.onload = function() {
 
     picture.hide = function() {
 
-        $('.innerWrap').css({'transition':'0.35s', 'opacity':'0'});
+        $('.facePicture').css({'transition':'0.35s', 'opacity':'0'});
 
         console.log('');
         console.log('HIDE PICTURE');
@@ -37,7 +74,7 @@ window.onload = function() {
 
     picture.show = function() {
 
-        $('.innerWrap').css({'transition':'0.35s', 'opacity':'1'});
+        $('.facePicture').css({'transition':'0.2s', 'opacity':'1'});
 
         console.log('');
         console.log('SHOW PICTURE');
@@ -65,8 +102,8 @@ window.onload = function() {
 
         $('#lB, #rB').css({'transition':'0s', 'transform':'scale(1)'})
         setTimeout(()=>{
-            $('#lB, #rB').css({'transition':'0.35s', 'opacity':'1'})
-        }, 100)
+            $('#lB, #rB').css({'transition':'0.19s', 'opacity':'1'})
+        }, 10)
 
         console.log('');
         console.log('SHOW BUTTON');
@@ -75,11 +112,19 @@ window.onload = function() {
     }
 
 
+    $('#go').click(function() {
+
+        go.hide();
+
+    })
+
     $('#lB').click(function() {
 
         if(!button.isClicked) {
 
             button.isClicked = true;
+
+            go.show();
 
             node.emit('stopTime');
 
@@ -98,6 +143,8 @@ window.onload = function() {
         if(!button.isClicked) {
 
             button.isClicked = true;
+
+            go.show();
 
             node.emit('stopTime');
 
@@ -138,21 +185,7 @@ window.onload = function() {
 
         setTimeout(()=>{
             picture.set(currentIndex);
-        }, 500)
-
-
-        setTimeout(()=>{
-            picture.show();
-        }, 1000)
-
-        setTimeout(()=>{
-
-            button.show();
-
-            node.emit('startTimer');
-
-        }, 1500)
-
+        }, 250)
 
 
     })
@@ -185,19 +218,6 @@ window.onload = function() {
         }, 500)
 
 
-        setTimeout(()=>{
-            picture.show();
-        }, 1000)
-
-        setTimeout(()=>{
-
-            button.show();
-
-            node.emit('startTimer');
-
-        }, 1500)
-
-
 
     })
 
@@ -209,6 +229,8 @@ window.onload = function() {
         if(!button.isClicked) {
 
             button.isClicked = true;
+
+            go.show();
 
             button.hide();
 
