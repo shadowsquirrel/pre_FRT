@@ -57,15 +57,15 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // -------------- //
 
 
-        // node.game.pairIndexList = [
-        //     1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24
-        //     // 0,0,0,1,1,1,0,0,1,1 ,1 ,1 ,1 ,1, 0 ,1 ,0 ,1 ,1 ,0 ,0 ,1 ,1 ,1
-        // ]
-        //
-        // node.game.correctAnswerList = [
-        //     0,0,0,1,1,1,0,0,1,1 ,1 ,1 ,1 ,1, 0 ,1 ,0 ,1 ,1 ,0 ,0 ,1 ,1 ,1
-        //     // 0,1,0,1,0,1,0,1,0,1 ,0 ,1 ,0 ,1, 1, 0 ,1 ,0 ,0 ,1 ,0 ,1 ,0 ,0
-        // ]
+        node.game.pairIndexList = [
+            1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29
+            // 0,0,0,1,1,1,0,0,1,1 ,1 ,1 ,0 ,0, 0 ,1 ,1 ,1 ,0 ,0 ,0 ,1 ,1 ,1 ,0 ,1 ,1 ,1 ,0
+        ]
+
+        node.game.correctAnswerList = [
+            0,0,0,1,1,1,0,0,1,1 ,1 ,1 ,0 ,0, 0 ,1 ,1 ,1 ,0 ,0 ,0 ,1 ,1 ,1 ,0 ,1 ,1 ,1 ,0
+            // 0,1,0,1,0,1,0,1,0,1 ,0 ,1 ,0 ,1, 1, 0 ,1 ,0 ,0 ,1 ,0 ,1 ,0 ,0
+        ]
 
 
         // for a quick debug
@@ -88,8 +88,15 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
                 player.shuffled = {
                     correctAnswerList: undefined,
-                    pairIndexList: undefined
+                    pairIndexList: undefined,
+                    correctDecisionList: [],
                 };
+
+                player.unshuffled = {
+                    pairIndexList: [],
+                    givenAnswerList: [],
+                    correctDecisionList: []
+                }
 
                 var shuffledAnswers = [];
 
@@ -188,7 +195,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             console.log('current index: ' + player.cpx);
             console.log('size: ' + size);
 
-            if(player.cpx === size) {
+            if(player.cpx >= size) {
 
                 console.log('DONE WITH FACE TEST');
 
@@ -218,6 +225,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
             node.game.updateCurrentIndex(player);
 
+            node.game.saveToMemory();
+
             if(node.game.checkEnd(player)) {
 
                 var msg = 'DONE';
@@ -227,8 +236,14 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             } else {
 
                 var currentIndex = player.shuffled.pairIndexList[player.cpx];
+                var currentCorrectAnswer = player.shuffled.correctAnswerList[player.cpx];
 
-                node.say('LOGIC-nextPicture', player.id, currentIndex);
+                var data = {
+                    index: currentIndex,
+                    correctAnswer: currentCorrectAnswer
+                }
+
+                node.say('LOGIC-nextPicture', player.id, data);
 
             }
 
@@ -244,6 +259,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
             node.game.updateCurrentIndex(player);
 
+            node.game.saveToMemory();
+
             if(node.game.checkEnd(player)) {
 
                 var msg = 'DONE';
@@ -253,8 +270,14 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             } else {
 
                 var currentIndex = player.shuffled.pairIndexList[player.cpx];
+                var currentCorrectAnswer = player.shuffled.correctAnswerList[player.cpx];
 
-                node.say('LOGIC-nextPicture', player.id, currentIndex);
+                var data = {
+                    index: currentIndex,
+                    correctAnswer: currentCorrectAnswer
+                }
+
+                node.say('LOGIC-nextPicture', player.id, data);
 
             }
 
@@ -270,6 +293,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
             node.game.updateCurrentIndex(player);
 
+            node.game.saveToMemory();
+
             if(node.game.checkEnd(player)) {
 
                 var msg = 'DONE';
@@ -279,8 +304,14 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             } else {
 
                 var currentIndex = player.shuffled.pairIndexList[player.cpx];
+                var currentCorrectAnswer = player.shuffled.correctAnswerList[player.cpx];
 
-                node.say('LOGIC-nextPicture', player.id, currentIndex);
+                var data = {
+                    index: currentIndex,
+                    correctAnswer: currentCorrectAnswer
+                }
+
+                node.say('LOGIC-nextPicture', player.id, data);
 
             }
 
@@ -310,6 +341,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
                 var correct = (player.shuffled.correctAnswerList[i] === player.givenAnswerList[i]);
 
+                player.shuffled.correctDecisionList[i] = correct;
+
                 if(correct) {
                     score++;
                 }
@@ -319,6 +352,23 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             player.score = score;
 
             console.log('PLAYER FINAL SCORE: ' + player.score);
+
+            console.log(player.shuffled.pairIndexList);
+            console.log(player.givenAnswerList);
+            console.log(player.shuffled.correctAnswerList);
+            console.log(player.shuffled.correctDecisionList);
+
+            node.game.generateUnshuffledLists(player);
+
+        })
+
+        node.on.data('results-LOGIC', function(msg) {
+
+            let player = node.game.pl.get(msg.from);
+
+            let score = player.score;
+
+            node.say('LOGIC-results', player.id, score);
 
         })
 
@@ -336,12 +386,78 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             console.log('FIRST INDEX IS REQUESTED FROM CLIENT TO LOGIC SIDE');
 
             var currentIndex = player.shuffled.pairIndexList[player.cpx];
+            var currentCorrectAnswer = player.shuffled.correctAnswerList[player.cpx];
+
+            var data = {
+                index: currentIndex,
+                correctAnswer: currentCorrectAnswer
+            }
 
             console.log('FIRST INDEX IS: ' + currentIndex);
+            console.log('CORRECT ANSWER IS: ' + currentCorrectAnswer);
 
-            node.say('LOGIC-firstPicture', player.id, currentIndex);
+            console.log('Data to be sent');
+            console.log(data);
+
+            node.say('LOGIC-firstPicture', player.id, data);
 
         })
+
+
+        // -------------- //
+
+
+        // not used
+        node.game.generateUnshuffledLists = function(player) {
+
+            let shuffled = {};
+            let unshuffled = {};
+
+            shuffled.index = player.shuffled.pairIndexList;
+            shuffled.answerList = player.givenAnswerList;
+            shuffled.correctDecisionList = player.shuffled.correctDecisionList;
+
+            unshuffled.index = node.game.pairIndexList;
+            var myLength = unshuffled.index.length;
+            unshuffled.answerList = Array(myLength);
+            unshuffled.correctDecisionList = Array(myLength);
+
+            for(var i = 0; i < unshuffled.index.length; i++) {
+
+                var myIndex = shuffled.index.indexOf(unshuffled.index[i])
+
+                unshuffled.answerList[i] = shuffled.answerList[myIndex];
+                unshuffled.correctDecisionList[i] = shuffled.correctDecisionList[myIndex];
+
+            }
+
+            player.unshuffled.pairIndexList = unshuffled.index;
+            player.unshuffled.givenAnswerList = unshuffled.answerList;
+            player.unshuffled.correctDecisionList = unshuffled.correctDecisionList;
+
+
+        }
+
+
+        // -------------- //
+
+        node.game.saveToMemory = function() {
+
+            memory.save('decision.csv', {
+
+                header: [
+                    'player',
+                    'index',
+                    'answer',
+                    'correct'
+                ],
+
+                updatesOnly:true,
+
+            })
+
+
+        }
 
 
 

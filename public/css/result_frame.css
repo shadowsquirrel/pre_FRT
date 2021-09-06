@@ -19,5 +19,9 @@
 }
 .text
 {
-    font-size:30px;
+    transition:1s;
+    opacity:0;
+    font-weight:100;
+    margin-top:175px;
+    font-size:40px;
 }

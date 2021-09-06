@@ -3,10 +3,16 @@ var picture = {};
 var button = {};
 var go = {};
 
+picture.index = undefined;
+picture.correctAnswer = undefined;
+button.answer = undefined;
+
 
 window.onload = function() {
 
     var node = parent.node;
+
+    $('#go').html('START');
 
 
     button.isClicked = false;
@@ -24,7 +30,21 @@ window.onload = function() {
 
     }
 
+    go.switchedToNext = false;
+
     go.hide = function() {
+
+        if(!go.switchedToNext) {
+
+            go.switchedToNext = true;
+
+            setTimeout(()=>{
+                $('#go').html('NEXT')
+            }, 750)
+
+        }
+
+
 
         // hide the go button
         $('.frame-C').css({'transition':'0.1s',
@@ -124,6 +144,8 @@ window.onload = function() {
 
             button.isClicked = true;
 
+            button.answer = 0;
+
             go.show();
 
             node.emit('stopTime');
@@ -132,7 +154,22 @@ window.onload = function() {
 
             picture.hide();
 
-            node.emit('HTML-diffPerson');
+            var isAnswerCorrect = (button.answer === picture.correctAnswer)
+
+            var data = {
+                index: picture.index,
+                answer: button.answer,
+                correct: isAnswerCorrect
+            }
+
+            console.log('');
+            console.log('');
+            console.log('LEFT BUTTON - data to be sent to CLIENT');
+            console.log(data);
+            console.log('');
+            console.log('');
+
+            node.emit('HTML-diffPerson', data);
 
         }
 
@@ -144,6 +181,8 @@ window.onload = function() {
 
             button.isClicked = true;
 
+            button.answer = 1;
+
             go.show();
 
             node.emit('stopTime');
@@ -152,7 +191,22 @@ window.onload = function() {
 
             picture.hide();
 
-            node.emit('HTML-samePerson');
+            var isAnswerCorrect = (button.answer === picture.correctAnswer)
+
+            var data = {
+                index: picture.index,
+                answer: button.answer,
+                correct: isAnswerCorrect
+            }
+
+            console.log('');
+            console.log('');
+            console.log('RIGHT BUTTON - data to be sent to CLIENT');
+            console.log(data);
+            console.log('');
+            console.log('');
+
+            node.emit('HTML-samePerson', data);
 
         }
 
@@ -173,7 +227,8 @@ window.onload = function() {
         console.log('');
         console.log('NEW PICTURE RECEIVED');
 
-        console.log('INDEX: ' + msg);
+        console.log('INDEX: ' + msg.index);
+        console.log('ANSWER: ' + msg.correctAnswer);
         console.log('');
         console.log('');
         console.log('');
@@ -181,7 +236,15 @@ window.onload = function() {
         console.log('');
         console.log('');
 
-        var currentIndex = msg;
+        var currentIndex = msg.index;
+        var correctAnswer = msg.correctAnswer;
+
+        // set the current picture pair index
+        picture.index = currentIndex;
+        picture.correctAnswer = correctAnswer;
+
+        // initially set the answer to no answer
+        button.answer = -2;
 
         setTimeout(()=>{
             picture.set(currentIndex);
@@ -203,7 +266,8 @@ window.onload = function() {
         console.log('');
         console.log('FIRST PICTURE RECEIVED');
 
-        console.log('INDEX: ' + msg);
+        console.log('INDEX: ' + msg.index);
+        console.log('ANSWER: ' + msg.correctAnswer);
         console.log('');
         console.log('');
         console.log('');
@@ -211,7 +275,15 @@ window.onload = function() {
         console.log('');
         console.log('');
 
-        var currentIndex = msg;
+        var currentIndex = msg.index;
+        var correctAnswer = msg.correctAnswer;
+
+        // set the current picture pair index
+        picture.index = currentIndex;
+        picture.correctAnswer = correctAnswer;
+
+        // initially set the answer to no answer
+        button.answer = -2;
 
         setTimeout(()=>{
             picture.set(currentIndex);
@@ -236,7 +308,22 @@ window.onload = function() {
 
             picture.hide();
 
-            node.emit('HTML-timeUp');
+            var isAnswerCorrect = (button.answer === picture.correctAnswer)
+
+            var data = {
+                index: picture.index,
+                answer: button.answer,
+                correct: isAnswerCorrect
+            }
+
+            console.log('');
+            console.log('');
+            console.log('TIME UP - data to be sent to CLIENT');
+            console.log(data);
+            console.log('');
+            console.log('');
+
+            node.emit('HTML-timeUp', data);
 
         }
 

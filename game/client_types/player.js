@@ -111,9 +111,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
             node.game.talk('INDEX RECEIVED: ' + msg.data)
 
-            var myIndex = msg.data;
+            var myData = msg.data;
 
-            node.emit('nextPicture-HTML', myIndex);
+            node.emit('nextPicture-HTML', myData);
 
         })
 
@@ -124,9 +124,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
             node.game.talk('INDEX RECEIVED: ' + msg.data)
 
-            var myIndex = msg.data;
+            var myData = msg.data;
 
-            node.emit('firstPicture-HTML', myIndex);
+            node.emit('firstPicture-HTML', myData);
 
         })
 
@@ -141,6 +141,14 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
 
+        node.on.data('LOGIC-results', function(msg) {
+
+            let score = msg.data;
+
+            node.emit('results-HTML', score);
+
+        })
+
 
 
         // ------------------------------------------------------------------ //
@@ -151,19 +159,65 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // ------------------------------------------------------------------ //
         // ------------------------------------------------------------------ //
 
-        node.on('HTML-samePerson', function() {
+        node.on('HTML-samePerson', function(msg) {
 
             this.talk('HTML SAME PERSON RESPONSE RECEIVED BY CLIENT')
 
+            this.talk('MESSAGE RECEIVED')
+            this.talk(msg.index)
+            this.talk(msg.answer)
+            this.talk(msg.correct)
+            this.talk('------------')
+
+            node.set({
+                index:msg.index,
+                answer:msg.answer,
+                correct:msg.correct
+            })
+
             node.say('samePerson-LOGIC', 'SERVER');
+
+
 
         })
 
-        node.on('HTML-diffPerson', function() {
+        node.on('HTML-diffPerson', function(msg) {
 
             this.talk('HTML DIFF PERSON RESPONSE RECEIVED BY CLIENT')
 
+            this.talk('MESSAGE RECEIVED')
+            this.talk(msg.index)
+            this.talk(msg.answer)
+            this.talk(msg.correct)
+            this.talk('------------')
+
+            node.set({
+                index:msg.index,
+                answer:msg.answer,
+                correct:msg.correct
+            })
+
             node.say('diffPerson-LOGIC', 'SERVER');
+
+        })
+
+        node.on('HTML-timeUp', function(msg) {
+
+            this.talk('TIME IS UP')
+
+            this.talk('MESSAGE RECEIVED')
+            this.talk(msg.index)
+            this.talk(msg.answer)
+            this.talk(msg.correct)
+            this.talk('------------')
+
+            node.set({
+                index:msg.index,
+                answer:msg.answer,
+                correct:msg.correct
+            })
+
+            node.say('noAnswer-LOGIC', 'SERVER');
 
         })
 
@@ -175,14 +229,11 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
 
-        node.on('HTML-timeUp', function() {
+        node.on('HTML-results', function() {
 
-            this.talk('TIME IS UP')
-
-            node.say('noAnswer-LOGIC', 'SERVER');
+            node.say('results-LOGIC', 'SERVER');
 
         })
-
 
     });
 
@@ -266,9 +317,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     });
 
     stager.extendStep('results', {
-        frame: 'results.htm',
+        frame: 'resultScreen.htm',
         cb: function() {
-
+            node.game.talk('--------- RESULTS ---------')
         }
     });
 
