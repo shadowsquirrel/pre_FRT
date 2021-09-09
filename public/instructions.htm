@@ -1,23 +1,650 @@
-<!doctype html>
-<title>INSTRUCTIONS</title>
-<link rel="stylesheet" href="/lib/bootstrap/bootstrap.min.css" />
-<link rel="stylesheet" href="/stylesheets/nodegame.css" />
-<link rel="stylesheet" href="css/style.css" />
+<!DOCTYPE html>
+<html>
+<head>
+
+    <link rel="stylesheet" href="css/frame.css">
+    <link rel="stylesheet" href="css/instructions_frame.css">
+    <link rel="stylesheet" href="css/instructions_frame_initialSetup.css">
+    <link rel="stylesheet" href="css/explanationBox.css">
+    <link rel="stylesheet" href="css/explanationBox_extras.css">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+
+    <title>Face Test</title>
+
+</head>
 <body>
-  <div id="container">
-    <h1>Instructions</h1>
-    <h3>Please read them carefully</h3>
-    <div id="instructions">
-      <br>
-      In this game, you need to guess if the value
-      of a randomly generated number between 1 and 10 is larger than 5.
-      <br><br>
-      For each correct answer you will win <span id="coins"> - </span> ECU (Experimental Currency).
-      100 ECU are equal to <span id="exchange-rate"> - </span> USD.
-      <br><br>
-      The game is repeated <span id="rounds"> - </span> rounds.
-      <br><br>
+
+    <!-- <buttton type='button' class='myButton0' id='disconnectButton'>Disconnect</buttton> -->
+
+    <div id=start></div>
+
+    <div class = 'wrap  noselect' style='margin-top:10px;'>
+
+        <div class='debugInfoBoxText'>
+            <p>
+                <span id=debugInfoBoxText></span>
+            </p>
+        </div>
+
+        <div class = 'all'>
+
+            <!-- #################### DYNAMIC TITLE ######################## -->
+
+            <div class=welcomeTitle>
+                <p class ='title1'>
+                    <span id='mainmainTitle'></span>
+                </p>
+            </div>
+
+
+            <div class='frame-A'>
+
+                <div class='frame-A-0' id='frame-0'>
+
+                    <div class='frame-A-0-0' id='frame-0-0'>
+
+                        <div class='leftFace innerWrap'>
+                            <img id='lF' class='facePicture' src='faces/tuto/1a.jpg'/>
+                        </div>
+
+                        <div class='rightFace innerWrap'>
+                            <img id='rF' class='facePicture' src='faces/tuto/1b.jpg'/>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class='boxbox' id='boxbox-A' style='display:block;'></div>
+
+
+            <div class='frame-B'>
+
+                <div class='frame-B-0'>
+
+                    <div class='frame-B-0-0'>
+
+                        <div class='leftButton buttonWrap'>
+                            <img id='lB' class='iconButton' src='images/decisionIcons/false.png'/>
+                            <div class=leftButtonExplanation>
+                                <p>
+                                    Different
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class='rightButton buttonWrap'>
+                            <img id='rB' class='iconButton' src='images/decisionIcons/true.png'/>
+                            <div class=rightButtonExplanation>
+                                <p>
+                                    Same
+                                </p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class='boxbox' id='boxbox-B' style='display:none;'></div>
+
+
+            <div class='frame-C'>
+
+                <div class='frame-C-0'>
+
+                    <div class='frame-C-0-0'>
+
+                        <div class='transitionButton' id='go'>
+
+                            <p>
+                                <span id=go></span>
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class='boxbox' id='boxbox-C' style='display:none;'></div>
+
+
+        </div>
+
+
     </div>
-    If you understood the instructions correctly press the "DONE" button to proceed to the game.
-  </div>
+
+    <div id=end></div>
+
+
+
+    <div class=boxStorage>
+
+        <div class=boxwrap id='boxwrap-A-1'>
+
+            <div class='box' id='box-A-1'>
+
+                <div class=text>
+                    <p>
+                        Welcome to our experiment!
+                        <br />
+                        <br />
+                        Please click the <strong>OK</strong> button to begin
+                        the <i>tutorial</i>.
+                    </p>
+                </div>
+
+                <div class=buttonWrap>
+                    <div class=button id='btn-A-1'>
+                        <p>
+                            OK
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class=boxwrap id='boxwrap-A-2'>
+
+            <div class='box' id='box-A-2'>
+
+                <div class=text>
+                    <p>
+                        During this tutorial,
+                        <br />
+                        you will encounter yellow information boxes such as this one.
+                    </p>
+                </div>
+
+                <div class=buttonWrap>
+                    <div class=button id='btn-A-2'>
+                        <p>
+                            OK
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class=boxwrap id='boxwrap-A-3'>
+
+            <div class='box' id='box-A-3'>
+
+                <div class=text>
+                    <p>
+                        You are expected to <i>carefully</i> read its content,
+                        <br />
+                        then click the <strong>OK</strong> button to proceed.
+                    </p>
+                </div>
+
+                <div class=buttonWrap>
+                    <div class=button id='btn-A-3'>
+                        <p>
+                            OK
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class=boxwrap id='boxwrap-A-4'>
+
+            <div class='box' id='box-A-4'>
+
+                <div class=text>
+                    <p>
+                        At times,
+                        <br />
+                        the <strong>OK</strong> button will appear
+                        <i>only after</i> you perform a
+                        <i>required</i> action.
+                    </p>
+                </div>
+
+                <div class=buttonWrap>
+                    <div class=button id='btn-A-4'>
+                        <p>
+                            OK
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class=boxwrap id='boxwrap-A-6'>
+
+            <div class='box' id='box-A-6'>
+
+                <div class=text>
+                    <p>
+
+                        Please click the <strong>OK</strong> button to proceed
+                        to the main section of the tutorial.
+                    </p>
+                </div>
+
+                <div class=buttonWrap>
+                    <div class=button id='btn-A-6'>
+                        <p>
+                            OK
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <div class=boxwrap id='boxwrap-B-1'>
+
+            <div class='box' id='box-B-1'>
+
+                <div class=text>
+
+                    <p>
+                        In the experiment,
+                        <br />
+                        you will be presented with a pair of
+                        face pictures on the <i>above</i> A and B frames.
+                    </p>
+
+                </div>
+
+                <div class=buttonWrap>
+                    <div class=button id='btn-B-1'>
+                        <p>
+                            OK
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class=boxwrap id='boxwrap-B-2'>
+
+            <div class='box' id='box-B-2'>
+
+                <div class=text>
+
+                    <p>
+                        You will be asked to evaluate whether the pair of photos
+                        <br />
+                        belong to the <span class=b>same person</span>
+                        or <span class=b>not</span>.
+                    </p>
+
+                </div>
+
+                <div class=buttonWrap>
+                    <div class=button id='btn-B-2'>
+                        <p>
+                            OK
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class=boxwrap id='boxwrap-B-3'>
+
+            <div class='box' id='box-B-3'>
+
+                <div class=text>
+
+                    <p>
+                        Click <img class='infoBoxIconButton' src='images/decisionIcons/true.png'/>
+                        button to indicate your evaluation that
+                        <br />
+                        the pair belongs to the <span class=b>same</span> person.
+                    </p>
+
+                </div>
+
+                <div class=buttonWrap>
+                    <div class=button id='btn-B-3'>
+                        <p>
+                            OK
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class=boxwrap id='boxwrap-B-4'>
+
+            <div class='box' id='box-B-4'>
+
+                <div class=text>
+
+                    <p>
+                        Click <img class='infoBoxIconButton' src='images/decisionIcons/false.png'/>
+                        button to indicate your evaluation that
+                        <br />
+                        the pair does <span class=b>NOT</span> belong to the <i>same</i>
+                        person.
+                    </p>
+
+                </div>
+
+                <div class=buttonWrap>
+                    <div class=button id='btn-B-4'>
+                        <p>
+                            OK
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class=boxwrap id='boxwrap-B-5'>
+
+            <div class='box' id='box-B-5'>
+
+                <div class=text>
+
+                    <p>
+                        Please make a decision for the above pair.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class=boxwrap id='boxwrap-B-6'>
+
+            <div class='box' id='box-B-6'>
+
+                <div class=text>
+
+                    <p>
+                        In the experiment,
+                        <br />
+                        you will be asked to evaluate <span class=b>28</span>
+                        pairs of photos in this fashion.
+                    </p>
+
+                </div>
+
+                <div class=buttonWrap>
+                    <div class=button id='btn-B-6'>
+                        <p>
+                            OK
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class=boxwrap id='boxwrap-B-7'>
+
+            <div class='box' id='box-B-7'>
+
+                <div class=text>
+
+                    <p>
+                        You will <i>only</i> have <span class=b id=dtd1></span> seconds
+                        to evaluate <i>each</i> pair.
+                    </p>
+
+                </div>
+
+                <div class=buttonWrap>
+                    <div class=button id='btn-B-7'>
+                        <p>
+                            OK
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class=boxwrap id='boxwrap-B-8'>
+
+            <div class='box' id='box-B-8'>
+
+                <div class=text>
+
+                    <p>
+                        The timer will be displayed on the <i>top right corner</i>
+                        of your screen.
+                    </p>
+
+                </div>
+
+                <div class=buttonWrap>
+                    <div class=button id='btn-B-8'>
+                        <p>
+                            OK
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class=boxwrap id='boxwrap-C-1'>
+
+            <div class='box' id='box-C-1'>
+
+                <div class=text>
+
+                    <p>
+                        Please click the <span class=b>START</span> button
+                        <i>above</i> to practice the task with the timer.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class=boxwrap id='boxwrap-C-2'>
+
+            <div class='box' id='box-C-2'>
+
+                <div class=text>
+
+                    <p>
+                        After you make a decision or after your time is up,
+                        <br />
+                        the photos and the decision buttons disappear
+                        <br />
+                        and the <i>above</i>
+                        <span class=b>NEXT</span> button appears.
+                    </p>
+
+                </div>
+
+                <div class=buttonWrap>
+                    <div class=button id='btn-C-2'>
+                        <p>
+                            OK
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class=boxwrap id='boxwrap-C-201'>
+
+            <div class='box' id='box-C-201'>
+
+                <div class=text>
+
+                    <p>
+                        You will need to click the <span class=b>NEXT</span> button
+                        to begin evaluating <br /> the <i>next pair</i> of photos.
+                    </p>
+
+                </div>
+
+                <div class=buttonWrap>
+                    <div class=button id='btn-C-201'>
+                        <p>
+                            OK
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class=boxwrap id='boxwrap-C-3'>
+
+            <div class='box' id='box-C-3'>
+
+                <div class=text>
+
+                    <p>
+                        Please click the <span class=b>NEXT</span> button
+                        to proceed to the next practice pair.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+
+
+
+        <div class=boxwrap id='boxwrap-C-4'>
+
+            <div class='box' id='box-C-4'>
+
+                <div class=text>
+
+                    <p>
+                        You are almost done with the tutorial!
+                    </p>
+
+                </div>
+
+                <div class=buttonWrap>
+                    <div class=button id='btn-C-4'>
+                        <p>
+                            OK
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class=boxwrap id='boxwrap-C-5'>
+
+            <div class='box' id='box-C-5'>
+
+                <div class=text>
+
+                    <p>
+                        <u>A final yet crucial information</u>
+                        <br />
+                        <br />
+                        During the experiment,
+                        <br />
+                        For <i>every correct evaluation</i> you make, you will
+                        receive <span class=b>10 cents</span>.
+                    </p>
+
+                </div>
+
+                <div class=buttonWrap>
+                    <div class=button id='btn-C-5'>
+                        <p>
+                            OK
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class=boxwrap id='boxwrap-C-6'>
+
+            <div class='box' id='box-C-6' style='margin-top:50px;'>
+
+                <div class=text>
+
+                    <p>
+                        You are done with the tutorial!
+                        <br />
+                        <br />
+                        Click the <span class=b>OK</span> button to begin the
+                        experiment.
+                    </p>
+
+                </div>
+
+                <div class=buttonWrap>
+                    <div class=button id='btn-C-6'>
+                        <p>
+                            OK
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="js/explanationBox.js"></script>
+    <script src="js/instructionHelpers.js"></script>
+    <script src="js/title.js"></script>
+    <script src="js/buttons.js"></script>
+
+
 </body>
+</html>

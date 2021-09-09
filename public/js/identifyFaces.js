@@ -2,6 +2,7 @@
 var picture = {};
 var button = {};
 var go = {};
+var dtd = undefined;
 
 picture.index = undefined;
 picture.correctAnswer = undefined;
@@ -11,6 +12,26 @@ button.answer = undefined;
 window.onload = function() {
 
     var node = parent.node;
+
+    // --------------- //
+
+    node.emit('HTML-startSecretExpTimer');
+
+    // --------------- //
+
+    node.on('requestDtd-HTML', function(msg) {
+
+        console.log('');
+        console.log('DTD RECEIVED FROM THE CLIENT: ' + msg);
+        console.log('');
+
+        dtd = msg;
+
+    })
+
+    node.emit('HTML-requestDtd');
+
+    // --------------- //
 
     $('#go').html('START');
 

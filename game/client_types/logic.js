@@ -38,6 +38,37 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         });
 
 
+
+        // Decision Time Duration
+        node.game.dtd = undefined;
+
+        node.game.dtdList = J.shuffle([5000, 8000, 10000]);
+
+        node.game.dtd = node.game.dtdList[0];
+
+        console.log('DECISION TIME DURATION IS DETERMINED TO BE: ' +
+        node.game.dtd);
+
+        node.on.data('dtd-LOGIC', function(msg) {
+
+            console.log('INSIDE DTD-LOGIC');
+
+            let player = node.game.pl.get(msg.from);
+
+            node.say('LOGIC-dtd', player.id, node.game.dtd)
+
+        })
+
+        node.on.data('requestDtd-LOGIC', function(msg) {
+
+            console.log('INSIDE REQUESTDTD-LOGIC');
+
+            let player = node.game.pl.get(msg.from);
+
+            node.say('LOGIC-requestDtd', player.id, node.game.dtd);
+
+        })
+
         //-------- SOME DEBUG METHODS --------//
 
         // Identifies the player in the console
@@ -59,7 +90,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         node.game.pairIndexList = [
             1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29
-            0,0,0,1,1,1,0,0,1,1 ,1 ,1 ,0 ,0, 0 ,1 ,1 ,1 ,0 ,0 ,0 ,1 ,1 ,1 ,0 ,1 ,1 ,1 ,0
+            // 0,0,0,1,1,1,0,0,1,1 ,1 ,1 ,0 ,0, 0 ,1 ,1 ,1 ,0 ,0 ,0 ,1 ,1 ,1 ,0 ,1 ,1 ,1 ,0
         ]
 
         node.game.correctAnswerList = [
@@ -69,13 +100,13 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
 
         // for a quick debug
-        // node.game.pairIndexList = [
-        //     1,2,3
-        // ]
-        //
-        // node.game.correctAnswerList = [
-        //     0,1,0
-        // ]
+        node.game.pairIndexList = [
+            1,2,3
+        ]
+
+        node.game.correctAnswerList = [
+            0,1,0
+        ]
 
         // -------------- //
 
@@ -225,8 +256,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
             node.game.updateCurrentIndex(player);
 
-            node.game.saveToMemory();
-
             if(node.game.checkEnd(player)) {
 
                 var msg = 'DONE';
@@ -259,8 +288,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
             node.game.updateCurrentIndex(player);
 
-            node.game.saveToMemory();
-
             if(node.game.checkEnd(player)) {
 
                 var msg = 'DONE';
@@ -292,8 +319,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             player.givenAnswerList[player.cpx] = -2;
 
             node.game.updateCurrentIndex(player);
-
-            node.game.saveToMemory();
 
             if(node.game.checkEnd(player)) {
 
@@ -358,8 +383,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             console.log(player.shuffled.correctAnswerList);
             console.log(player.shuffled.correctDecisionList);
 
-            node.game.generateUnshuffledLists(player);
-
         })
 
         node.on.data('results-LOGIC', function(msg) {
@@ -407,59 +430,46 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // -------------- //
 
 
-        // not used
-        node.game.generateUnshuffledLists = function(player) {
+        memory
+        .select('dataType', '=', 'time')
+        .save('timeSpent.csv', {
 
-            let shuffled = {};
-            let unshuffled = {};
+            header: [
+                'player',
+                'tutoTime',
+                'expTime',
+            ],
 
-            shuffled.index = player.shuffled.pairIndexList;
-            shuffled.answerList = player.givenAnswerList;
-            shuffled.correctDecisionList = player.shuffled.correctDecisionList;
+            flattenByGroup:'player',
 
-            unshuffled.index = node.game.pairIndexList;
-            var myLength = unshuffled.index.length;
-            unshuffled.answerList = Array(myLength);
-            unshuffled.correctDecisionList = Array(myLength);
+            flatten:true,
 
-            for(var i = 0; i < unshuffled.index.length; i++) {
+            keepUpdated: true
 
-                var myIndex = shuffled.index.indexOf(unshuffled.index[i])
+        })
 
-                unshuffled.answerList[i] = shuffled.answerList[myIndex];
-                unshuffled.correctDecisionList[i] = shuffled.correctDecisionList[myIndex];
+        memory.view('correct').save('decision.csv', {
 
-            }
+            header: [
+                'player',
+                'index',
+                'answer',
+                'correct',
+                'dtd'
+            ],
 
-            player.unshuffled.pairIndexList = unshuffled.index;
-            player.unshuffled.givenAnswerList = unshuffled.answerList;
-            player.unshuffled.correctDecisionList = unshuffled.correctDecisionList;
+            keepUpdated: true
 
-
-        }
+        });
 
 
         // -------------- //
 
-        node.game.saveToMemory = function() {
-
-            memory.save('decision.csv', {
-
-                header: [
-                    'player',
-                    'index',
-                    'answer',
-                    'correct'
-                ],
-
-                updatesOnly:true,
-
-            })
 
 
-        }
+    });
 
-
+    stager.extendStep('instructions', {
 
     });
 
@@ -506,6 +516,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // node.game.forceDisconnect(0);
 
     },
+
 
     })
 

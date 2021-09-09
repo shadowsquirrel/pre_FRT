@@ -57,6 +57,159 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // games.
         W.init({ waitScreen: false });
 
+        // ------------ //
+
+        node.game.dtd = undefined;
+
+        node.on.data('LOGIC-dtd', function(msg) {
+
+            node.game.dtd = msg.data;
+
+            node.game.talk('CLIENT: DTD RECEIVED FROM LOGIC: ' + node.game.dtd);
+
+        })
+
+        node.say('dtd-LOGIC', 'SERVER');
+
+        // ------------ //
+
+        node.on('showTutoTimer', function() {
+
+            node.game.visualTimer.show();
+
+            node.game.visualTimer.restart({
+
+                milliseconds: node.game.dtd,
+
+                timeup: function(msg) {
+
+                    console.log('do nothing just show');
+
+                }
+
+            })
+
+        })
+
+        node.on('hideTutoTimer', function() {
+
+            node.game.visualTimer.hide();
+
+        })
+
+        node.on('stopTutoTimer', function() {
+
+            node.game.visualTimer.gameTimer.pause();
+
+            node.game.visualTimer.hide();
+
+        })
+
+        node.on('startTutoTimer', function(msg) {
+
+            console.log('tutoTimer message: ' + msg);
+
+            var myKey = msg;
+
+            node.game.visualTimer.show();
+
+            node.game.visualTimer.restart({
+
+                milliseconds: node.game.dtd,
+
+                timeup: function() {
+
+                    node.game.visualTimer.hide();
+
+                    node.emit('tutoTimeUp', myKey)
+
+                }
+
+            })
+
+        })
+
+        // ------------------------------------------------------ //
+        // ------------ RECORDING TIME SPENT ON TUTO ------------ //
+        // ------------------------------------------------------ //
+
+        // 10 minutes length -> long enough to be used in any section
+        node.game.secretTutoTimer = node.timer.create({
+
+            milliseconds: 600000,
+
+            update: 1000,
+
+        })
+        node.game.secretTutoTimer.start();
+
+        node.on('HTML-startSecretTutoTimer', function() {
+
+            node.game.secretTutoTimer.restart();
+
+        })
+
+        node.on('HTML-recordSecretTutoTimer', function() {
+
+            var data = {};
+
+            var timeLeft = node.game.secretTutoTimer.timeLeft;
+
+            var timeSpent = 600000 - timeLeft;
+
+            var timeSpent = Math.ceil(timeSpent / 1000);
+
+            node.game.talk('RECORD TUTO TIME triggered from the html side. ' +
+            'TIME LEFT: ' + timeLeft + ' TIME SPENT: ' + timeSpent);
+
+            node.set({
+                dataType:'time',
+                tutoTime:timeSpent,
+            })
+
+        })
+
+        // ------------------------------------------------------ //
+        // ------------ RECORDING TIME SPENT ON EXP ------------- //
+        // ------------------------------------------------------ //
+
+        // 10 minutes length -> long enough to be used in any section
+        node.game.secretExpTimer = node.timer.create({
+
+            milliseconds: 6000000,
+
+            update: 1000,
+
+        })
+        node.game.secretExpTimer.start();
+
+        node.on('HTML-startSecretExpTimer', function() {
+
+            node.game.secretExpTimer.restart();
+
+        })
+
+        node.on('HTML-recordSecretExpTimer', function() {
+
+            var data = {};
+
+            var timeLeft = node.game.secretExpTimer.timeLeft;
+
+            var timeSpent = 6000000 - timeLeft;
+
+            var timeSpent = Math.ceil(timeSpent / 1000);
+
+            node.game.talk('RECORD EXP TIME triggered from the html side. ' +
+            'TIME LEFT: ' + timeLeft + ' TIME SPENT: ' + timeSpent);
+
+            node.set({
+                dataType:'time',
+                expTime:timeSpent,
+            })
+
+        })
+
+        // -------------- //
 
         node.on('startTimer', function() {
 
@@ -64,7 +217,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
             node.game.visualTimer.restart({
 
-                milliseconds: 5000,
+                milliseconds: node.game.dtd,
 
                 timeup: function() {
 
@@ -137,9 +290,14 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
             node.say('calculateScore-LOGIC', 'SERVER');
 
+            // node.say('saveToCSV-LOGIC', 'SERVER');
+
+            node.emit('HTML-recordSecretExpTimer');
+
             node.done();
 
         })
+
 
         node.on.data('LOGIC-results', function(msg) {
 
@@ -149,6 +307,14 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
 
+
+        node.on.data('LOGIC-requestDtd', function(msg) {
+
+            node.game.talk('CLIENT: LOGIC-REQUESTDTD MSG RECEIVED: ' + msg.data)
+
+            node.emit('requestDtd-HTML', msg.data)
+
+        })
 
 
         // ------------------------------------------------------------------ //
@@ -170,14 +336,14 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             this.talk('------------')
 
             node.set({
+                dataType:'decision',
                 index:msg.index,
                 answer:msg.answer,
-                correct:msg.correct
+                correct:msg.correct,
+                dtd:node.game.dtd
             })
 
             node.say('samePerson-LOGIC', 'SERVER');
-
-
 
         })
 
@@ -192,9 +358,11 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             this.talk('------------')
 
             node.set({
+                dataType:'decision',
                 index:msg.index,
                 answer:msg.answer,
-                correct:msg.correct
+                correct:msg.correct,
+                dtd:node.game.dtd
             })
 
             node.say('diffPerson-LOGIC', 'SERVER');
@@ -212,9 +380,11 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             this.talk('------------')
 
             node.set({
+                dataType:'decision',
                 index:msg.index,
                 answer:msg.answer,
-                correct:msg.correct
+                correct:msg.correct,
+                dtd:node.game.dtd
             })
 
             node.say('noAnswer-LOGIC', 'SERVER');
@@ -235,66 +405,29 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
 
+        // ----------------- //
+
+        node.on('HTML-endTuto', function() {
+
+            node.game.talk('CLIENT SIDE: DONE WITH TUTO');
+
+            node.done();
+
+        })
+
+        // ----------------- //
+
+        node.on('HTML-requestDtd', function() {
+
+            node.say('requestDtd-LOGIC', 'SERVER');
+
+        })
+
     });
 
     stager.extendStep('instructions', {
         frame: 'instructions.htm',
         cb: function() {
-            var s;
-            // Note: we need to specify node.game.settings,
-            // and not simply settings, because this code is
-            // executed on the client.
-            s = node.game.settings;
-            // Replace variables in the instructions.
-            W.setInnerHTML('coins', s.COINS);
-            W.setInnerHTML('rounds', s.ROUNDS);
-            W.setInnerHTML('exchange-rate', (s.COINS * s.EXCHANGE_RATE));
-        }
-    });
-
-    stager.extendStep('quiz', {
-        cb: function() {
-            // Modify CSS rules on the fly.
-            W.cssRule('.choicetable-left, .choicetable-right ' +
-                      '{ width: 200px !important; }');
-
-            W.cssRule('table.choicetable td { text-align: left !important; ' +
-                      'font-weight: normal; padding-left: 10px; }');
-        },
-
-        // Make a widget step.
-        widget: {
-            name: 'ChoiceManager',
-            id: 'quiz',
-            options: {
-                mainText: 'Answer the following questions to check ' +
-                          'your understanding of the game.',
-                forms: [
-                    {
-                        name: 'ChoiceTable',
-                        id: 'howmany',
-                        mainText: 'How many players are there in this game? ',
-                        choices: [ 1, 2, 3 ],
-                        correctChoice: 0
-                    },
-                    {
-                        name: 'ChoiceTable',
-                        id: 'coins',
-                        mainText: 'How many coins can you win in each round?',
-                        choices: [
-                            settings.COINS,
-                            settings.COINS + 100,
-                            settings.COINS + 25,
-                            'Not known'
-                        ],
-                        correctChoice: 0
-                    }
-                ],
-                // Settings here apply to all forms.
-                formsOptions: {
-                    shuffleChoices: true
-                }
-            }
         }
     });
 
@@ -319,7 +452,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     stager.extendStep('results', {
         frame: 'resultScreen.htm',
         cb: function() {
-            node.game.talk('--------- RESULTS ---------')
+
         }
     });
 
