@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <link rel="stylesheet" href="css/frame.css">
+    <link rel="stylesheet" href="css/survey_frame.css">
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+
+    <title>Experiment</title>
+
+</head>
+<body>
+
+    <div id=start></div>
+
+    <div class = 'wrap'>
+
+
+        <div class = 'all'>
+
+
+            <div class='frame-A'>
+
+                <div class='frame-A-0' id='frame-0'>
+
+                    <div class='frame-A-0-0 noselect' id='frame-0-0'>
+                        <p class='questionIndexText'>
+                            Question <span id=questionIndex class=qIndex></span>/<span id=numOfQuestion class=qIndex></span>
+                        </p>
+                    </div>
+
+                    <div class="container" style='opacity:0;'>
+                        <div class="progress">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 10%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class='frame-B'>
+
+                <div class='frame-B-0'>
+
+                    <div class='frame-B-0-0'>
+
+                        <div class='question gender'>
+
+                            <p>
+                                What is your gender?
+                            </p>
+
+                            <div class=buttonWrap>
+
+                                <div class=button id=female>Female</div>
+
+                                <div class=button id=male>Male</div>
+
+                                <div class=button id=lgbtqi>LGBTQI+</div>
+
+                            </div>
+
+                        </div>
+
+                        <div class='question education'>
+
+                            <p>
+                                What is your education level?
+                            </p>
+
+                            <div class=buttonWrap>
+
+                                <div class=button id=primarySchool>Primary School</div>
+
+                                <div class=button id=highSchool>High School</div>
+
+                                <div class=button id=bachelor>Bachelor's Degree</div>
+
+                                <div class=button id=master>Master's Degree</div>
+
+                                <div class=button id=phd>Ph.D. or Higher</div>
+
+                            </div>
+
+                        </div>
+
+                        <div class='question age'>
+
+                            <p>
+                                What is your age group?
+                            </p>
+
+                            <div class=buttonWrap>
+
+                                <div class=button id=18-24>18-24 years old</div>
+
+                                <div class=button id=25-34>25-34 years old</div>
+
+                                <div class=button id=35-44>35-44 years old</div>
+
+                                <div class=button id=45-54>45-54 years old</div>
+
+                                <div class=button id=55-64>55-64 years old</div>
+
+                                <div class=button id=65-74>65-74 years old</div>
+
+                                <div class=button id=75plus>75 years or older</div>
+
+                            </div>
+
+                        </div>
+
+                        <div class='question employment'>
+
+                            <p>
+                                What is your current employment status?
+                            </p>
+
+                            <div class=buttonWrap>
+
+                                <div class=button id=student>Student</div>
+
+                                <div class=button id=fullTimeEmployed>Full-Time Employed</div>
+
+                                <div class=button id=partTimeEmployed>Part-Time Employed</div>
+
+                                <div class=button id=selfEmployed>Self-employed</div>
+
+                                <div class=button id=lookingForJobs>Unemployed (looking for work)</div>
+
+                                <div class=button id=notLookingForJobs>Unemployed (not looking for work)</div>
+
+                                <div class=button id=retired>Retired</div>
+
+                            </div>
+
+                        </div>
+
+                        <div class='question location'>
+
+                            <p>
+                                Which of these best describes the general area where you live?
+                            </p>
+
+                            <div class=buttonWrap>
+
+                                <div class=button id=urban>Urban</div>
+
+                                <div class=button id=suburban>Suburban</div>
+
+                                <div class=button id=rural>Rural</div>
+
+                                <div class=button id=remote>Remote</div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class='frame-C'>
+
+                <div class='frame-C-0'>
+
+                    <div class='frame-C-0-0'>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+    <div id=end></div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="js/surveyHelper.js"></script>
+    <script src="js/surveyButtons.js"></script>
+    <script src="js/survey1.js"></script>
+
+</body>
+</html>

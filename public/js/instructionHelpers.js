@@ -148,7 +148,7 @@ window.onload = function() {
                 index = 1;
             }
 
-            if(picture.fastForwardCounter > 70) {
+            if(picture.fastForwardCounter > 50) {
                 picture.hide(3)
                 setTimeout(()=>{
                     picture.fastForwardActive = false;
@@ -355,8 +355,8 @@ window.onload = function() {
 
             listener.b5 = false;
 
-            console.log('node.emit(stopTutoTimer) b5');
-            node.emit('stopTutoTimer');
+            // console.log('node.emit(stopTutoTimer) b5');
+            // node.emit('stopTutoTimer');
 
 
             button.hide();
@@ -375,7 +375,7 @@ window.onload = function() {
 
             setTimeout(()=>{
                 box.button.show('B-6');
-            }, 2750)
+            }, 4750)
 
         }
 
@@ -418,7 +418,7 @@ window.onload = function() {
 
             $('.frame-A').css({'opacity':'0'})
             setTimeout(()=>{
-                $('.frame-A').css({'transform':'scale(0)', 'margin-bottom':'-255px'})
+                $('.frame-A').css({'transform':'scale(0)', 'margin-bottom':'-345px'})
             }, 1000)
 
             setTimeout(()=>{
@@ -465,8 +465,8 @@ window.onload = function() {
 
             listener.b5 = false;
 
-            console.log('node.emit(stopTutoTimer) b5');
-            node.emit('stopTutoTimer');
+            // console.log('node.emit(stopTutoTimer) b5');
+            // node.emit('stopTutoTimer');
             // timer.stop = true;
 
             button.hide();
@@ -485,7 +485,7 @@ window.onload = function() {
 
             setTimeout(()=>{
                 box.button.show('B-6');
-            }, 2750)
+            }, 4750)
 
         }
 
@@ -530,7 +530,7 @@ window.onload = function() {
 
             $('.frame-A').css({'opacity':'0'})
             setTimeout(()=>{
-                $('.frame-A').css({'transform':'scale(0)', 'margin-bottom':'-255px'})
+                $('.frame-A').css({'transform':'scale(0)', 'margin-bottom':'-345px'})
             }, 1000)
 
             setTimeout(()=>{
@@ -631,9 +631,12 @@ window.onload = function() {
 
     });
 
-    $('#btn-C-6').click(function() {
+
+    $('#btn-C-7').click(function() {
 
         box.transition('C-6', '', 0, 0, 1, 750);
+        box.transition('C-7', '', 0, 0, 1, 750);
+        box.transition('C-8', '', 0, 0, 1, 750);
 
         box.flush();
 
@@ -641,6 +644,12 @@ window.onload = function() {
 
         console.log('node.emit(HTML-endTuto)');
         node.emit('HTML-endTuto');
+
+    });
+
+    $('#btn-C-8').click(function() {
+
+        window.location.reload(false);
 
     });
 
@@ -671,7 +680,7 @@ window.onload = function() {
 
             setTimeout(()=>{
                 box.button.show('B-6');
-            }, 2750)
+            }, 4750)
 
         }
 
@@ -708,7 +717,7 @@ window.onload = function() {
 
             $('.frame-A').css({'opacity':'0'})
             setTimeout(()=>{
-                $('.frame-A').css({'transform':'scale(0)', 'margin-bottom':'-255px'})
+                $('.frame-A').css({'transform':'scale(0)', 'margin-bottom':'-345px'})
             }, 1000)
 
             setTimeout(()=>{

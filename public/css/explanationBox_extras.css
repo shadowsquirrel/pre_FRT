@@ -40,7 +40,7 @@
     color: #e63333;
     font-size: 45px;
     top: 48px;
-    margin-left: -255px;
+    margin-left: -275px;
     width: 280px;
     transition: 0.3s;
     z-index: -10;
@@ -61,4 +61,16 @@
 {
     height: 35px;
     margin-top: -8px;
+}
+.destroyBox
+{
+    width:0px;
+    background-color: transparent;
+    border: transparent;
+    box-shadow: 0 0 transparent;
+}
+.specialButton2
+{
+    width: 378px;
+    border-radius: 100px;
 }

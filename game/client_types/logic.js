@@ -44,6 +44,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         node.game.dtdList = J.shuffle([5000, 8000, 10000]);
 
+        console.log('SHUFFLED DTDLIST: ' + node.game.dtdList);
+
         node.game.dtd = node.game.dtdList[0];
 
         console.log('DECISION TIME DURATION IS DETERMINED TO BE: ' +
@@ -89,12 +91,12 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
 
         node.game.pairIndexList = [
-            1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29
+            1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30
             // 0,0,0,1,1,1,0,0,1,1 ,1 ,1 ,0 ,0, 0 ,1 ,1 ,1 ,0 ,0 ,0 ,1 ,1 ,1 ,0 ,1 ,1 ,1 ,0
         ]
 
         node.game.correctAnswerList = [
-            0,0,0,1,1,1,0,0,1,1 ,1 ,1 ,0 ,0, 0 ,1 ,1 ,1 ,0 ,0 ,0 ,1 ,1 ,1 ,0 ,1 ,1 ,1 ,0
+            0,0,0,1,1,1,0,0,1,1 ,1 ,1 ,0 ,0, 0 ,1 ,1 ,1 ,0 ,0 ,0 ,1 ,1 ,1 ,0 ,1 ,1 ,1 ,0, 1
             // 0,1,0,1,0,1,0,1,0,1 ,0 ,1 ,0 ,1, 1, 0 ,1 ,0 ,0 ,1 ,0 ,1 ,0 ,0
         ]
 
@@ -438,6 +440,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 'player',
                 'tutoTime',
                 'expTime',
+                'surveyTime'
             ],
 
             flattenByGroup:'player',
@@ -462,6 +465,33 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         });
 
+
+        memory.view('score').save('testScore.csv', {
+
+            header: [
+                'player',
+                'score'
+            ],
+
+            keepUpdated: true
+
+        })
+
+
+        memory.view('age').save('survey.csv', {
+
+            header: [
+                'player',
+                'age',
+                'education',
+                'employment',
+                'gender',
+                'location'
+            ],
+
+            keepUpdated: true
+
+        })
 
         // -------------- //
 

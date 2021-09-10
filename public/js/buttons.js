@@ -18,7 +18,7 @@ $('#btn-A-2').click(function() {
 
     box.transition('A-2', 'A-3', 1, 1, 1, 750);
 
-    title.update.textColor(-6000, false, 50);
+    // title.update.textColor(-6000, false, 50);
 
     setTimeout(()=>{
         box.button.show('A-3');
@@ -30,7 +30,7 @@ $('#btn-A-3').click(function() {
 
     box.transition('A-3', 'A-6', 1, 1, 1, 750);
 
-    title.update.textColor(-6000, false, 50);
+    // title.update.textColor(-6000, false, 50);
 
     setTimeout(()=>{
         box.button.show('A-6');
@@ -224,10 +224,15 @@ $('#btn-C-4').click(function() {
 
 $('#btn-C-5').click(function() {
 
+    $('#box-C-5').css({'transition':'0.5s', 'margin-top':'-85px'});
+
     box.transition('C-5', 'C-6', 1, 1, 1, 750);
+    box.transition('', 'C-7', 1, 1, 1, 750);
+    box.transition('', 'C-8', 1, 1, 1, 750);
 
     setTimeout(()=>{
-        box.button.show('C-6');
+        box.button.show('C-7');
+        box.button.show('C-8');
     }, 2750)
 
 });

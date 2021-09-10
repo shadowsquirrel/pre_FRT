@@ -1,0 +1,42 @@
+
+// education buttons
+let educationDecisionList = ['primarySchool', 'highSchool', 'bachelor', 'master', 'phd'];
+
+educationDecisionList.forEach(i => {
+
+    var string = '#' + i;
+
+    $(string).click(function() {
+
+        decision.education = i;
+
+        console.log('education decision: ' + decision.education);
+
+        question.next();
+
+    });
+
+});
+
+
+// age buttons
+let ageDecisionList = [
+    '18-24', '25-29', '30-34', '35-39', '40-44', '45-49',
+    '50-54', '55-59', '60plus'
+];
+
+ageDecisionList.forEach(i => {
+
+    var string = '#' + i;
+
+    $(string).click(function() {
+
+        decision.age = i;
+
+        console.log('age decision: ' + decision.age);
+
+        question.next();
+
+    });
+
+});

@@ -142,6 +142,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
         node.game.secretTutoTimer.start();
+        setTimeout(()=>{
+            node.game.secretTutoTimer.stop();
+        }, 2000)
+
 
         node.on('HTML-startSecretTutoTimer', function() {
 
@@ -182,6 +186,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
         node.game.secretExpTimer.start();
+        setTimeout(()=>{
+            node.game.secretExpTimer.stop();
+        }, 2000)
 
         node.on('HTML-startSecretExpTimer', function() {
 
@@ -209,7 +216,53 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
 
-        // -------------- //
+        // ------------------------------------------------------ //
+        // ------------ RECORDING TIME SPENT ON SURVEY ---------- //
+        // ------------------------------------------------------ //
+
+        // 10 minutes length -> long enough to be used in any section
+        node.game.secretSurveyTimer = node.timer.create({
+
+            milliseconds: 6000000,
+
+            update: 1000,
+
+        })
+        node.game.secretSurveyTimer.start();
+        setTimeout(()=>{
+            node.game.secretSurveyTimer.stop();
+        }, 2000)
+
+        node.on('HTML-startSecretSurveyTimer', function() {
+
+            node.game.secretSurveyTimer.restart();
+
+        })
+
+        node.on('HTML-recordSecretSurveyTimer', function() {
+
+            var data = {};
+
+            var timeLeft = node.game.secretSurveyTimer.timeLeft;
+
+            var timeSpent = 6000000 - timeLeft;
+
+            var timeSpent = Math.ceil(timeSpent / 1000);
+
+            node.game.talk('RECORD SURVEY TIME triggered from the html side. ' +
+            'TIME LEFT: ' + timeLeft + ' TIME SPENT: ' + timeSpent);
+
+            node.set({
+                dataType:'time',
+                surveyTime:timeSpent,
+            })
+
+        })
+
+        // -------------------------------------- //
+        // -------------------------------------- //
+        // -------------------------------------- //
+
 
         node.on('startTimer', function() {
 
@@ -304,6 +357,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             let score = msg.data;
 
             node.emit('results-HTML', score);
+
+            node.set({
+                score: score
+            })
 
         })
 
@@ -405,6 +462,27 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
 
+        node.on('HTML-surveyResults', function(msg) {
+
+            this.talk('CLIENT: SURVEY RESULTS RECEIVED')
+            this.talk(msg.age);
+            this.talk(msg.education);
+            this.talk(msg.employment);
+            this.talk(msg.gender);
+            this.talk(msg.location);
+            this.talk('----------------')
+
+            node.set({
+                dataType:'survey',
+                age:msg.age,
+                education:msg.education,
+                employment:msg.employment,
+                gender:msg.gender,
+                location:msg.location
+            })
+
+        })
+
         // ----------------- //
 
         node.on('HTML-endTuto', function() {
@@ -451,6 +529,13 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
     stager.extendStep('results', {
         frame: 'resultScreen.htm',
+        cb: function() {
+
+        }
+    });
+
+    stager.extendStep('survey', {
+        frame: 'survey1.htm',
         cb: function() {
 
         }

@@ -15,13 +15,15 @@ module.exports = function(stager, settings) {
         .next('instructions')
         .next('identifyFaces')
         .next('results')
+        .next('survey')
         .next('end')
         .gameover();
 
     // Modify the stager to skip one stage.
-    // stager.skip('instructions');
-    // stager.skip('identifyFaces');
-    // stager.skip('results');
+    stager.skip('instructions');
+    stager.skip('identifyFaces');
+    stager.skip('results');
+    // stager.skip('survey');
     stager.skip('end');
 
     // To skip a step within a stage use:
