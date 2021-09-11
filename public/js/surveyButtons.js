@@ -1,6 +1,6 @@
 
 // gender buttons
-let genderDecisionList = ['female', 'male', 'lgbtqi'];
+let genderDecisionList = ['female', 'male', 'diverse'];
 
 genderDecisionList.forEach(i => {
 
@@ -21,7 +21,7 @@ genderDecisionList.forEach(i => {
 
 // education buttons
 let educationDecisionList = [
-    'primarySchool', 'highSchool', 'bachelor', 'master', 'phd'
+    'primarySchool', 'someCollegeClasses', 'highSchool', 'bachelor', 'master', 'phd'
 ];
 
 educationDecisionList.forEach(i => {
