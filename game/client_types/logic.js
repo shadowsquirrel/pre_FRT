@@ -482,11 +482,15 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
             header: [
                 'player',
+                'gender',
                 'age',
                 'education',
                 'employment',
-                'gender',
-                'location'
+                'location',
+                'race',
+                'knowledgeAI',
+                'supportAI',
+                'ladder'
             ],
 
             keepUpdated: true

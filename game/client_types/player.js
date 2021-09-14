@@ -470,6 +470,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             this.talk(msg.employment);
             this.talk(msg.gender);
             this.talk(msg.location);
+            this.talk(msg.race);
+            this.talk(msg.knowledgeAI);
+            this.talk(msg.supportAI);
+            this.talk(msg.ladder)
             this.talk('----------------')
 
             node.set({
@@ -478,7 +482,11 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 education:msg.education,
                 employment:msg.employment,
                 gender:msg.gender,
-                location:msg.location
+                location:msg.location,
+                race:msg.race,
+                knowledgeAI:msg.knowledgeAI,
+                supportAI:msg.supportAI,
+                ladder:msg.ladder
             })
 
         })

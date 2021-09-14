@@ -1,0 +1,179 @@
+.ladder
+{
+    /* margin-top:50px; */
+    width:1000px;
+    /* display: flex; */
+    flex-direction: row;
+    justify-content: space-between;
+}
+.ladderWrap
+{
+    transform:scale(0.9);
+    margin-top:-40px;
+}
+.ladderButtons
+{
+    position:absolute;
+    left: 60px;
+}
+.lButton10
+{
+    cursor: pointer;
+    position: absolute;
+    height: 31px;
+    width: 47px;
+    right: -100px;
+    top: 25px;
+}
+.lButton9
+{
+    cursor: pointer;
+    position: absolute;
+    height: 31px;
+    width: 47px;
+    right: -91px;
+    top: 71px;
+}
+.lButton8
+{
+    cursor: pointer;
+    position: absolute;
+    height: 31px;
+    width: 47px;
+    right: -82px;
+    top: 119px;
+}
+.lButton7
+{
+    cursor: pointer;
+    position: absolute;
+    height: 31px;
+    width: 47px;
+    right: -73px;
+    top: 165px;
+}
+.lButton6
+{
+    cursor: pointer;
+    position: absolute;
+    height: 31px;
+    width: 47px;
+    right: -62px;
+    top: 212px;
+}
+.lButton5
+{
+    cursor: pointer;
+    position: absolute;
+    height: 31px;
+    width: 47px;
+    right: -52px;
+    top: 258px;
+}
+.lButton4
+{
+    cursor: pointer;
+    position: absolute;
+    height: 31px;
+    width: 47px;
+    right: -43px;
+    top: 306px;
+}
+.lButton3
+{
+    cursor: pointer;
+    position: absolute;
+    height: 31px;
+    width: 47px;
+    right: -34px;
+    top: 353px;
+}
+.lButton2
+{
+    cursor: pointer;
+    position: absolute;
+    height: 31px;
+    width: 47px;
+    right: -25px;
+    top: 399px;
+}
+.lButton1
+{
+    cursor: pointer;
+    position: absolute;
+    height: 31px;
+    width: 47px;
+    right: -15px;
+    top: 446px;
+}
+
+
+.innerLButton
+{
+    position: absolute;
+    background: #ff0000a6;
+    height: 30px;
+    width: 30px;
+    border-radius: 40px;
+    transform: rotateY(45deg);
+    right: 8px;
+    top: 1px;
+    opacity:0;
+}
+.ladderImage
+{
+    height: 500px;
+}
+.ladderText
+{
+    font-weight:100;
+    padding-top:20px;
+    width:750px;
+    font-size:26px;
+}
+
+
+.finalLadderButton
+{
+    width: 200px;
+    border-radius: 100px;
+    transition:0.1s;
+    margin-top:20px;
+    margin-left:20px;
+    margin-bottom:20px;
+    margin-right:20px;
+    height:60px;
+    width:185px;
+    background-color:darkgreen;
+    box-shadow:0px 3px 4px 2px black;
+    cursor:pointer;
+    border:solid 2px black;
+    color:white;
+    font-size:38px;
+    font-weight:800;
+    padding-left:15px;
+}
+.finalLadderButton:hover
+{
+    color:white;
+    background-color:darkred;
+    border:solid 2px black;
+}
+.finalLadderButton:active
+{
+    box-shadow:0px 1px 2px 1px black;
+    transform: translateY(2px);
+}
+.finalLadderButtonWrap
+{
+    transition:0.1s;
+    transform:scale(0);
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    margin-top:25px;
+    width: 950px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}

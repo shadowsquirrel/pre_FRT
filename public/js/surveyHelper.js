@@ -91,7 +91,11 @@ question.switch = function(class1, class2) {
     // while question div is hidden change the question
     setTimeout(()=>{
         $(class1).css({'display':'none'});
-        $(class2).css({'display':'block', 'opacity':'0'});
+        if(class2 === '.ladder') {
+            $(class2).css({'display':'flex', 'opacity':'0'});
+        } else {
+            $(class2).css({'display':'block', 'opacity':'0'});
+        }            
         setTimeout(()=>{
             $(class2).css({'transition':'0.2s', 'opacity':'1'});
         }, 50)
@@ -153,10 +157,14 @@ experiment.generate = function() {
 
     order.active = [
         'gender',
-        'education',
         'age',
+        'race',
+        'education',
         'employment',
-        'location'
+        'location',
+        'knowledgeAI',
+        'supportAI',
+        'ladder'
     ];
 
     $('#numOfQuestion').html(order.active.length);

@@ -1,216 +1,3 @@
-
-// gender buttons
-let genderDecisionList = ['female', 'male', 'diverse'];
-
-genderDecisionList.forEach(i => {
-
-    var string = '#' + i;
-
-    $(string).click(function() {
-
-        var index = genderDecisionList.indexOf(i);
-
-        console.log('gender index: ' + index);
-
-        decision.gender = index;
-
-        console.log('gender decision: ' + decision.gender);
-
-        question.next();
-
-    });
-
-});
-
-
-// education buttons
-let educationDecisionList = [
-    'primarySchool', 'highSchool', 'someCollegeClasses', 'associatedDegree',
-    'bachelor', 'master', 'professional', 'phd'
-];
-
-educationDecisionList.forEach(i => {
-
-    var string = '#' + i;
-
-    $(string).click(function() {
-
-        var index = educationDecisionList.indexOf(i);
-
-        console.log('education index: ' + index);
-
-        decision.education = index;
-
-        console.log('education decision: ' + decision.education);
-
-        question.next();
-
-    });
-
-});
-
-
-// age buttons
-let ageDecisionList = [
-    '18-24', '25-34', '35-44', '45-54', '55-64', '65-74', '75plus'
-];
-
-ageDecisionList.forEach(i => {
-
-    var string = '#' + i;
-
-    $(string).click(function() {
-
-        var index = ageDecisionList.indexOf(i);
-
-        console.log('age index: ' + index);
-
-        decision.age = index;
-
-        console.log('age decision: ' + decision.age);
-
-        question.next();
-
-    });
-
-});
-
-
-// employment buttons
-let employmentDecisionList = [
-    'student', 'fullTimeEmployed', 'partTimeEmployed', 'selfEmployed',
-    'lookingForJobs', 'notLookingForJobs', 'retired', 'homemaker', 'unableToWork'
-];
-
-employmentDecisionList.forEach(i => {
-
-    var string = '#' + i;
-
-    $(string).click(function() {
-
-        var index = employmentDecisionList.indexOf(i);
-
-        console.log('employment index: ' + index);
-
-        decision.employment = index;
-
-        console.log('employment decision: ' + decision.employment);
-
-        question.next();
-
-    });
-
-});
-
-
-// location buttons
-let locationDecisionList = [
-    'urban', 'suburban', 'rural', 'remote'
-];
-
-locationDecisionList.forEach(i => {
-
-    var string = '#' + i;
-
-    $(string).click(function() {
-
-        var index = locationDecisionList.indexOf(i);
-
-        console.log('location index: ' + index);
-
-        decision.location = index;
-
-        console.log('location decision: ' + decision.location);
-
-        question.next();
-
-    });
-
-});
-
-
-// race buttons
-let raceDecisionList = [
-    'alaska', 'asian', 'black', 'pacific', 'white'
-];
-
-raceDecisionList.forEach(i => {
-
-    var string = '#' + i;
-
-    $(string).click(function() {
-
-        var index = raceDecisionList.indexOf(i);
-
-        console.log('race index: ' + index);
-
-        decision.race = index;
-
-        console.log('race decision: ' + decision.race);
-
-        question.next();
-
-    });
-
-});
-
-
-// AI knowledge buttons
-let knowledgeAIDecisionList = [
-    'veryLow', 'low', 'moderate', 'high', 'veryHigh'
-];
-
-knowledgeAIDecisionList.forEach(i => {
-
-    var string = '#' + i;
-
-    $(string).click(function() {
-
-        var index = knowledgeAIDecisionList.indexOf(i);
-
-        console.log('knowledgeAI index: ' + index);
-
-        decision.knowledgeAI = index;
-
-        console.log('knowledgeAI decision: ' + decision.knowledgeAI);
-
-        question.next();
-
-    });
-
-});
-
-
-// AI support buttons
-let supportAIDecisionList = [
-    'stronglySupport', 'somewhatSupport', 'neitherNor', 'somewhatOppose',
-    'stronglyOppose'
-];
-
-supportAIDecisionList.forEach(i => {
-
-    var string = '#' + i;
-
-    $(string).click(function() {
-
-        var index = supportAIDecisionList.indexOf(i);
-
-        index = 5 - index;
-
-        console.log('supportAI index: ' + index);
-
-        decision.supportAI = index;
-
-        console.log('supportAI decision: ' + decision.supportAI);
-
-        question.next();
-
-    });
-
-});
-
-// -------------------------------------- //
-
 let ladder = {};
 
 ladder.someLadderClicked = false;
@@ -255,10 +42,10 @@ $('.ten').click(function() {
 
         if(!ladder.cursorOn) {
             $('.lButton9, .lButton8, .lButton7, .lButton6, .lButton5, .lButton4, .lButton3, .lButton2, .lButton1').css({'cursor':'default'})
-            $('.finalLadderButtonWrap').css({'transform':'scale(1)'});
+            $('.buttonWrap').css({'transform':'scale(1)'});
         } else {
             $('.lButton10, .lButton9, .lButton8, .lButton7, .lButton6, .lButton5, .lButton4, .lButton3, .lButton2, .lButton1').css({'cursor':'pointer'})
-            $('.finalLadderButtonWrap').css({'transform':'scale(0)'});
+            $('.buttonWrap').css({'transform':'scale(0)'});
         }
 
     }
@@ -304,10 +91,10 @@ $('.nine').click(function() {
 
         if(!ladder.cursorOn) {
             $('.lButton10, .lButton8, .lButton7, .lButton6, .lButton5, .lButton4, .lButton3, .lButton2, .lButton1').css({'cursor':'default'})
-            $('.finalLadderButtonWrap').css({'transform':'scale(1)'});
+            $('.buttonWrap').css({'transform':'scale(1)'});
         } else {
             $('.lButton10, .lButton9, .lButton9, .lButton8, .lButton7, .lButton6, .lButton5, .lButton4, .lButton3, .lButton2, .lButton1').css({'cursor':'pointer'})
-            $('.finalLadderButtonWrap').css({'transform':'scale(0)'});
+            $('.buttonWrap').css({'transform':'scale(0)'});
         }
 
     }
@@ -353,10 +140,10 @@ $('.eight').click(function() {
 
         if(!ladder.cursorOn) {
             $('.lButton10, .lButton9, .lButton7, .lButton6, .lButton5, .lButton4, .lButton3, .lButton2, .lButton1').css({'cursor':'default'})
-            $('.finalLadderButtonWrap').css({'transform':'scale(1)'});
+            $('.buttonWrap').css({'transform':'scale(1)'});
         } else {
             $('.lButton10, .lButton9, .lButton9, .lButton8, .lButton7, .lButton6, .lButton5, .lButton4, .lButton3, .lButton2, .lButton1').css({'cursor':'pointer'})
-            $('.finalLadderButtonWrap').css({'transform':'scale(0)'});
+            $('.buttonWrap').css({'transform':'scale(0)'});
         }
 
     }
@@ -403,10 +190,10 @@ $('.seven').click(function() {
 
         if(!ladder.cursorOn) {
             $('.lButton10, .lButton9, .lButton8, .lButton6, .lButton5, .lButton4, .lButton3, .lButton2, .lButton1').css({'cursor':'default'})
-            $('.finalLadderButtonWrap').css({'transform':'scale(1)'});
+            $('.buttonWrap').css({'transform':'scale(1)'});
         } else {
             $('.lButton10, .lButton9, .lButton9, .lButton8, .lButton7, .lButton6, .lButton5, .lButton4, .lButton3, .lButton2, .lButton1').css({'cursor':'pointer'})
-            $('.finalLadderButtonWrap').css({'transform':'scale(0)'});
+            $('.buttonWrap').css({'transform':'scale(0)'});
         }
 
     }
@@ -453,10 +240,10 @@ $('.six').click(function() {
 
         if(!ladder.cursorOn) {
             $('.lButton10, .lButton9, .lButton8, .lButton7, .lButton5, .lButton4, .lButton3, .lButton2, .lButton1').css({'cursor':'default'})
-            $('.finalLadderButtonWrap').css({'transform':'scale(1)'});
+            $('.buttonWrap').css({'transform':'scale(1)'});
         } else {
             $('.lButton10, .lButton9, .lButton9, .lButton8, .lButton7, .lButton6, .lButton5, .lButton4, .lButton3, .lButton2, .lButton1').css({'cursor':'pointer'})
-            $('.finalLadderButtonWrap').css({'transform':'scale(0)'});
+            $('.buttonWrap').css({'transform':'scale(0)'});
         }
 
     }
@@ -503,10 +290,10 @@ $('.five').click(function() {
 
         if(!ladder.cursorOn) {
             $('.lButton10, .lButton9, .lButton8, .lButton7, .lButton6, .lButton4, .lButton3, .lButton2, .lButton1').css({'cursor':'default'})
-            $('.finalLadderButtonWrap').css({'transform':'scale(1)'});
+            $('.buttonWrap').css({'transform':'scale(1)'});
         } else {
             $('.lButton10, .lButton9, .lButton9, .lButton8, .lButton7, .lButton6, .lButton5, .lButton4, .lButton3, .lButton2, .lButton1').css({'cursor':'pointer'})
-            $('.finalLadderButtonWrap').css({'transform':'scale(0)'});
+            $('.buttonWrap').css({'transform':'scale(0)'});
         }
 
     }
@@ -553,10 +340,10 @@ $('.four').click(function() {
 
         if(!ladder.cursorOn) {
             $('.lButton10, .lButton9, .lButton8, .lButton7, .lButton6, .lButton5, .lButton3, .lButton2, .lButton1').css({'cursor':'default'})
-            $('.finalLadderButtonWrap').css({'transform':'scale(1)'});
+            $('.buttonWrap').css({'transform':'scale(1)'});
         } else {
             $('.lButton10, .lButton9, .lButton9, .lButton8, .lButton7, .lButton6, .lButton5, .lButton4, .lButton3, .lButton2, .lButton1').css({'cursor':'pointer'})
-            $('.finalLadderButtonWrap').css({'transform':'scale(0)'});
+            $('.buttonWrap').css({'transform':'scale(0)'});
         }
 
     }
@@ -603,10 +390,10 @@ $('.three').click(function() {
 
         if(!ladder.cursorOn) {
             $('.lButton10, .lButton9, .lButton8, .lButton7, .lButton6, .lButton5, .lButton4, .lButton2, .lButton1').css({'cursor':'default'})
-            $('.finalLadderButtonWrap').css({'transform':'scale(1)'});
+            $('.buttonWrap').css({'transform':'scale(1)'});
         } else {
             $('.lButton10, .lButton9, .lButton9, .lButton8, .lButton7, .lButton6, .lButton5, .lButton4, .lButton3, .lButton2, .lButton1').css({'cursor':'pointer'})
-            $('.finalLadderButtonWrap').css({'transform':'scale(0)'});
+            $('.buttonWrap').css({'transform':'scale(0)'});
         }
 
     }
@@ -653,10 +440,10 @@ $('.two').click(function() {
 
         if(!ladder.cursorOn) {
             $('.lButton10, .lButton9, .lButton8, .lButton7, .lButton6, .lButton5, .lButton4, .lButton3, .lButton1').css({'cursor':'default'})
-            $('.finalLadderButtonWrap').css({'transform':'scale(1)'});
+            $('.buttonWrap').css({'transform':'scale(1)'});
         } else {
             $('.lButton10, .lButton9, .lButton9, .lButton8, .lButton7, .lButton6, .lButton5, .lButton4, .lButton3, .lButton2, .lButton1').css({'cursor':'pointer'})
-            $('.finalLadderButtonWrap').css({'transform':'scale(0)'});
+            $('.buttonWrap').css({'transform':'scale(0)'});
         }
 
     }
@@ -703,10 +490,10 @@ $('.one').click(function() {
 
         if(!ladder.cursorOn) {
             $('.lButton10, .lButton9, .lButton8, .lButton7, .lButton6, .lButton5, .lButton4, .lButton3, .lButton2').css({'cursor':'default'})
-            $('.finalLadderButtonWrap').css({'transform':'scale(1)'});
+            $('.buttonWrap').css({'transform':'scale(1)'});
         } else {
             $('.lButton10, .lButton9, .lButton9, .lButton8, .lButton7, .lButton6, .lButton5, .lButton4, .lButton3, .lButton2, .lButton1').css({'cursor':'pointer'})
-            $('.finalLadderButtonWrap').css({'transform':'scale(0)'});
+            $('.buttonWrap').css({'transform':'scale(0)'});
         }
 
     }
