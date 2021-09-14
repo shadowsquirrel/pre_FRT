@@ -47,6 +47,16 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         W.setHeaderPosition('right');
 
+        W.setHeight = function(val) {
+            var myframe = W.gid('ng_mainframe');
+            var myHeight = val + 'px';
+            myframe.style.minHeight = myHeight;
+        };
+
+        node.on('setHeight', function(val) {
+            W.setHeight(val);
+        });
+
 
         // for debug
         this.talk = function(msg){
@@ -65,7 +75,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
             node.game.dtd = msg.data;
 
-            node.game.talk('CLIENT: DTD RECEIVED FROM LOGIC: ' + node.game.dtd);
+            node.game.talk('EXPERIMENT RELATED - CLIENT: DTD RECEIVED FROM LOGIC: ' + node.game.dtd);
 
         })
 
@@ -235,6 +245,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         node.on('HTML-startSecretSurveyTimer', function() {
 
+            this.talk('CLIENT: SUBJECT SURVEY TIMER STARTS')
+
             node.game.secretSurveyTimer.restart();
 
         })
@@ -255,6 +267,51 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             node.set({
                 dataType:'time',
                 surveyTime:timeSpent,
+            })
+
+        })
+
+        // ------------------------------------------------------ //
+        // ------------ RECORDING TIME SPENT ON SURVEY 2 -------- //
+        // ------------------------------------------------------ //
+
+        // 10 minutes length -> long enough to be used in any section
+        node.game.secretSurvey2Timer = node.timer.create({
+
+            milliseconds: 6000000,
+
+            update: 1000,
+
+        })
+        node.game.secretSurvey2Timer.start();
+        setTimeout(()=>{
+            node.game.secretSurvey2Timer.stop();
+        }, 2000)
+
+        node.on('HTML-startSecretSurvey2Timer', function() {
+
+            this.talk('CLIENT: EXPERIENCE SURVEY TIMER STARTS')
+
+            node.game.secretSurvey2Timer.restart();
+
+        })
+
+        node.on('HTML-recordSecretSurvey2Timer', function() {
+
+            var data = {};
+
+            var timeLeft = node.game.secretSurvey2Timer.timeLeft;
+
+            var timeSpent = 6000000 - timeLeft;
+
+            var timeSpent = Math.ceil(timeSpent / 1000);
+
+            node.game.talk('RECORD SURVEY 2 TIME triggered from the html side. ' +
+            'TIME LEFT: ' + timeLeft + ' TIME SPENT: ' + timeSpent);
+
+            node.set({
+                dataType:'time',
+                surveyTime2:timeSpent,
             })
 
         })
@@ -311,6 +368,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // ------------------------------------------------------------------ //
         // ------------------------------------------------------------------ //
 
+        // asks for the next picture from LOGIC
         node.on.data('LOGIC-nextPicture', function(msg) {
 
             node.game.talk('inside LOGIC-nextPicture')
@@ -323,7 +381,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
 
-
+        // asks for the first picture from LOGIC
         node.on.data('LOGIC-firstPicture', function(msg) {
 
             node.game.talk('inside LOGIC-firstPicture')
@@ -336,14 +394,17 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
 
-
+        // called by logic by either:
+        // - diffperson-LOGIC
+        // - samePerson-LOGIC
+        // - noAnswer-LOGIC
+        // when there are no more facial image pairs to ask
+        // also triggers LOGIC side calculate score to calculate score in LOGIC side
         node.on.data('LOGIC-finishTest', function() {
 
             node.game.talk('CLIENT SIDE: DONE WITH FACE TEST');
 
             node.say('calculateScore-LOGIC', 'SERVER');
-
-            // node.say('saveToCSV-LOGIC', 'SERVER');
 
             node.emit('HTML-recordSecretExpTimer');
 
@@ -351,7 +412,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
 
-
+        // the calculator score from the experiment is requested from LOGIC
+        // at any time by CLIENT upon reqiest to be saved to memory or for something else
         node.on.data('LOGIC-results', function(msg) {
 
             let score = msg.data;
@@ -364,10 +426,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
 
-
         node.on.data('LOGIC-requestDtd', function(msg) {
 
-            node.game.talk('CLIENT: LOGIC-REQUESTDTD MSG RECEIVED: ' + msg.data)
+            node.game.talk('CLIENT: DTD RECEIVED FROM LOGIC ' + msg.data)
 
             node.emit('requestDtd-HTML', msg.data)
 
@@ -381,6 +442,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // -------------------                          --------------------- //
         // ------------------------------------------------------------------ //
         // ------------------------------------------------------------------ //
+
+        // ---- decision listener and recorder ---- //
 
         node.on('HTML-samePerson', function(msg) {
 
@@ -448,6 +511,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
 
+
+        // ---- first index listener and requester ---- //
+
         node.on('HTML-requestFirstIndex', function() {
 
             this.talk('FIRST INDEX REQUEST RECEIVED FROM HTML TO CLIENT SIDE')
@@ -456,12 +522,15 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
 
+        // activates logic listener to active client LOGIC-result
+        // to record result data into memory upon request from HTML side
         node.on('HTML-results', function() {
 
             node.say('results-LOGIC', 'SERVER');
 
         })
 
+        // survey 1
         node.on('HTML-surveyResults', function(msg) {
 
             this.talk('CLIENT: SURVEY RESULTS RECEIVED')
@@ -476,7 +545,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             this.talk(msg.ladder)
             this.talk('----------------')
 
-            node.set({
+            node.done({
                 dataType:'survey',
                 age:msg.age,
                 education:msg.education,
@@ -491,7 +560,49 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
 
-        // ----------------- //
+        // survey 2
+        node.on('HTML-survey2Results', function(msg) {
+
+            this.talk('CLIENT: SURVEY 2 RESULTS RECEIVED')
+            this.talk('tutorial ' + msg.tutorial);
+            this.talk('enought time ' + msg.enoughTime);
+            this.talk('need more time ' + msg.needMoreTime);
+            this.talk('decision screen ' + msg.decisionScreen);
+            this.talk('image size ' + msg.imageSize);
+            this.talk('button placement ' + msg.buttonPlacement);
+            this.talk('num of images tired ' + msg.numOfImages_tired);
+            this.talk('num of images bored ' + msg.numOfImages_bored);
+            this.talk('display time duration ' + msg.dtd)
+            this.talk('----------------')
+
+            node.done({
+                tutorial:msg.tutorial,
+                enoughTime:msg.enoughTime,
+                needMoreTime:msg.needMoreTime,
+                decisionScreen:msg.decisionScreen,
+                imageSize:msg.imageSize,
+                buttonPlacement:msg.buttonPlacement,
+                numOfImages_tired:msg.numOfImages_tired,
+                numOfImages_bored:msg.numOfImages_bored,
+                dtd:msg.dtd
+            })
+
+        })
+
+        // request decision time duration upon request by html
+        // use at will for memory recording at different stages
+        node.on('HTML-requestDtd', function() {
+
+            this.talk('CLIENT: HTML REQUESTED DTD')
+
+            node.say('requestDtd-LOGIC', 'SERVER');
+
+        })
+
+
+        // ---------------------------------- //
+        // -------- HTML --> CLIENT --------- //
+        // ---------------------------------- //
 
         node.on('HTML-endTuto', function() {
 
@@ -501,11 +612,11 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
 
-        // ----------------- //
+        node.on('HTML-endResults', function() {
 
-        node.on('HTML-requestDtd', function() {
+            node.game.talk('CLIENT SIDE: DONE WITH RESULTS');
 
-            node.say('requestDtd-LOGIC', 'SERVER');
+            node.done();
 
         })
 
@@ -514,6 +625,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     stager.extendStep('instructions', {
         frame: 'instructions.htm',
         cb: function() {
+            this.talk('------- INSTRUCTION ---------')
         }
     });
 
@@ -526,7 +638,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         },
 
         cb: function() {
-
+            this.talk('--------- EXPERIMENT ----------')
         },
 
         done: function() {
@@ -535,17 +647,24 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
     });
 
-    stager.extendStep('results', {
-        frame: 'resultScreen.htm',
+    stager.extendStep('survey2', {
+        frame: 'survey2.htm',
         cb: function() {
-
+            this.talk('--------- EXPERIENCE SURVEY ----------')
         }
     });
 
-    stager.extendStep('survey', {
+    stager.extendStep('results', {
+        frame: 'resultScreen.htm',
+        cb: function() {
+            this.talk('------------- RESULT SCREEN --------------')
+        }
+    });
+
+    stager.extendStep('survey1', {
         frame: 'survey1.htm',
         cb: function() {
-
+            this.talk('--------------- SUBJECT SURVEY ----------------')
         }
     });
 
@@ -556,4 +675,5 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             node.game.doneButton.destroy();
         }
     });
+
 };

@@ -6,7 +6,8 @@
     text-align: center;
     justify-content: center;
     flex-direction: row;
-    background: linear-gradient(0deg, rgb(30,30,30), rgb(210,210,210));
+    /* background: linear-gradient(0deg, rgb(30,30,30), rgb(210,210,210)); */
+    background: linear-gradient(0deg, rgb(0 0 0), rgb(76 76 76));
     width: 1000px;
     border-radius: 100px;
     color: rgb(40 40 40);

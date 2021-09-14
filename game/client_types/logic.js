@@ -25,19 +25,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
     stager.setOnInit(function() {
 
-        // Feedback.
-        memory.view('feedback').save('feedback.csv', {
-            header: [ 'time', 'timestamp', 'player', 'feedback' ],
-            keepUpdated: true
-        });
-
-        // Email.
-        memory.view('email').save('email.csv', {
-            header: [ 'timestamp', 'player', 'email' ],
-            keepUpdated: true
-        });
-
-
 
         // Decision Time Duration
         node.game.dtd = undefined;
@@ -63,7 +50,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         node.on.data('requestDtd-LOGIC', function(msg) {
 
-            console.log('INSIDE REQUESTDTD-LOGIC');
+            console.log('LOGIC: CLIENT REQUESTED DTD');
 
             let player = node.game.pl.get(msg.from);
 
@@ -102,13 +89,13 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
 
         // for a quick debug
-        node.game.pairIndexList = [
-            1,2,3
-        ]
-
-        node.game.correctAnswerList = [
-            0,1,0
-        ]
+        // node.game.pairIndexList = [
+        //     1,2,3
+        // ]
+        //
+        // node.game.correctAnswerList = [
+        //     0,1,0
+        // ]
 
         // -------------- //
 
@@ -347,7 +334,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         // -------------- //
 
-
+        // called by LOGIC-finishTest on client side
         node.on.data('calculateScore-LOGIC', function(msg) {
 
             let player = node.game.pl.get(msg.from);
@@ -387,6 +374,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
 
+        // listens client to return client player's score calculated in logic
         node.on.data('results-LOGIC', function(msg) {
 
             let player = node.game.pl.get(msg.from);
@@ -429,9 +417,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         })
 
 
-        // -------------- //
+        // -------  MEMORY  ------- //
 
-
+        // saving time spent on different stages
         memory
         .select('dataType', '=', 'time')
         .save('timeSpent.csv', {
@@ -440,7 +428,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 'player',
                 'tutoTime',
                 'expTime',
-                'surveyTime'
+                'surveyTime',
+                'surveyTime2'
             ],
 
             flattenByGroup:'player',
@@ -451,6 +440,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
 
+        // saving experiment data
         memory.view('correct').save('decision.csv', {
 
             header: [
@@ -465,7 +455,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         });
 
-
+        // saving score data
         memory.view('score').save('testScore.csv', {
 
             header: [
@@ -477,7 +467,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
 
-
+        // saving subject survey data
         memory.view('age').save('survey.csv', {
 
             header: [
@@ -497,15 +487,43 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
 
+        // saving subject experiment experience survey data
+        memory.view('needMoreTime').save('survey2.csv', {
+
+            header: [
+                'player',
+                'tutorial',
+                'enoughTime',
+                'needMoreTime',
+                'decisionScreen',
+                'imageSize',
+                'buttonPlacement',
+                'numOfImages_tired',
+                'numOfImages_bored',
+                'dtd'
+            ],
+
+            keepUpdated: true
+
+        })
+
+        // Feedback.
+        memory.view('feedback').save('feedback.csv', {
+            header: [ 'time', 'timestamp', 'player', 'feedback' ],
+            keepUpdated: true
+        });
+
+        // Email.
+        memory.view('email').save('email.csv', {
+            header: [ 'timestamp', 'player', 'email' ],
+            keepUpdated: true
+        });
+
         // -------------- //
 
 
-
     });
 
-    stager.extendStep('instructions', {
-
-    });
 
     stager.extendStep('identifyFaces', {
 

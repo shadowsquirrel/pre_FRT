@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <link rel="stylesheet" href="css/frame.css">
+    <link rel="stylesheet" href="css/survey_frame.css">
+
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+
+    <title>Experiment</title>
+
+</head>
+<body>
+
+    <div id=start></div>
+
+    <div class = 'wrap'>
+
+
+        <div class = 'all'>
+
+
+            <div class='frame-A'>
+
+                <div class='frame-A-0' id='frame-0'>
+
+                    <div class='frame-A-0-0 noselect' id='frame-0-0'>
+                        <p class='questionIndexText'>
+                            Question <span id=questionIndex class=qIndex></span>/<span id=numOfQuestion class=qIndex></span>
+                        </p>
+                    </div>
+
+                    <div class="container" style='opacity:0;'>
+                        <div class="progress">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: 10%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class='frame-B'>
+
+                <div class='frame-B-0'>
+
+                    <div class='frame-B-0-0'>
+
+                        <div class='question tutorial'>
+
+                            <p>
+                                The tutorial was clear and helpful.
+                            </p>
+
+                            <div class=buttonWrap>
+
+                                <div class=button id=1stronglyDisagree>
+                                    Strongly Disagree
+                                </div>
+
+                                <div class=button id=1somewhatDisagree>
+                                    Somewhat Disagree
+                                </div>
+
+                                <div class=button id=1neitherNor>
+                                    Neither agree nor disagree
+                                </div>
+
+                                <div class=button id=1somewhatAgree>
+                                    Somewhat Agree
+                                </div>
+
+                                <div class=button id=1stronglyAgree>
+                                    Strongly Agree
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class='question enoughTime'>
+
+                            <p>
+                                I needed more time to evaluate each
+                                pair of facial images.
+                            </p>
+
+                            <div class=buttonWrap>
+
+                                <div class=button id=2stronglyDisagree>
+                                    Strongly Disagree
+                                </div>
+
+                                <div class=button id=2somewhatDisagree>
+                                    Somewhat Disagree
+                                </div>
+
+                                <div class=button id=2neitherNor>
+                                    Neither agree nor disagree
+                                </div>
+
+                                <div class=button id=2somewhatAgree>
+                                    Somewhat Agree
+                                </div>
+
+                                <div class=button id=2stronglyAgree>
+                                    Strongly Agree
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class='question needMoreTime'>
+
+                            <p>
+                                Decision screen for evaluating the facial
+                                pictures was intuitive and easy to use.
+                            </p>
+
+                            <div class=buttonWrap>
+
+                                <div class=button id=3stronglyDisagree>
+                                    Strongly Disagree
+                                </div>
+
+                                <div class=button id=3somewhatDisagree>
+                                    Somewhat Disagree
+                                </div>
+
+                                <div class=button id=3neitherNor>
+                                    Neither agree nor disagree
+                                </div>
+
+                                <div class=button id=3somewhatAgree>
+                                    Somewhat Agree
+                                </div>
+
+                                <div class=button id=3stronglyAgree>
+                                    Strongly Agree
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class='question decisionScreen'>
+
+                            <p>
+                                Decision screen for evaluating the facial
+                                pictures was intuitive and easy to use.
+                            </p>
+
+                            <div class=buttonWrap>
+
+                                <div class=button id=4stronglyDisagree>
+                                    Strongly Disagree
+                                </div>
+
+                                <div class=button id=4somewhatDisagree>
+                                    Somewhat Disagree
+                                </div>
+
+                                <div class=button id=4neitherNor>
+                                    Neither agree nor disagree
+                                </div>
+
+                                <div class=button id=4somewhatAgree>
+                                    Somewhat Agree
+                                </div>
+
+                                <div class=button id=4stronglyAgree>
+                                    Strongly Agree
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class='question imageSize'>
+
+                            <p>
+                                The size of facial images was large enough to
+                                perform the evaluation task
+                            </p>
+
+                            <div class=buttonWrap>
+
+                                <div class=button id=5stronglyDisagree>
+                                    Strongly Disagree
+                                </div>
+
+                                <div class=button id=5somewhatDisagree>
+                                    Somewhat Disagree
+                                </div>
+
+                                <div class=button id=5neitherNor>
+                                    Neither agree nor disagree
+                                </div>
+
+                                <div class=button id=5somewhatAgree>
+                                    Somewhat Agree
+                                </div>
+
+                                <div class=button id=5stronglyAgree>
+                                    Strongly Agree
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class='question buttonPlacement'>
+
+                            <p>
+                                Placement of the decision buttons did not
+                                cause any issues in my task performance.
+                            </p>
+
+                            <div class=buttonWrap>
+
+                                <div class=button id=6stronglyDisagree>
+                                    Strongly Disagree
+                                </div>
+
+                                <div class=button id=6somewhatDisagree>
+                                    Somewhat Disagree
+                                </div>
+
+                                <div class=button id=6neitherNor>
+                                    Neither agree nor disagree
+                                </div>
+
+                                <div class=button id=6somewhatAgree>
+                                    Somewhat Agree
+                                </div>
+
+                                <div class=button id=6stronglyAgree>
+                                    Strongly Agree
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class='question numOfImages_tired'>
+
+                            <p>
+                                I got tired because of too many facial pairs of images.
+                            </p>
+
+                            <div class=buttonWrap>
+
+                                <div class=button id=7stronglyDisagree>
+                                    Strongly Disagree
+                                </div>
+
+                                <div class=button id=7somewhatDisagree>
+                                    Somewhat Disagree
+                                </div>
+
+                                <div class=button id=7neitherNor>
+                                    Neither agree nor disagree
+                                </div>
+
+                                <div class=button id=7somewhatAgree>
+                                    Somewhat Agree
+                                </div>
+
+                                <div class=button id=7stronglyAgree>
+                                    Strongly Agree
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class='question numOfImages_bored'>
+
+                            <p>
+                                I got bored because of too many facial pairs of images.
+                            </p>
+
+                            <div class=buttonWrap>
+
+                                <div class=button id=8stronglyDisagree>
+                                    Strongly Disagree
+                                </div>
+
+                                <div class=button id=8somewhatDisagree>
+                                    Somewhat Disagree
+                                </div>
+
+                                <div class=button id=8neitherNor>
+                                    Neither agree nor disagree
+                                </div>
+
+                                <div class=button id=8somewhatAgree>
+                                    Somewhat Agree
+                                </div>
+
+                                <div class=button id=8stronglyAgree>
+                                    Strongly Agree
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class='frame-C'>
+
+                <div class='frame-C-0'>
+
+                    <div class='frame-C-0-0'>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+    <div id=end></div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="js/survey2Helper.js"></script>
+    <script src="js/survey2Buttons.js"></script>
+    <script src="js/survey2.js"></script>
+
+</body>
+</html>

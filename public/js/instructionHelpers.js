@@ -574,6 +574,8 @@ window.onload = function() {
     // ----- BUTTONS WITH EMIITERS INSIDE ----- //
     // ---------------------------------------- //
 
+    // --- B --- //
+
     $('#btn-B-7').click(function() {
 
         console.log('NODE.EMIT(SHOWTUTOTIMER)');
@@ -631,6 +633,24 @@ window.onload = function() {
 
     });
 
+    // --- C --- //
+
+    $('#btn-C-5').click(function() {
+
+        $('#box-C-5').css({'transition':'0.5s', 'margin-top':'-85px'});
+
+        box.transition('C-5', 'C-6', 1, 1, 1, 750);
+        box.transition('', 'C-7', 1, 1, 1, 750);
+        box.transition('', 'C-8', 1, 1, 1, 750);
+
+        setTimeout(()=>{
+            box.button.show('C-7');
+            box.button.show('C-8');
+        }, 2750)
+
+        node.emit('setHeight', 700);
+
+    });
 
     $('#btn-C-7').click(function() {
 
@@ -653,6 +673,7 @@ window.onload = function() {
 
     });
 
+    // ------------- //
 
     node.on('tutoTimeUp', function(key) {
 
