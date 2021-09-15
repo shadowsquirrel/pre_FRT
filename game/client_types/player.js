@@ -152,12 +152,14 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
         node.game.secretTutoTimer.start();
-        setTimeout(()=>{
-            node.game.secretTutoTimer.stop();
-        }, 2000)
+        // setTimeout(()=>{
+        //     node.game.secretTutoTimer.stop();
+        // }, 2000)
 
 
         node.on('HTML-startSecretTutoTimer', function() {
+
+            this.talk('CLIENT: TUTORIAL TIMER STARTS');
 
             node.game.secretTutoTimer.restart();
 
@@ -196,9 +198,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
         node.game.secretExpTimer.start();
-        setTimeout(()=>{
-            node.game.secretExpTimer.stop();
-        }, 2000)
+        // setTimeout(()=>{
+        //     node.game.secretExpTimer.stop();
+        // }, 2000)
 
         node.on('HTML-startSecretExpTimer', function() {
 
@@ -239,9 +241,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
         node.game.secretSurveyTimer.start();
-        setTimeout(()=>{
-            node.game.secretSurveyTimer.stop();
-        }, 2000)
+        // setTimeout(()=>{
+        //     node.game.secretSurveyTimer.stop();
+        // }, 2000)
 
         node.on('HTML-startSecretSurveyTimer', function() {
 
@@ -284,9 +286,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
         node.game.secretSurvey2Timer.start();
-        setTimeout(()=>{
-            node.game.secretSurvey2Timer.stop();
-        }, 2000)
+        // setTimeout(()=>{
+        //     node.game.secretSurvey2Timer.stop();
+        // }, 2000)
 
         node.on('HTML-startSecretSurvey2Timer', function() {
 
@@ -665,6 +667,12 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         frame: 'survey1.htm',
         cb: function() {
             this.talk('--------------- SUBJECT SURVEY ----------------')
+        },
+        done: function() {
+
+            node.say('showMemory', 'SERVER');
+            node.say('saveTimeMemory', 'SERVER');
+
         }
     });
 

@@ -419,26 +419,66 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         // -------  MEMORY  ------- //
 
-        // saving time spent on different stages
-        memory
-        .select('dataType', '=', 'time')
-        .save('timeSpent.csv', {
+        node.on.data('showMemory', function() {
 
-            header: [
-                'player',
-                'tutoTime',
-                'expTime',
-                'surveyTime',
-                'surveyTime2'
-            ],
+            let timeMemory =     memory
+                .select('dataType', '=', 'time')
+                .fetch();
 
-            flattenByGroup:'player',
-
-            flatten:true,
-
-            keepUpdated: true
+            console.log(timeMemory);
 
         })
+
+        node.on.data('saveTimeMemory', function() {
+
+            memory
+            .select('dataType', '=', 'time')
+            .save('timeSpent.csv', {
+
+                header: [
+                    'player',
+                    'tutoTime',
+                    'expTime',
+                    'surveyTime',
+                    'surveyTime2'
+                ],
+
+                flattenByGroup:'player',
+
+                flatten:true,
+
+                keepUpdated: true
+
+            })
+
+        })
+
+        // saving time spent on different stages
+        memory
+        // .select('dataType', '=', 'time')
+        // .save('timeSpent.csv', {
+        //
+        //     header: [
+        //         'player',
+        //         'tutoTime',
+        //         'expTime',
+        //         'surveyTime',
+        //         'surveyTime2'
+        //     ],
+        //
+        //     flattenByGroup:'player',
+        //
+        //     flatten:true,
+        //
+        //     keepUpdated: true
+        //
+        // })
+        //
+        // memory.view('tutoTime').save('tutoTime.csv')
+        // memory.view('expTime').save('expTime.csv');
+        // memory.view('surveyTime').save('surveyTime.csv');
+        // memory.view('surveyTime2').save('surveyTime2.csv');
+
 
         // saving experiment data
         memory.view('correct').save('decision.csv', {
@@ -448,7 +488,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 'index',
                 'answer',
                 'correct',
-                'dtd'
+                'dtd',
             ],
 
             keepUpdated: true
@@ -480,7 +520,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 'race',
                 'knowledgeAI',
                 'supportAI',
-                'ladder'
+                'ladder',
             ],
 
             keepUpdated: true
@@ -500,7 +540,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 'buttonPlacement',
                 'numOfImages_tired',
                 'numOfImages_bored',
-                'dtd'
+                'dtd',
             ],
 
             keepUpdated: true

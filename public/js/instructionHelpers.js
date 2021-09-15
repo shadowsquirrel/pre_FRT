@@ -427,7 +427,7 @@ window.onload = function() {
 
                 setTimeout(()=>{
                     box.button.show('C-4');
-                }, 2750)
+                }, 1750)
 
             }, 2000)
 
@@ -640,8 +640,10 @@ window.onload = function() {
         $('#box-C-5').css({'transition':'0.5s', 'margin-top':'-85px'});
 
         box.transition('C-5', 'C-6', 1, 1, 1, 750);
-        box.transition('', 'C-7', 1, 1, 1, 750);
-        box.transition('', 'C-8', 1, 1, 1, 750);
+        setTimeout(()=>{
+            box.transition('', 'C-7', 1, 1, 1, 750);
+            box.transition('', 'C-8', 1, 1, 1, 750);
+        }, 100)
 
         setTimeout(()=>{
             box.button.show('C-7');
