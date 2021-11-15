@@ -1,0 +1,34 @@
+.frame-A
+{
+    width:900px;
+}
+.frame-A-0
+{
+    height:500px;
+    justify-content: center;
+    display:flex;
+    flex-direction: column;
+    opacity:1;
+}
+.frame-A-0-0
+{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-bottom:20px;
+}
+.text
+{
+    transition:2s;
+    opacity:0;
+    font-weight:100;
+    margin-top:125px;
+    font-size:50px;
+}
+.thankYou
+{
+    display:block;
+    margin-top:75px;
+    transition:3s;
+    opacity:0;
+}

@@ -167,7 +167,9 @@ window.onload = function() {
 
             button.answer = 0;
 
-            go.show();
+            setTimeout(()=>{
+                go.show();
+            }, 500)
 
             node.emit('stopTime');
 
@@ -204,7 +206,9 @@ window.onload = function() {
 
             button.answer = 1;
 
-            go.show();
+            setTimeout(()=>{
+                go.show();
+            }, 500)
 
             node.emit('stopTime');
 

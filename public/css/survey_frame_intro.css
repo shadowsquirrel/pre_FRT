@@ -1,0 +1,23 @@
+.frame-C
+{
+    display:block;
+    position:absolute;
+    top:200px;
+    transition:1s;
+    opacity:0;
+}
+.introText
+{
+    font-size:55px;
+    font-weight:100;
+}
+.frame-A
+{
+    opacity:0;
+    transition:1s;
+}
+.frame-B
+{
+    opacity:0;
+    transition:1s;
+}

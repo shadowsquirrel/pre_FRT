@@ -25,28 +25,21 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
     stager.setOnInit(function() {
 
+        node.game.rndTest = Math.random();
 
-        // Decision Time Duration
-        node.game.dtd = undefined;
+        node.on.data('rnd-LOGIC', function(msg) {
 
-        node.game.dtdList = J.shuffle([5000, 8000, 10000]);
-
-        console.log('SHUFFLED DTDLIST: ' + node.game.dtdList);
-
-        node.game.dtd = node.game.dtdList[0];
-
-        console.log('DECISION TIME DURATION IS DETERMINED TO BE: ' +
-        node.game.dtd);
-
-        node.on.data('dtd-LOGIC', function(msg) {
-
-            console.log('INSIDE DTD-LOGIC');
+            console.log('INSIDE RND-LOGIC');
+            console.log('OUR RANDOM NUMBER IS: ' + node.game.rndTest);
 
             let player = node.game.pl.get(msg.from);
 
-            node.say('LOGIC-dtd', player.id, node.game.dtd)
+            node.say('LOGIC-rnd', player.id, node.game.rndTest);
 
         })
+
+
+        // ---- Decision Time Duration Listener ---- //
 
         node.on.data('requestDtd-LOGIC', function(msg) {
 
@@ -54,7 +47,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
             let player = node.game.pl.get(msg.from);
 
-            node.say('LOGIC-requestDtd', player.id, node.game.dtd);
+            node.say('LOGIC-requestDtd', player.id, player.dtd);
 
         })
 
@@ -89,22 +82,87 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
 
         // for a quick debug
-        // node.game.pairIndexList = [
-        //     1,2,3
-        // ]
-        //
-        // node.game.correctAnswerList = [
-        //     0,1,0
-        // ]
+        node.game.pairIndexList = [
+            1,2,3
+        ]
+
+        node.game.correctAnswerList = [
+            0,1,0
+        ]
+
 
         // -------------- //
 
 
-        node.game.initPlayer = function() {
+        // init player button position and decision time duration
+        // randomly determined for each player
+        node.game.initPlayerFundamentals = function(player) {
 
-            node.game.pl.each(function(player) {
+            // check if the player is already initiated
+            if(player.fundamentalsInitiated === undefined) {
 
-                console.log('PLAYER DATA IS INITIATED');
+                player.fundamentalsInitiated = true;
+
+                // ---- determine player's dtd ---- //
+
+                let myDtdList = J.shuffle([5000, 8000, 10000]);
+
+                console.log('PLAYER (' + player.id + ') SHUFFLED DTD LIST: '
+                + myDtdList);
+
+                player.dtd = myDtdList[0];
+
+                console.log('PLAYER (' + player.id + ') DECISION TIME ' +
+                ' DURATION IS DETERMINED TO BE: ' + player.dtd);
+
+
+                // ---- determine player's button position ---- //
+
+                if(Math.random() > 0.005) {
+
+                    player.buttonTop = true;
+
+                } else {
+
+                    player.buttonTop = false;
+
+                }
+
+                console.log('PLAYER (' + player.id + ') IS BUTTON ON TOP -> ' +
+                player.buttonTop);
+
+            } else {
+
+                console.log('PLAYER ' + player.id + ' is already initiated');
+
+                console.log('PLAYER (' + player.id + ') DECISION TIME ' +
+                ' DURATION WAS DETERMINED TO BE: ' + player.dtd);
+
+                console.log('PLAYER (' + player.id + ') WAS BUTTON ON TOP -> ' +
+                player.buttonTop);
+
+            }
+
+            console.log('LOGIC: SENDING FUNDAMENTAL PLAYER DATA TO CLIENT');
+
+            let myData = {
+                bp: player.buttonTop,
+                dtd: player.dtd
+            }
+
+            node.say('LOGIC-init', player.id, myData);
+
+        }
+
+
+        // init player for face test: generating the shuffled index etc
+        node.game.initPlayerLists = function(player) {
+
+            if(player.listsGenerated === undefined) {
+
+                player.listsGenerated = true;
+
+                console.log('PLAYER DATA IS BEING INITIATED');
 
                 player.shuffled = {
                     correctAnswerList: undefined,
@@ -122,12 +180,14 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
                 player.shuffled.pairIndexList = J.shuffle(node.game.pairIndexList);
 
+                // Current Pair/Photo IndeX: CPX
                 player.cpx = 0;
 
                 console.log();
                 console.log('STARTING PLAYER PAIR INDEX: ' + player.cpx);
                 console.log('STARTING PLAYER PAIR NUMBER: ' + player.shuffled.pairIndexList[player.cpx]);
                 console.log();
+
 
                 var shuffledList = player.shuffled.pairIndexList;
 
@@ -139,7 +199,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
                 }
 
-
                 player.shuffled.correctAnswerList = shuffledAnswers;
 
 
@@ -149,26 +208,41 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
                 player.score = undefined;
 
+            } else {
 
-                console.log();
-                console.log('node.game.pairIndexList');
-                console.log(node.game.pairIndexList);
-                console.log();
-                console.log('player shuffled Index list');
-                console.log(player.shuffled.pairIndexList);
-                console.log();
-                console.log();
-                console.log('node.game.correctAnswerList');
-                console.log(node.game.correctAnswerList);
-                console.log();
-                console.log('player shuffled correct answer list');
-                console.log(player.shuffled.correctAnswerList);
-                console.log();
-                console.log();
-                console.log('player given answer list');
-                console.log(player.givenAnswerList);
+                console.log('PLAYER LISTS ARE ALREADY INITIATED');
 
-            })
+            }
+
+
+            console.log();
+            console.log('node.game.pairIndexList');
+            console.log(node.game.pairIndexList);
+            console.log();
+            console.log('player shuffled Index list');
+            console.log(player.shuffled.pairIndexList);
+            console.log();
+            console.log();
+            console.log('node.game.correctAnswerList');
+            console.log(node.game.correctAnswerList);
+            console.log();
+            console.log('player shuffled correct answer list');
+            console.log(player.shuffled.correctAnswerList);
+            console.log();
+            console.log();
+            console.log('player given answer list');
+            console.log(player.givenAnswerList);
+
+        }
+
+
+        // init player meta func
+        node.game.initPlayer = function(player) {
+
+            console.log('INITIALIZING PLAYER ' + player.id);
+
+            node.game.initPlayerFundamentals(player);
+            node.game.initPlayerLists(player);
 
         }
 
@@ -388,11 +462,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         // -------------- //
 
-
+        // initializing the player inside here
         node.on.data('requestFirstIndex-LOGIC', function(msg) {
-
-            // initializing the player
-            node.game.initPlayer();
 
             let player = node.game.pl.get(msg.from);
 
@@ -417,18 +488,11 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         })
 
 
+
+
         // -------  MEMORY  ------- //
 
-        node.on.data('showMemory', function() {
-
-            let timeMemory =     memory
-                .select('dataType', '=', 'time')
-                .fetch();
-
-            console.log(timeMemory);
-
-        })
-
+        // saving time memory
         node.on.data('saveTimeMemory', function() {
 
             memory
@@ -453,33 +517,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
 
-        // saving time spent on different stages
-        memory
-        // .select('dataType', '=', 'time')
-        // .save('timeSpent.csv', {
-        //
-        //     header: [
-        //         'player',
-        //         'tutoTime',
-        //         'expTime',
-        //         'surveyTime',
-        //         'surveyTime2'
-        //     ],
-        //
-        //     flattenByGroup:'player',
-        //
-        //     flatten:true,
-        //
-        //     keepUpdated: true
-        //
-        // })
-        //
-        // memory.view('tutoTime').save('tutoTime.csv')
-        // memory.view('expTime').save('expTime.csv');
-        // memory.view('surveyTime').save('surveyTime.csv');
-        // memory.view('surveyTime2').save('surveyTime2.csv');
-
-
         // saving experiment data
         memory.view('correct').save('decision.csv', {
 
@@ -489,6 +526,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 'answer',
                 'correct',
                 'dtd',
+                'bt'
             ],
 
             keepUpdated: true
@@ -560,6 +598,16 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         });
 
         // -------------- //
+
+        node.on.data('init-LOGIC', function(msg) {
+
+            console.log('LOGIC: PLAYER INITIATION REQUESTED');
+
+            let player = node.game.pl.get(msg.from);
+
+            node.game.initPlayer(player);
+
+        })
 
 
     });

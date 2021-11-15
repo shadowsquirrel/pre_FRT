@@ -15,6 +15,19 @@ window.onload = function() {
 
     node.emit('HTML-requestDtd');
 
+    setTimeout(()=>{
+        $('.frame-C').css({'opacity':'1'});
+    }, 1000)
+    setTimeout(()=>{
+        $('.frame-C').css({'opacity':'0'});
+        setTimeout(()=>{
+            $('.frame-A, .frame-B').css({'opacity':'1'});
+            setTimeout(()=>{
+                $('.frame-C').css({'display':'none'});
+            }, 300)
+        }, 750)
+    }, 5000)
+
     experiment.generate();
 
     // ----------------------- //

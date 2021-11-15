@@ -1,0 +1,49 @@
+.leftButton
+{
+    margin-right:185px;
+}
+.rightButton
+{
+    margin-left:185px;
+}
+.frame-B
+{
+    margin-bottom:15px;
+}
+.frame-C
+{
+    margin-top:0px;
+}
+.iconButton
+{
+    height:100px;
+}
+.transitionButton
+{
+    font-size:40px;
+    padding-bottom:2px;
+}
+.leftButtonExplanation
+{
+    opacity:0;
+    position: absolute;
+    color: #e63333;
+    font-size: 45px;
+    top: 26px;
+    margin-left: 150px;
+    width: 280px;
+    transition: 0.3s;
+    z-index: -10;
+}
+.rightButtonExplanation
+{
+    opacity:0;
+    position: absolute;
+    color: #6ac258;
+    font-size: 45px;
+    top: 26px;
+    margin-left: -328px;
+    width: 280px;
+    transition: 0.3s;
+    z-index: -10;
+}
