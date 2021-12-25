@@ -167,6 +167,7 @@ window.onload = function() {
 
         // ----- debug photo indicator ---- //
         $('#xxx').html(trial.photo);
+        $('#yyy').html(trial.icon);
         if(trial.photo === 0) {
             $('#xxx').css({'color':'red'});
         }

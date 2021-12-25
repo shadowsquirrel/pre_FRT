@@ -1,0 +1,16 @@
+"player","ibt_Icon","ibt_PhotoIndex","ibt_IconIndex","ibt_AdjIndex","ibt_Adjective","ibt_Answer","ibt_isAnswerRelevant","ibt_isAnswerCorrect","ibt_IntroTimeDuration","ibt_PrimerDisplayDuration","ibt_ReactionTime"
+"371492521179541","person",1,1,3,"bad","NO ANSWER",1,0,2503,21,763
+"371492521179541","person",4,1,3,"bad","NO ANSWER",1,0,2515,21,764
+"371492521179541","person",2,1,1,"kind","NO ANSWER",1,0,2515,22,766
+"371492521179541","person",1,1,5,"untrustworthy","NO ANSWER",1,0,2511,22,762
+"371492521179541","person",3,1,5,"untrustworthy","YES",1,1,2502,22,366
+"371492521179541","person",2,1,3,"bad","NO",1,0,2502,21,333
+"371492521179541","person",1,1,1,"kind","YES",1,1,2512,22,675
+"371492521179541","person",4,1,5,"untrustworthy","YES",1,1,2515,22,600
+"371492521179541","person",1,1,0,"good","NO ANSWER",1,0,2511,21,761
+"371492521179541","person",2,1,2,"trustworthy","YES",1,1,2516,23,421
+"371492521179541","person",3,1,2,"trustworthy","YES",1,1,2514,22,638
+"371492521179541","person",4,1,2,"trustworthy","YES",1,1,2513,21,472
+"371492521179541","person",3,1,3,"bad","YES",1,1,2513,21,692
+"371492521179541","person",1,1,4,"cruel","YES",1,1,2510,22,666
+"371492521179541","person",3,1,1,"kind","YES",1,1,2508,23,500

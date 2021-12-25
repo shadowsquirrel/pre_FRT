@@ -174,33 +174,33 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
         ]
 
-        node.game.ibt.stateList = [
-            0, 0, 0, 0, 0, 0,
-            1, 0, 1, 0, 1, 0,
-            0, 1, 0, 1, 0, 1,
-            1, 0, 1, 1, 0, 0,
-            1, 1, 0, 1, 0, 1,
-            0, 0, 1, 0, 0, 1,
-            0, 1, 0, 1, 1, 0,
-            1, 1, 0, 1, 0, 1,
-            1, 0, 1, 1, 0, 1,
-            1, 0, 1, 0, 1, 1
-        ];
+        // node.game.ibt.stateList = [
+        //     0, 0, 0, 0, 0, 0,
+        //     1, 0, 1, 0, 1, 0,
+        //     0, 1, 0, 1, 0, 1,
+        //     1, 0, 1, 1, 0, 0,
+        //     1, 1, 0, 1, 0, 1,
+        //     0, 0, 1, 0, 0, 1,
+        //     0, 1, 0, 1, 1, 0,
+        //     1, 1, 0, 1, 0, 1,
+        //     1, 0, 1, 1, 0, 1,
+        //     1, 0, 1, 0, 1, 1
+        // ];
 
         // for debug the data lists wont match this
         // and we will have errors at the end
-        // node.game.ibt.stateList = [
-        //     1, 1, 1, 1, 1, 1,
-        //     1, 1, 1, 1, 1, 1,
-        //     1, 1, 1, 1, 1, 1,
-        //     1, 1, 1, 1, 1, 1,
-        //     1, 1, 1, 1, 1, 1,
-        //     1, 1, 1, 1, 1, 1,
-        //     1, 1, 1, 1, 1, 1,
-        //     1, 1, 1, 1, 1, 1,
-        //     1, 1, 1, 1, 1, 1,
-        //     1, 0, 1, 0, 1, 1
-        // ];
+        node.game.ibt.stateList = [
+            1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1,
+            1, 0, 1, 0, 1, 1
+        ];
 
         // there are 4 photos plus no photo
         // no photo index is 0
@@ -218,23 +218,23 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 1, 1, 0, 4, 1, 0
             ],
 
-            hidden photo primer list for persons
-            [
-                0, 4, 2, 1, 3, 2,
-                1, 4, 1, 0, 3, 0,
-                3, 1, 0, 3, 2, 4,
-                2, 4, 1, 2, 0, 3,
-                4, 0, 1, 2, 3, 4
-            ]
+            // hidden photo primer list for persons
+            // [
+            //     0, 4, 2, 1, 3, 2,
+            //     1, 4, 1, 0, 3, 0,
+            //     3, 1, 0, 3, 2, 4,
+            //     2, 4, 1, 2, 0, 3,
+            //     4, 0, 1, 2, 3, 4
+            // ]
 
             // // debug setup will fail to cover all
-            // [
-            //     1, 4, 2, 1, 3, 2,
-            //     1, 4, 1, 2, 3, 4,
-            //     3, 1, 3, 3, 2, 4,
-            //     2, 4, 1, 2, 4, 3,
-            //     4, 2, 1, 2, 3, 4
-            // ]
+            [
+                1, 4, 2, 1, 3, 2,
+                1, 4, 1, 2, 3, 4,
+                3, 1, 3, 3, 2, 4,
+                2, 4, 1, 2, 4, 3,
+                4, 2, 1, 2, 3, 4
+            ]
 
         ];
 
@@ -437,7 +437,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                         [],
                         [],
                     ]
-                ]
+                ];
 
                 // generate deep copy of state list
                 player.ibt.stateList = [...node.game.ibt.stateList];
@@ -859,22 +859,22 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
             // every time disconnect reconnect IBT trials start over
 
-            // this.talk('=====   BEFORE THE PUSH   ====')
-            // console.log();
-            // this.talk('--- node.game.ibt.stateList ---')
-            // console.log(node.game.ibt.stateList);
-            // this.talk('--- node.game.ibt.photoList ---')
-            // console.log(node.game.ibt.photoList);
-            // this.talk('--- node.game.ibt.adjList ---');
-            // console.log(node.game.ibt.adjList);
-            // console.log();
-            // this.talk('--- player.ibt.stateList ---')
-            // console.log(player.ibt.stateList);
-            // this.talk('--- player.ibt.photoList ---')
-            // console.log(player.ibt.photoList);
-            // this.talk('--- player.ibt.adjList ---');
-            // console.log(player.ibt.adjList);
-            // console.log();
+            this.talk('=====   BEFORE THE PUSH   ====')
+            console.log();
+            this.talk('--- node.game.ibt.stateList ---')
+            console.log(node.game.ibt.stateList);
+            this.talk('--- node.game.ibt.photoList ---')
+            console.log(node.game.ibt.photoList);
+            this.talk('--- node.game.ibt.adjList ---');
+            console.log(node.game.ibt.adjList);
+            console.log();
+            this.talk('--- player.ibt.stateList ---')
+            console.log(player.ibt.stateList);
+            this.talk('--- player.ibt.photoList ---')
+            console.log(player.ibt.photoList);
+            this.talk('--- player.ibt.adjList ---');
+            console.log(player.ibt.adjList);
+            console.log();
 
             var buttonSetup = player.ibt.buttonSetup;
             var trialRound = player.stage.round;
