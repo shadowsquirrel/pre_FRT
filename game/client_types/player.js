@@ -867,8 +867,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     });
 
     stager.extendStep('IBT', {
-        // frame: 'ibt.htm',
-        frame: 'ibt_alt.htm',
+        frame: 'ibt.htm',
+        // frame: 'ibt_alt.htm',
         cb: function() {
             this.talk('--------- IMPLICIT BIAS TEST ----------')
         }
