@@ -218,7 +218,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 1, 1, 0, 4, 1, 0
             ],
 
-            hidden photo primer list for persons
+            // hidden photo primer list for persons
             [
                 0, 4, 2, 1, 3, 2,
                 1, 4, 1, 0, 3, 0,
