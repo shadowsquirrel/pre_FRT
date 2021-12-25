@@ -229,11 +229,11 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
             // // debug setup will fail to cover all
             // [
-            //     1, 4, 2, 1, 3, 2,
-            //     1, 4, 1, 2, 3, 4,
-            //     3, 1, 3, 3, 2, 4,
-            //     2, 4, 1, 2, 4, 3,
-            //     4, 2, 1, 2, 3, 4
+            //     1, 2, 3, 4, 1, 2,
+            //     3, 4, 1, 2, 3, 4,
+            //     1, 2, 3, 4, 1, 2,
+            //     3, 4, 1, 2, 3, 4,
+            //     1, 2, 3, 4, 1, 2,
             // ]
 
         ];

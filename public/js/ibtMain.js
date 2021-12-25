@@ -64,10 +64,10 @@ window.onload = function() {
 
 
     // debug
-    // introDuration = 3000
-    // photoDuration = 3000;
-    // iconDuration = 3000;
-    // adjDuration = 10000;
+    // introDuration = 1000
+    // photoDuration = 1000;
+    // iconDuration = 1000;
+    // adjDuration = 1000;
 
 
 
@@ -159,6 +159,7 @@ window.onload = function() {
 
         // ----- debug photo indicator ---- //
         $('#xxx').html(trial.photo);
+        $('#yyy').html(trial.icon);
         if(trial.photo === 0) {
             $('#xxx').css({'color':'red'});
         }

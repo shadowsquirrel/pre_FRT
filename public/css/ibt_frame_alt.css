@@ -6,6 +6,7 @@
     left:unset;
     font-size: 5rem;
     z-index: 100;
+    display:none;
 }
 .introToTrial
 {
@@ -21,7 +22,7 @@
     height:90vh;
     z-index:0;
     opacity:0.6;
-    /* opacity:1; */
+    /* opacity:0.8; */
     transform-origin: center top;
     transform: scale(0.3);
     top:0vh;
