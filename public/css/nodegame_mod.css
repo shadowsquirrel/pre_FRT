@@ -1,5 +1,14 @@
 /* Overwrites default nodeGame css settings */
-
+body {
+  -ms-overflow-style: none!important; /* for Internet Explorer, Edge */
+  scrollbar-width: none!important; /* for Firefox */
+  overflow-y: scroll!important;
+  overflow: hidden!important;
+}
+#ng_mainframe
+{
+    padding-right:0px!important;
+}
 #ng_header {
     left: auto;
     right: 10px;

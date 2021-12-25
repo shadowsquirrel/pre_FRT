@@ -1,0 +1,70 @@
+.photoIndicator
+{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    left:unset;
+    font-size: 5rem;
+    z-index: 100;
+}
+.introToTrial
+{
+    top:unset;
+    bottom:0;
+}
+.primer-photo
+{
+    transition:0s;
+    display:flex;
+    position:absolute;
+    top:5vh;
+    height:90vh;
+    z-index:0;
+    opacity:0.6;
+    /* opacity:1; */
+    transform-origin: center top;
+    transform: scale(0.3);
+    top:0vh;
+    left:-45vh;
+}
+.primer-empty
+{
+    transform: scale(3);
+}
+.string-p
+{
+    transform:scale(2);
+    /* transform: scaleY(1.1) scaleX(2); */
+    /* filter: invert(1); */
+}
+.string-h
+{
+    transform:scale(2);
+    /* transform: scaleY(1.15) scaleX(1.85); */
+    /* filter: invert(1); */
+}
+.buttonHelper-wrap-row
+{
+    margin-top:0;
+    margin-bottom:0;
+    justify-content:space-evenly;
+}
+.leftButton
+{
+    font-size:1.3rem;
+    margin-right:5vh;
+}
+.rightButton
+{
+    font-size:1.3rem;
+    margin-left:5vh;
+}
+.text-wrap-column
+{
+    justify-content: flex-end;
+    font-size:7vh;
+}
+.text-wrap-row
+{
+
+}

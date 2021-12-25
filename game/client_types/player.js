@@ -39,11 +39,11 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         W.setRightPadding = function(val) {
             var myframe = W.gid('ng_mainframe');
-            var myLength = val + 'px';
+            var myLength = val + 'px!important';
             myframe.style.paddingRight = myLength;
         };
 
-        W.setRightPadding(125);
+        // W.setRightPadding(125);
 
         W.setHeaderPosition('right');
 
@@ -141,7 +141,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         node.on('HTML-startSecretTutoTimer', function() {
 
-            this.talk('CLIENT: TUTORIAL TIMER STARTS');
+            this.talk('TUTORIAL TIMER STARTS');
 
             node.game.secretTutoTimer.restart();
 
@@ -223,7 +223,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         node.on('HTML-startSecretSurveyTimer', function() {
 
-            this.talk('CLIENT: SUBJECT SURVEY TIMER STARTS')
+            this.talk('SUBJECT SURVEY TIMER STARTS')
 
             node.game.secretSurveyTimer.restart();
 
@@ -265,7 +265,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         node.on('HTML-startSecretSurvey2Timer', function() {
 
-            this.talk('CLIENT: EXPERIENCE SURVEY 2 TIMER STARTS')
+            this.talk('EXPERIENCE SURVEY 2 TIMER STARTS')
 
             node.game.secretSurvey2Timer.restart();
 
@@ -290,6 +290,19 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             })
 
         })
+
+        // ------------------------------------------------------ //
+        // ------------------- TIMERS FOR IBT ------------------- //
+        // ------------------------------------------------------ //
+
+
+
+
+
+
+
+
+
 
         // -------------------------------------- //
         // -------------------------------------- //
@@ -342,7 +355,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // ------------------------------------------------------------------ //
         // ------------------------------------------------------------------ //
 
-        // asks for the next picture from LOGIC
+        // receives the next picture from LOGIC and sends it to HTML
         node.on.data('LOGIC-nextPicture', function(msg) {
 
             node.game.talk('inside LOGIC-nextPicture')
@@ -355,16 +368,40 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
 
-        // asks for the first picture from LOGIC
+        // receives the first picture from LOGIC and sends it to HTML
         node.on.data('LOGIC-firstPicture', function(msg) {
 
-            node.game.talk('inside LOGIC-firstPicture')
+            if(msg.data.listIndex > 0) {
 
+                node.game.talk(' --- PLAYER DISCONNECTED AND RECONNECTED, REQUESTING THE LAST PICTURE ---')
+
+            } else {
+
+                node.game.talk(' --- PLAYER REQUESTING FIRST PICTURE ---')
+
+            }
+
+            node.game.talk('PLAYER PAIR INDEX LIST INDEX: ' + msg.data.listIndex)
             node.game.talk('INDEX RECEIVED: ' + msg.data.index)
+
+
 
             var myData = msg.data;
 
             node.emit('firstPicture-HTML', myData);
+
+        })
+
+        // receives for the IBT trial paremeters from LOGIC
+        node.on.data('LOGIC-IBT-trial', function(msg) {
+
+            node.game.talk('Trial ICON: ' + msg.data.icon);
+            node.game.talk('Trial PHOTO INDEX: ' + msg.data.photo);
+            node.game.talk('Trial ADJ INDEX: ' + msg.data.adj)
+
+            var myData = msg.data;
+
+            node.emit('request-IBT-trial-HTML', myData);
 
         })
 
@@ -402,11 +439,13 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         node.on.data('LOGIC-requestDtd', function(msg) {
 
-            node.game.talk('CLIENT: DTD RECEIVED FROM LOGIC ' + msg.data)
+            node.game.talk('DTD RECEIVED FROM LOGIC ' + msg.data)
 
             node.emit('requestDtd-HTML', msg.data)
 
         })
+
+
 
 
         // ------------------------------------------------------------------ //
@@ -491,6 +530,11 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         // ---- first index listener and requester ---- //
 
+        // html triggers this listener
+        // this listener triggers logic listener
+        // logic listener the above LOGIC-firstPicture listener
+        // this process occurs the first time the subject starts the test
+        // OR when the subject reconnects to continue from  the last picture unanswered
         node.on('HTML-requestFirstIndex', function() {
 
             this.talk('FIRST INDEX REQUEST RECEIVED FROM HTML TO CLIENT SIDE')
@@ -499,18 +543,87 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
 
+
+
+        // ----------------- IBT request trial --------------------- //
+
+        node.on('HTML-request-IBT-trial', function(msg) {
+
+            node.say('request-IBT-trial-LOGIC', 'SERVER');
+
+        })
+
+        // ---------------- IBT decision listener and recorder ------------ //
+
+        node.on('HTML-IBT-decisionMade', function(msg) {
+
+            var data = msg;
+
+            this.talk('');
+            this.talk('');
+            this.talk('');
+            this.talk('-----------------  IBT Decision Data  -----------------');
+            this.talk('');
+            this.talk('');
+            this.talk('answer: ' + data.answer);
+            this.talk('adjective: ' + data.adjective);
+            this.talk('');
+            this.talk('--     --     --    --     --     --    --     --     --');
+            this.talk('');
+            this.talk('given Answer: ' + data.givenAnswer);
+            this.talk('is answer relevant: ' + data.isAnswerRelevant);
+            this.talk('is answer correct: ' + data.isAnswerCorrect);
+            this.talk('');
+            this.talk('--     --     --    --     --     --    --     --     --');
+            this.talk('');
+            this.talk('intro time duration: ' + data.introTimeDuration);
+            this.talk('primer display duration: ' + data.primeDisplayDuration);
+            this.talk('reaction time: ' + data.reactionTime)
+            this.talk('');
+            this.talk('');
+            this.talk('');
+
+
+            node.done({
+
+                ibt_Icon: data.icon,
+                ibt_PhotoIndex: data.photoIndex,
+                ibt_IconIndex: data.iconIndex,
+                ibt_AdjIndex: data.adjIndex,
+                ibt_Adjective: data.adjective,
+
+                ibt_Answer: data.givenAnswer,
+                ibt_isAnswerRelevant: data.isAnswerRelevant,
+                ibt_isAnswerCorrect: data.isAnswerCorrect,
+
+                ibt_IntroTimeDuration: data.introTimeDuration,
+                ibt_PrimerDisplayDuration: data.primeDisplayDuration,
+                ibt_ReactionTime: data.reactionTime
+
+            })
+
+        })
+
+
+        // ------------------------------------------------ //
+
         // activates logic listener to active client LOGIC-result
         // to record result data into memory upon request from HTML side
+        // notice that the score is calculated in the LOGIC and sent back here
+        // -to be displayed in the HTML
+        // -to be recorded in the memory by triggering the respective memory listener
         node.on('HTML-results', function() {
 
             node.say('results-LOGIC', 'SERVER');
 
         })
 
-        // survey 1
+
+        // ----------------- survey 1 --------------------- //
+
         node.on('HTML-surveyResults', function(msg) {
 
-            this.talk('CLIENT: SURVEY RESULTS RECEIVED')
+            this.talk('SURVEY RESULTS RECEIVED')
             this.talk(msg.age);
             this.talk(msg.education);
             this.talk(msg.employment);
@@ -537,10 +650,12 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
 
-        // survey 2
+
+        // ----------------- survey 2 --------------------- //
+
         node.on('HTML-survey2Results', function(msg) {
 
-            this.talk('CLIENT: SURVEY 2 RESULTS RECEIVED')
+            this.talk('SURVEY 2 RESULTS RECEIVED')
             this.talk('tutorial ' + msg.tutorial);
             this.talk('enought time ' + msg.enoughTime);
             this.talk('need more time ' + msg.needMoreTime);
@@ -566,20 +681,31 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
 
+
+
+
+        // -------- dtd requester for any stage ------- //
+
         // request decision time duration upon request by html
         // use at will for memory recording at different stages
         node.on('HTML-requestDtd', function() {
 
-            this.talk('CLIENT: HTML REQUESTED DTD')
+            this.talk('HTML REQUESTED DTD');
+            this.talk('PASSING THE REQUEST TO LOGIC');
 
             node.say('requestDtd-LOGIC', 'SERVER');
 
         })
 
 
+
+
         // ---------------------------------- //
         // -------- HTML --> CLIENT --------- //
         // ---------------------------------- //
+
+
+        // -------------- ENDERS ---------------- //
 
         node.on('HTML-endTuto', function() {
 
@@ -598,7 +724,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         })
 
 
-        // ------- BUTTON POSITION & DTD ------- //
+        // ------- BUTTON POSITION & DTD INITIATER ------- //
 
         node.game.buttonTop = undefined;
 
@@ -606,8 +732,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         node.on.data('LOGIC-init', function(msg) {
 
-            this.talk('CLIENT: inside LOGIC-init')
-            this.talk('CLIENT: BUTTON POSITION AND DTD RECEIVED')
+            this.talk('inside LOGIC-init')
+            this.talk('BUTTON POSITION AND DTD RECEIVED')
             this.talk('BUTTON TOP: ' + msg.data.bp);
             this.talk('DTD: ' + msg.data.dtd);
 
@@ -622,18 +748,46 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         node.say('init-LOGIC', 'SERVER');
 
+        // Alternative method to retrieve the data
+        node.get('mySetup', function(myInfo) {
+
+            this.talk('inside node.get')
+            this.talk('button top: ' + myInfo.bt);
+            this.talk('dtd: ' + myInfo.dtd)
+
+            if(node.game.buttonTop === undefined) {
+                this.talk('redefining buttonTop');
+                node.game.buttonTop = myInfo.bt;
+                this.talk('buttonTop: ' + node.game.buttonTop);
+            } else {
+                this.talk('buttonTop is already defined -> ' + node.game.buttonTop);
+            }
+
+            if(node.game.dtd === undefined) {
+                this.talk('redefining dtd');
+                node.game.dtd = myInfo.dtd;
+                this.talk('dtd: ' + node.game.dtd);
+            } else {
+                this.talk('dtd is already defined -> ' + node.game.dtd);
+            }
+
+        })
+
 
         // -- test -- //
 
         node.on.data('LOGIC-rnd', function(msg) {
-            this.talk('CLIENT: RND NUMBER -> ' + msg.data);
+            this.talk('RND NUMBER -> ' + msg.data);
         })
         node.say('rnd-LOGIC', 'SERVER');
 
         // --      -- //
 
 
+
     });
+
+
 
     // -------- TESTING STAGE --------- //
 
@@ -648,11 +802,11 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         frame: function() {
 
-            if(!node.game.buttonTop) {
-                return 'test1.htm';
-            } else {
-                return 'test2.htm';
-            }
+                if(!node.game.buttonTop) {
+                    return 'test1.htm';
+                } else {
+                    return 'test2.htm';
+                }
 
         },
 
@@ -709,6 +863,14 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         frame: 'survey2.htm',
         cb: function() {
             this.talk('--------- EXPERIENCE SURVEY ----------')
+        }
+    });
+
+    stager.extendStep('IBT', {
+        // frame: 'ibt.htm',
+        frame: 'ibt_alt.htm',
+        cb: function() {
+            this.talk('--------- IMPLICIT BIAS TEST ----------')
         }
     });
 

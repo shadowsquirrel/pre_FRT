@@ -1,0 +1,174 @@
+/* hide scrollbar but allow scrolling */
+body {
+  -ms-overflow-style: none!important; /* for Internet Explorer, Edge */
+  scrollbar-width: none!important; /* for Firefox */
+  overflow-y: scroll!important;
+  overflow: hidden!important;
+  /* margin-right:-261px!important; */
+}
+
+body::-webkit-scrollbar {
+  display: none; /* for Chrome, Safari, and Opera */
+
+}
+
+.photoIndicator
+{
+    position:absolute;
+    top:10px;
+    left:10px;
+    font-size:5rem;
+    display:none;
+}
+
+
+.main-wrap-row
+{
+    /* height:100vh; */
+    display:flex;
+    flex-direction: row;
+    /* background-color: red; */
+    justify-content: center;
+    /* transform-origin:top;
+    transform:scale(0.8); */
+}
+.main-wrap-column
+{
+    display:flex;
+    flex-direction: column;
+    /* background-color: blue; */
+    justify-content: center;
+}
+
+.introToTrial
+{
+    position: absolute;
+    z-index: 2;
+    top: 35%;
+    margin-left: 3%;
+}
+.trialIntroText
+{
+    transition:0.25s;
+    opacity:0;
+    text-align: center;
+    font-size:5rem;
+}
+#trialNumber
+{
+    transition:0.25s;
+    transition-delay: 0.05s;
+    opacity:0;
+}
+.myProgress
+{
+    width:100vh;
+}
+
+
+
+.primer-empty
+{
+    height:90vh;
+    display:flex;
+    transition:0s;
+    top:0vh;
+    position:relative;
+    z-index:1;
+    opacity:1;
+}
+.primer-photo
+{
+    transition:0s;
+    display:flex;
+    position:absolute;
+    top:5vh;
+    height:90vh;
+    z-index:0;
+    opacity:0.4;
+}
+.primer-string
+{
+    transition:0s;
+    display:flex;
+    position:absolute;
+    top:5vh;
+    height:90vh;
+    z-index:0;
+}
+.primer-empty
+{
+    transform: scale(1.35);
+}
+.string-p
+{
+    transform: scale(1.1);
+}
+.string-h
+{
+    transform: scale(1.35);
+}
+
+.text-wrap-column
+{
+    transition:0s;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    position:absolute;
+    top:5vh;
+    height:90vh;
+    width:120vh;
+    z-index:0;
+    font-size:15vh;
+}
+.text-wrap-row
+{
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.buttonHelper-wrap-row
+{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top:20vh;
+    margin-bottom:-20vh;
+}
+.leftButton
+{
+    border-radius:100px;
+    font-size:3rem;
+    padding:20px;
+    transition:0s;
+}
+.rightButton
+{
+    border-radius:100px;
+    font-size:3rem;
+    padding:20px;
+    transition:0s;
+}
+.fake-buttonHelper-wrap-row
+{
+    display:flex;
+    flex-direction: row;
+    justify-content: space-between;
+    /* margin-top:20vh;
+    margin-bottom:-20vh; */
+}
+.fakeLeftButton
+{
+    border-radius:100px;
+    font-size:3rem;
+    padding:20px;
+    transition:0s;
+}
+.fakeRightButton
+{
+    border-radius:100px;
+    font-size:3rem;
+    padding:20px;
+    transition:0s;
+}
