@@ -1,0 +1,31 @@
+"player","ibt_Icon","ibt_PhotoIndex","ibt_IconIndex","ibt_AdjIndex","ibt_Adjective","ibt_Answer","ibt_isAnswerRelevant","ibt_isAnswerCorrect","ibt_IntroTimeDuration","ibt_PrimerDisplayDuration","ibt_ReactionTime"
+"867585838890511","person",1,1,3,"bad","NO ANSWER",1,0,2503,23,756
+"867585838890511","person",4,1,3,"bad","NO ANSWER",1,0,2515,22,757
+"867585838890511","person",2,1,1,"kind","NO ANSWER",1,0,2505,21,758
+"867585838890511","person",1,1,5,"untrustworthy","NO ANSWER",1,0,2509,22,764
+"867585838890511","person",3,1,5,"untrustworthy","NO ANSWER",1,0,2518,21,760
+"867585838890511","person",2,1,3,"bad","NO ANSWER",1,0,2508,21,761
+"867585838890511","person",1,1,1,"kind","NO ANSWER",1,0,2509,22,752
+"867585838890511","person",4,1,5,"untrustworthy","NO ANSWER",1,0,2503,21,762
+"867585838890511","person",1,1,0,"good","NO ANSWER",1,0,2507,24,764
+"867585838890511","person",2,1,2,"trustworthy","NO ANSWER",1,0,2510,22,759
+"867585838890511","person",3,1,2,"trustworthy","NO ANSWER",1,0,2515,21,766
+"867585838890511","person",4,1,2,"trustworthy","NO ANSWER",1,0,2513,22,761
+"867585838890511","person",3,1,3,"bad","NO ANSWER",1,0,2502,21,764
+"867585838890511","person",1,1,4,"cruel","NO ANSWER",1,0,2506,21,762
+"867585838890511","person",3,1,1,"kind","NO ANSWER",1,0,2504,21,760
+"867585838890511","person",3,1,4,"cruel","NO ANSWER",1,0,2513,21,762
+"867585838890511","person",2,1,5,"untrustworthy","NO ANSWER",1,0,2515,22,760
+"867585838890511","person",4,1,1,"kind","NO ANSWER",1,0,2505,22,760
+"867585838890511","person",2,1,4,"cruel","NO ANSWER",1,0,2512,21,762
+"867585838890511","person",4,1,4,"cruel","YES",1,1,2501,21,40
+"867585838890511","person",1,1,2,"trustworthy","YES",1,1,2501,21,239
+"867585838890511","person",2,1,0,"good","NO ANSWER",1,0,2514,24,766
+"867585838890511","person",4,1,0,"good","YES",1,1,2503,23,449
+"867585838890511","person",3,1,0,"good","YES",1,1,2516,21,468
+"867585838890511","person",4,1,"NA","NA","NO",1,0,2504,22,476
+"867585838890511","person",2,1,"NA","NA","YES",1,1,2505,21,465
+"867585838890511","person",1,1,"NA","NA","YES",1,1,2508,22,418
+"867585838890511","person",2,1,"NA","NA","YES",1,1,2501,22,517
+"867585838890511","person",3,1,"NA","NA","YES",1,1,2505,21,405
+"867585838890511","person",4,1,"NA","NA","YES",1,1,2514,22,422

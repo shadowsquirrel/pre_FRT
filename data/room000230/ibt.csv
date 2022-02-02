@@ -1,0 +1,18 @@
+"player","ibt_Icon","ibt_PhotoIndex","ibt_IconIndex","ibt_AdjIndex","ibt_Adjective","ibt_Answer","ibt_isAnswerRelevant","ibt_isAnswerCorrect","ibt_IntroTimeDuration","ibt_PrimerDisplayDuration","ibt_ReactionTime"
+"840285365095197","house",0,0,3,"furnished","NO ANSWER",0,0,2003,2013,3001
+"840285365095197","house",2,0,0,"leaky","YES",0,"whoCares?",2013,2002,1187
+"840285365095197","house",3,0,1,"roomy","YES",0,"whoCares?",2004,2001,814
+"840285365095197","house",2,0,4,"drafty","NO ANSWER",0,0,2013,2010,3003
+"840285365095197","house",4,0,3,"furnished","NO ANSWER",0,0,2007,2006,3008
+"840285365095197","house",2,0,1,"roomy","NO ANSWER",0,0,2004,2002,3002
+"840285365095197","person",0,1,1,"kind","NO ANSWER",1,0,2005,2002,3002
+"840285365095197","house",4,0,2,"wooden","NO ANSWER",0,0,2007,2002,3005
+"840285365095197","person",4,1,3,"bad","NO ANSWER",1,0,2009,2013,3002
+"840285365095197","house",2,0,5,"thatch","NO ANSWER",0,0,2008,2001,3002
+"840285365095197","person",2,1,1,"kind","NO ANSWER",1,0,2003,2004,3016
+"840285365095197","house",4,0,1,"roomy","NO ANSWER",0,0,2009,2003,3003
+"840285365095197","house",1,0,3,"furnished","NO ANSWER",0,0,2004,2002,3002
+"840285365095197","person",1,1,3,"bad","NO ANSWER",1,0,2040,2004,3003
+"840285365095197","house",3,0,5,"thatch","NO ANSWER",0,0,2006,2001,3002
+"840285365095197","person",3,1,5,"untrustworthy","NO ANSWER",1,0,2005,2003,3002
+"840285365095197","house",0,0,4,"drafty","NO ANSWER",0,0,2003,2003,3001

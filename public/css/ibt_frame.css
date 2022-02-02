@@ -102,11 +102,11 @@ body::-webkit-scrollbar {
 }
 .string-p
 {
-    transform: scale(1.1);
+    /* transform: scale(1.1); */
 }
 .string-h
 {
-    transform: scale(1.35);
+    /* transform: scale(1.35); */
 }
 
 .text-wrap-column
