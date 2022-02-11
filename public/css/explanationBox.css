@@ -31,19 +31,21 @@
     justify-content: center;
     transition:0.5s;
 }
-.box
-{
-    display:flex;
+.box {
+    display: flex;
     flex-direction: row;
-    width:1000px;
-    background-color:rgb(255, 254, 198);
-    box-shadow: 0px 2px 5px 1px black;
-    border:4px inset gray;
-    transform-origin: top left;
-    transition:0.5s;
-    position:absolute;
-    transform:scale(0);
+    width: 1000px;
+    /* background-color: rgb(255, 254, 198); */
+    box-shadow: 0px 2px 2px 1px black;
+    border: 1px inset brown;
+    border-radius: 16px;
+    /* transform-origin: top left; */
+    /* transition: 0.5s; */
+    position: absolute;
+    transform: scale(0);
+    background-color: aliceblue;
 }
+
 .text
 {
     padding:10px;
@@ -56,6 +58,7 @@
     display:flex;
     flex-direction:column;
     justify-content: center;
+    background-color: aliceblue;
 }
 .buttonWrap
 {
@@ -72,19 +75,19 @@
     margin-right:20px;
     height:60px;
     width:80px;
-    background-color:darkgreen;
+    background-color:burlywood;
     box-shadow:0px 3px 4px 2px black;
     cursor:pointer;
-    border:solid 2px black;
     color:white;
     font-size:38px;
-    font-weight:800;
+    border-radius: 25%;
+    
 
 }
 .button:hover
 {
     color:white;
-    background-color:darkred;
+    background-color:darkgoldenrod;
     border:solid 2px black;
 
 }

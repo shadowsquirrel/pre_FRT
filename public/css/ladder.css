@@ -144,8 +144,8 @@
     margin-right:20px;
     height:60px;
     width:185px;
-    background-color:darkgreen;
-    box-shadow:0px 3px 4px 2px black;
+    background-color:goldenrod;
+    box-shadow:0px 2px 2px 1px black;
     cursor:pointer;
     border:solid 2px black;
     color:white;
@@ -156,7 +156,7 @@
 .finalLadderButton:hover
 {
     color:white;
-    background-color:darkred;
+    background-color:darkgoldenrod;
     border:solid 2px black;
 }
 .finalLadderButton:active
