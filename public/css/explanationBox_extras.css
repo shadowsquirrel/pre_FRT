@@ -1,13 +1,13 @@
 .welcomeTitle
 {
     display: flex;
-    font-size: 58px;
+    font-size: 58px;/* SAMIRA  old size 65*/
     font-weight: 100;
     text-align: center;
     justify-content: center;
     flex-direction: row;
-    /* background: linear-gradient(0deg, rgb(30,30,30), rgb(210,210,210)); */
-    background: cadetblue;
+    /* background: linear-gradient(0deg, rgb(30,30,30), rgb(210,210,210)); *//* SAMIRA */
+    background: cadetblue;/* SAMIRA */
     width: 1000px;
     border-radius: 100px;
     color: rgb(40 40 40);

@@ -21,8 +21,8 @@
     display:flex;
     flex-direction: column;
     justify-content: center;
-    /*border:3px solid black;*/
-    border: 10px;
+    /*border:3px solid black;*//* SAMIRA */
+    border: 10px;/* SAMIRA */
 }
 .leftFace
 {
@@ -57,7 +57,7 @@
     opacity: 0;
     height: 150px;
     border-radius: 100px;
-    /* box-shadow: 0px 8px 4px 0px black; */
+    /* box-shadow: 0px 8px 4px 0px black; *//* SAMIRA */
     cursor: pointer;
     transition: 0.1s;
 }
@@ -120,16 +120,17 @@
     border-radius: 100px;
     width: 139px;
     padding-top: 15px;
-    width: 200px;
+    width: 200px;/* SAMIRA */
     padding-top: 0px;
     padding-bottom: 5px;
-    font-size: 48px;
-    font-weight: 600;
+    font-size: 48px;/* SAMIRA */
+    font-weight: 600;/* SAMIRA */
 }
 
 .transitionButton:hover
 {
-    background-color:darkgoldenrod;
+    /* background-color: gray; *//* SAMIRA */
+    background-color:darkgoldenrod;/* SAMIRA */
     color:white;
 }
 .transitionButton:active

@@ -35,15 +35,15 @@
     display: flex;
     flex-direction: row;
     width: 1000px;
-    /* background-color: rgb(255, 254, 198); */
+    /* background-color: rgb(255, 254, 198); *//* SAMIRA */
     box-shadow: 0px 2px 2px 1px black;
     border: 1px inset brown;
     border-radius: 16px;
-    /* transform-origin: top left; */
-    /* transition: 0.5s; */
+    /* transform-origin: top left; *//* SAMIRA */
+    /* transition: 0.5s; *//* SAMIRA */
     position: absolute;
     transform: scale(0);
-    background-color: aliceblue;
+    background-color: aliceblue;    /* SAMIRA */
 }
 
 .text
@@ -58,7 +58,7 @@
     display:flex;
     flex-direction:column;
     justify-content: center;
-    background-color: aliceblue;
+    background-color: aliceblue;/* SAMIRA */
 }
 .buttonWrap
 {
@@ -75,18 +75,21 @@
     margin-right:20px;
     height:60px;
     width:80px;
-    background-color:burlywood;
+    /* background-color: darkgreen;*//* SAMIRA */
+    background-color:burlywood;/* SAMIRA */
     box-shadow:0px 3px 4px 2px black;
     cursor:pointer;
     color:white;
     font-size:38px;
+    /* font-weight:800; *//* SAMIRA */
     border-radius: 25%;
-    
+
 
 }
 .button:hover
 {
     color:white;
+    /* background-color: darkred; *//* SAMIRA */
     background-color:darkgoldenrod;
     border:solid 2px black;
 
