@@ -111,8 +111,10 @@
 .transitionButton {
     transition: 0.2s;
     cursor: pointer;
-    /* box-shadow: 0px 6px 8px 2px black; *//* SAMIRA */
-    box-shadow: 0px 1px 2px 2px black;/* SAMIRA */
+    /* CAN */
+    box-shadow: 0px 6px 8px 2px black;
+    /* SAMIRA */
+    /* box-shadow: 0px 1px 2px 2px black; */
     border-radius: 100px;
     width: 139px;
     padding-top: 15px;

@@ -433,7 +433,12 @@ box.button.hide = function(id) {
 
     id = '#btn-' + id;
 
-    $(id).css({'transform':'scale(0) rotate(1turn)'});
+    // $(id).css({'transform':'scale(0) rotate(1turn)'});
+
+    $(id).css({'transition':'0.1s', 'opacity':'0'});
+    setTimeout(()=>{
+        $(id).css({'transition':'0.1s', 'transform':'scale(0)'});
+    }, 150)
 
 }
 
@@ -441,11 +446,17 @@ box.button.show = function(id, size) {
 
     size = size === undefined ? 1 : size;
 
-    var string = 'scale(' + size + ') rotate(0turn)'
+    // var string = 'scale(' + size + ') rotate(0turn)';
+
+    var string = 'scale(' + size + ')';
 
     id = '#btn-' + id;
 
     $(id).css({'transform':string});
+    setTimeout(()=>{
+        $(id).css({'transition':'0.1s','opacity':'1'});
+    }, 750)
+
 
 }
 
@@ -453,12 +464,16 @@ box.button.show2 = function(id, size) {
 
     size = size === undefined ? 1 : size;
 
-    var string = 'scale(' + size + ') rotate(1turn)'
+    // var string = 'scale(' + size + ') rotate(1turn)';
+    var string = 'scale(' + size + ')';
 
     var temp = id;
     id = '#btn-' + id;
 
     $(id).css({'transition':'0.75s', 'transform':string});
+    setTimeout(()=>{
+        $(id).css({'transition':'0.1s','opacity':'1'});
+    }, 750)
 
     setTimeout(()=>{
         tool.active.sparkle = true;

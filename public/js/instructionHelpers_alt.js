@@ -148,7 +148,7 @@ window.onload = function() {
                 index = 1;
             }
 
-            if(picture.fastForwardCounter > 50) {
+            if(picture.fastForwardCounter > 20) {
                 picture.hide(3)
                 setTimeout(()=>{
                     picture.fastForwardActive = false;
@@ -157,7 +157,7 @@ window.onload = function() {
 
             setTimeout(()=>{
                 picture.fastForward(index)
-            }, 20)
+            }, 200)
 
 
         }
