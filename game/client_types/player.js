@@ -798,27 +798,28 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         },
     });
 
-    stager.extendStep('testStep', {
-
-        frame: function() {
-
-                if(!node.game.buttonTop) {
-                    return 'test1.htm';
-                } else {
-                    return 'test2.htm';
-                }
-
-        },
-
-        cb: function() {
-            this.talk('------- TEST STEP ---------')
-            this.talk('node.game.buttonTop: ' + node.game.buttonTop);
-            this.talk('node.game.dtd: ' + node.game.dtd);
-            this.talk('---------------------------')
-            node.done();
-        }
-
-    });
+    // stager.extendStep('testStep', {
+    //
+    //     frame: function() {
+    //
+    //             if(!node.game.buttonTop) {
+    //                 return 'test1.htm';
+    //             } else {
+    //                 return 'test2.htm';
+    //             }
+    //
+    //     },
+    //
+    //     cb: function() {
+    //         this.talk('------- TEST STEP ---------')
+    //         this.talk('node.game.buttonTop: ' + node.game.buttonTop);
+    //         this.talk('node.game.dtd: ' + node.game.dtd);
+    //         this.talk('---------------------------')
+    //         this.talk(node.game.stage)
+    //         node.done();
+    //     }
+    //
+    // });
 
     stager.extendStep('instructions', {
 
@@ -835,6 +836,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             this.talk('node.game.buttonTop: ' + node.game.buttonTop);
             this.talk('node.game.dtd: ' + node.game.dtd);
             this.talk('---------------------------')
+            this.talk(node.game.stage)
         }
 
     });

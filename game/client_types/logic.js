@@ -21,7 +21,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     // Make the logic independent from players position in the game.
     stager.setDefaultStepRule(ngc.stepRules.SOLO);
 
-    // Must implement the stages here.
 
     stager.setOnInit(function() {
 
@@ -189,18 +188,18 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         // for debug the data lists wont match this
         // and we will have errors at the end
-        // node.game.ibt.stateList = [
-        //     1, 1, 1, 1, 1, 1,
-        //     1, 1, 1, 1, 1, 1,
-        //     1, 1, 1, 1, 1, 1,
-        //     1, 1, 1, 1, 1, 1,
-        //     1, 1, 1, 1, 1, 1,
-        //     1, 1, 1, 1, 1, 1,
-        //     1, 1, 1, 1, 1, 1,
-        //     1, 1, 1, 1, 1, 1,
-        //     1, 1, 1, 1, 1, 1,
-        //     1, 0, 1, 0, 1, 1
-        // ];
+        node.game.ibt.stateList = [
+            1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1,
+            1, 1, 1, 1, 1, 1,
+            1, 0, 1, 0, 1, 1
+        ];
 
         // there are 4 photos plus no photo
         // no photo index is 0
@@ -219,22 +218,22 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             ],
 
             // hidden photo primer list for persons
-            [
-                0, 4, 2, 1, 3, 2,
-                1, 4, 1, 0, 3, 0,
-                3, 1, 0, 3, 2, 4,
-                2, 4, 1, 2, 0, 3,
-                4, 0, 1, 2, 3, 4
-            ]
+            // [
+            //     0, 4, 2, 1, 3, 2,
+            //     1, 4, 1, 0, 3, 0,
+            //     3, 1, 0, 3, 2, 4,
+            //     2, 4, 1, 2, 0, 3,
+            //     4, 0, 1, 2, 3, 4
+            // ],
 
             // // debug setup will fail to cover all
-            // [
-            //     1, 2, 3, 4, 1, 2,
-            //     3, 4, 1, 2, 3, 4,
-            //     1, 2, 3, 4, 1, 2,
-            //     3, 4, 1, 2, 3, 4,
-            //     1, 2, 3, 4, 1, 2,
-            // ]
+            [
+                1, 2, 3, 4, 1, 2,
+                3, 4, 1, 2, 3, 4,
+                1, 2, 3, 4, 1, 2,
+                3, 4, 1, 2, 3, 4,
+                1, 2, 3, 4, 1, 2,
+            ]
 
         ];
 
@@ -1166,9 +1165,11 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         }
 
         // Reconnection.
-        // node.on.preconnect(function(player) {
-        //     console.log('A previously disconnected player reconnected to the game: ' + p.id);
-        // });
+        node.on.preconnect(function(player) {
+            console.log('A previously disconnected player reconnected to the game: ' + player.id);
+            console.log('disconnected at stage: ' + player.disconnectedStage.stage);
+            console.log(node.game.stage);
+        });
 
     });
 
@@ -1246,41 +1247,41 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     });
 
 
-    stager.extendStep('testStep', {
-
-        reconnect: function(player, reconOpts) {
-
-            console.log();
-            console.log();
-            console.log(' ---------------------------------------- ');
-            console.log(' ---------------------------------------- ');
-            console.log(' --- INSIDE TEST STEP RECONNECT OPT --- ');
-            console.log(' ---------------------------------------- ');
-            console.log(' ---------------------------------------- ');
-            console.log();
-            console.log();
-
-            // node.game.disconnected.reIntroduce(player);
-            reconOpts.plot.frame = 'test2.htm';
-
-        },
-
-        init: function() {
-
-            console.log();
-            console.log();
-            console.log('*****************************');
-            console.log('*****************************');
-            console.log('*******   TEST STEP   ******');
-            console.log('*****************************');
-            console.log('*****************************');
-            console.log();
-            console.log();
-
-        },
-
-
-    });
+    // stager.extendStep('testStep', {
+    //
+    //     reconnect: function(player, reconOpts) {
+    //
+    //         console.log();
+    //         console.log();
+    //         console.log(' ---------------------------------------- ');
+    //         console.log(' ---------------------------------------- ');
+    //         console.log(' --- INSIDE TEST STEP RECONNECT OPT --- ');
+    //         console.log(' ---------------------------------------- ');
+    //         console.log(' ---------------------------------------- ');
+    //         console.log();
+    //         console.log();
+    //
+    //         // node.game.disconnected.reIntroduce(player);
+    //         reconOpts.plot.frame = 'test2.htm';
+    //
+    //     },
+    //
+    //     init: function() {
+    //
+    //         console.log();
+    //         console.log();
+    //         console.log('*****************************');
+    //         console.log('*****************************');
+    //         console.log('*******   TEST STEP   ******');
+    //         console.log('*****************************');
+    //         console.log('*****************************');
+    //         console.log();
+    //         console.log();
+    //
+    //     },
+    //
+    //
+    // });
 
 
     stager.extendStep('identifyFaces', {

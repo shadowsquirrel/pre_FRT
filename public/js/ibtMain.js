@@ -51,16 +51,20 @@ window.onload = function() {
 
     // intro duration also serves as the waiting time between trials
     var introDuration = 2500;
+    var introDuration = 2000;
 
     // duration of the primer photo being displayed
     var photoDuration = 20;
+    var photoDuration = 2000;
 
     // duration of the icon being displayed
     var iconDuration = 250;
+    var iconDuration = 2500;
 
     // max time to answer
     var adjDuration = 1000;
     adjDuration = 750;
+    adjDuration = 2000;
 
 
     // debug

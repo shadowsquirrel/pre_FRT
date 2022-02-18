@@ -1,0 +1,6 @@
+"player","ibt_Icon","ibt_PhotoIndex","ibt_IconIndex","ibt_AdjIndex","ibt_Adjective","ibt_Answer","ibt_isAnswerRelevant","ibt_isAnswerCorrect","ibt_IntroTimeDuration","ibt_PrimerDisplayDuration","ibt_ReactionTime"
+"179777823639391","house",0,0,3,"furnished","NO ANSWER",0,0,5020,2009,2016
+"179777823639391","house",2,0,0,"leaky","NO ANSWER",0,0,5009,2046,2022
+"179777823639391","house",3,0,1,"roomy","NO ANSWER",0,0,2065,2009,2003
+"179777823639391","house",2,0,4,"drafty","YES",0,"whoCares?",2015,2005,475
+"179777823639391","house",4,0,3,"furnished","NO ANSWER",0,0,2003,2011,2026
