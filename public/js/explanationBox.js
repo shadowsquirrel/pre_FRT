@@ -9,6 +9,8 @@ var box = {
 
     set: {},
     show: {},
+    sparkle:{},
+    active:{},
     hide: {},
     global: {},
     button: {},
@@ -17,6 +19,8 @@ var box = {
 
 }
 
+box.global.NoB = undefined;
+box.global.currentBoxNumber = 0;
 
 box.global.previousKey = undefined;
 box.global.currentKey = undefined;
@@ -348,6 +352,8 @@ box.flush = function() {
 
 }
 
+
+
 box.hide = function(id, transform, moveToReviewBox) {
 
     var idCore = id.split('box-')[1];
@@ -431,6 +437,9 @@ box.transition2 = function(id1, id2, transform, addSpaceBetween, hideButton, del
 
 box.button.hide = function(id) {
 
+
+    box.active.sparkle = false;
+
     id = '#btn-' + id;
 
     // $(id).css({'transform':'scale(0) rotate(1turn)'});
@@ -452,10 +461,10 @@ box.button.show = function(id, size) {
 
     id = '#btn-' + id;
 
-    $(id).css({'transform':string});
+    $(id).css({'transition':'0s','transform':string});
     setTimeout(()=>{
-        $(id).css({'transition':'0.1s','opacity':'1'});
-    }, 750)
+        $(id).css({'transition':'0.25s','opacity':'1'});
+    }, 10)
 
 
 }
@@ -470,18 +479,50 @@ box.button.show2 = function(id, size) {
     var temp = id;
     id = '#btn-' + id;
 
-    $(id).css({'transition':'0.75s', 'transform':string});
+    $(id).css({'transition':'0s', 'transform':string});
     setTimeout(()=>{
-        $(id).css({'transition':'0.1s','opacity':'1'});
+        $(id).css({'transition':'0.25s','opacity':'1'});
     }, 750)
 
     setTimeout(()=>{
-        tool.active.sparkle = true;
-        tool.sparkle(temp);
+        box.active.sparkle = true;
+        box.sparkle(temp);
     }, 1000)
 
 }
 
+box.active.sparkle = true;
+box.sparkle = function(buttonIndex) {
+
+    var bS = '#btn-' + buttonIndex;
+
+    if(box.active.sparkle) {
+
+        $(bS).css({'transition':'0.05s', 'filter': 'hue-rotate(0deg) saturate(1)'});
+
+        setTimeout(()=>{
+            $(bS).css({'transition':'0.05s', 'filter': 'hue-rotate(-95deg) saturate(5)'});
+        }, 1500)
+
+        setTimeout(()=>{
+            $(bS).css({'transition':'0.05s', 'filter': 'hue-rotate(0deg) saturate(1)'});
+        }, 1600)
+
+        setTimeout(()=>{
+            $(bS).css({'transition':'0.05s', 'filter': 'hue-rotate(-95deg) saturate(5)'});
+        }, 1700)
+
+        setTimeout(()=>{
+            box.sparkle(buttonIndex);
+        }, 1800)
+
+    } else {
+
+        $(bS).css({'transition':'0.5s', 'filter': 'hue-rotate(0deg) saturate(1)'});
+
+    }
+
+}
 
 box.global.stopWiggle = true;
 
@@ -528,5 +569,26 @@ box.slider.wiggle = function(state) {
     } else {
         $('.buttonIndicator2').css({'transition':'0.3s', 'opacity':'0', 'transform':'scale(0)'});
     }
+
+}
+
+
+box.updateProgressBar = function() {
+
+    console.log('inside box.updateProgressBar');
+
+    var totalSize = box.global.NoB;
+    box.global.currentBoxNumber++;
+    var currentSize = box.global.currentBoxNumber;
+
+    var pp = ( currentSize / totalSize ) * 100;
+
+    pp = pp + '%';
+
+    console.log(pp);
+
+    $('.progress-bar').css({'width':pp});
+
+    console.log(box.global.currentBoxNumber);
 
 }

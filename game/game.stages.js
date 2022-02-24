@@ -17,24 +17,18 @@ module.exports = function(stager, settings) {
     // potentially we may need to define more hidden steps between every step
 
     stager
-    .next('hiddenStep')
-    .next('testStep')
     .next('instructions')
     .next('identifyFaces')
     .next('survey2')
-    .repeat('IBT', 60)
     .next('results')
     .next('survey1')
     .next('end')
     .gameover();
 
     // Modify the stager to skip one stage.
-    // stager.skip('hiddenStep');
-    stager.skip('testStep');
     // stager.skip('instructions');
     // stager.skip('identifyFaces');
     // stager.skip('survey2');
-    stager.skip('IBT');
     // stager.skip('results');
     // stager.skip('survey1');
     // stager.skip('end');

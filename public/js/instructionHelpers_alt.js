@@ -7,7 +7,6 @@ var go = {};
 var tuto = {};
 var listener = {};
 var timer = {};
-var dtd = undefined;
 
 
 timer.stop = false;
@@ -20,33 +19,17 @@ tuto.timerIsOn = false;
 
 window.onload = function() {
 
+    // --------------- //
+
     var node = parent.node;
+
+    box.global.NoB = 16;
+    // box.updateProgressBar();
 
     // --------------- //
 
     node.emit('HTML-startSecretTutoTimer');
 
-    // --------------- //
-
-    node.on('requestDtd-HTML', function(msg) {
-
-        console.log('');
-        console.log('DTD RECEIVED FROM THE CLIENT: ' + msg);
-        console.log('');
-
-        dtd = msg;
-
-        dtd = dtd/1000;
-
-        console.log(dtd);
-
-        $('#dtd1').html(dtd);
-
-    })
-
-    node.emit('HTML-requestDtd');
-
-    // --------------- //
 
     // ----------------------- //
     // --------  GO  --------- //
@@ -98,11 +81,12 @@ window.onload = function() {
 
     // index will redefined picture.index
     // if index undefined, current picture.index definition is used
-    picture.set = function(index) {
+    picture.set = function(index, path) {
 
         picture.index = index === undefined ? picture.index : index;
 
-        var myString = 'faces/tuto/';
+        var myPath = path === undefined ? 'tuto' : path;
+        var myString = 'faces/' + myPath + '/';
 
         var sourceLeft = myString + picture.index + 'a' + '.jpg';
 
@@ -114,55 +98,22 @@ window.onload = function() {
 
     }
 
-    picture.set2 = function(index) {
-
-        picture.index = index === undefined ? picture.index : index;
-
-        var myString = 'faces/exp/';
-
-        var sourceLeft = myString + index + 'a' + '.jpg';
-
-        var sourceRight = myString + index + 'b' + '.jpg'
-
-        $('#lF').attr('src', sourceLeft);
-
-        $('#rF').attr('src', sourceRight);
-
-    }
-
-    picture.fastForwardActive = true;
-    picture.fastForwardCounter = 0;
-    picture.fastForward = function(index) {
-
-        if(picture.fastForwardActive) {
-
-            picture.fastForwardCounter++
-
-            picture.show(0.1)
-
-            picture.set2(index);
-
-            if(index < 28) {
-                index++
-            } else {
-                index = 1;
-            }
-
-            if(picture.fastForwardCounter > 20) {
-                picture.hide(3)
-                setTimeout(()=>{
-                    picture.fastForwardActive = false;
-                }, 3100)
-            }
-
-            setTimeout(()=>{
-                picture.fastForward(index)
-            }, 200)
-
-
-        }
-
-    }
+    // picture.set is modified now picture.set2 is not used
+    // picture.set2 = function(index) {
+    //
+    //     picture.index = index === undefined ? picture.index : index;
+    //
+    //     var myString = 'faces/exp/';
+    //
+    //     var sourceLeft = myString + index + 'a' + '.jpg';
+    //
+    //     var sourceRight = myString + index + 'b' + '.jpg'
+    //
+    //     $('#lF').attr('src', sourceLeft);
+    //
+    //     $('#rF').attr('src', sourceRight);
+    //
+    // }
 
     picture.hide = function(delay) {
 
@@ -184,6 +135,44 @@ window.onload = function() {
 
     }
 
+    picture.fastForwardActive = true;
+    picture.fastForwardCounter = 0;
+    picture.fastForward = function(index) {
+
+        if(picture.fastForwardActive) {
+
+            picture.fastForwardCounter++
+
+            picture.show(0.1)
+
+            picture.set(index, 'exp');
+
+            if(index < 28) {
+                index++
+            } else {
+                index = 1;
+            }
+
+            if(picture.fastForwardCounter > 20) {
+                picture.hide(1)
+                setTimeout(()=>{
+                    picture.fastForwardActive = false;
+                    picture.set(1);
+                    $('.facePicture').css({'filter':'brightness(1) opacity(1) blur(0px) saturate(1) grayscale(0)'});
+                    setTimeout(()=>{
+                        picture.show(1.5);
+                    }, 500)
+                }, 1100)
+            }
+
+            setTimeout(()=>{
+                picture.fastForward(index)
+            }, 100)
+
+
+        }
+
+    }
 
     // ----------------------- //
     // --  DECISION BUTTON  -- //
@@ -266,6 +255,8 @@ window.onload = function() {
 
         if(listener.c1) {
 
+            box.updateProgressBar();
+
             // listener.c1 = false;
 
             box.transition('C-1', '', 0, 0, 1, 0);
@@ -290,7 +281,7 @@ window.onload = function() {
                 setTimeout(()=>{
                     console.log('NODE.EMIT(STARTTUTOTIMER WITH ACTIVE TIMEOUT for c1)');
                     node.emit('startTutoTimer', 'c1');
-                }, 1000)
+                }, 50)
 
             }, 1200)
 
@@ -299,6 +290,7 @@ window.onload = function() {
         if(listener.c2) {
 
             // listener.c2 = false;
+            box.updateProgressBar();
 
             box.transition('C-3', '', 0, 0, 1, 0);
 
@@ -313,15 +305,64 @@ window.onload = function() {
             // show the pictures & buttons
             setTimeout(()=>{
 
-                picture.show(0.3);
-                button.show(0.3);
+                picture.show(0.1);
+                button.show(0.1);
 
                 console.log('NODE.EMIT(STARTTUTOTIMER WITH ACTIVE TIMEOUT for c2)');
                 node.emit('startTutoTimer', 'c2');
 
-            }, 1000)
+            }, 150)
 
         }
+
+        if(listener.c3) {
+
+            box.updateProgressBar();
+            go.hide(0.1);
+            $('#box-C-31').css({'opacity':'0'});
+
+            // set to picture based on picture.index
+            picture.set(5);
+
+            // show the pictures & buttons
+            setTimeout(()=>{
+
+                picture.show(0.1);
+                button.show(0.1);
+
+                console.log('NODE.EMIT(STARTTUTOTIMER WITH ACTIVE TIMEOUT for c3)');
+                node.emit('startTutoTimer', 'c3');
+
+            }, 150)
+
+        }
+
+        if(listener.c4) {
+
+            box.updateProgressBar();
+            go.hide(0.1);
+            $('#box-C-31').css({'opacity':'0'});
+            setTimeout(()=>{
+                box.transition('', 'C-31', 0, 0, 1, 0);
+            }, 1000)
+
+            // set to picture based on picture.index
+            picture.set(0);
+
+            // show the pictures & buttons
+            setTimeout(()=>{
+
+                picture.show(0.1);
+                button.show(0.1);
+
+                console.log('NODE.EMIT(STARTTUTOTIMER WITH ACTIVE TIMEOUT for c4)');
+                node.emit('startTutoTimer', 'c4');
+
+            }, 150)
+
+        }
+
+
 
     })
 
@@ -357,6 +398,8 @@ window.onload = function() {
 
         if(listener.b5) {
 
+            box.updateProgressBar();
+
             listener.b5 = false;
 
             // console.log('node.emit(stopTutoTimer) b5');
@@ -364,7 +407,6 @@ window.onload = function() {
 
 
             button.hide();
-
             picture.hide();
 
             $('.frame-A').css({'transform':'scale(1)'})
@@ -387,12 +429,13 @@ window.onload = function() {
 
             listener.c1 = false;
 
+            box.updateProgressBar();
+
             console.log('node.emit(stopTutoTimer) c1');
             node.emit('stopTutoTimer');
 
-            button.hide(1);
-
-            picture.hide(1);
+            button.hide(0.1);
+            picture.hide(0.1);
 
             box.transition('', 'C-2', 0, 0, 1, 0);
             $('.frame-A').css({'margin-top':'-100px'});
@@ -403,38 +446,100 @@ window.onload = function() {
                 box.button.show('C-2');
             }, 2750)
 
+            go.active = false;
+            $('.transitionButtonBlocker').css({'display':'block'});
+
             setTimeout(()=>{
-                go.active = false;
                 go.show(1);
-            }, 3000)
+            }, 2000)
 
         }
 
         if(listener.c2) {
 
             listener.c2 = false;
+            box.updateProgressBar();
 
             console.log('node.emit(stopTutoTimer) c2');
             node.emit('stopTutoTimer');
 
-            button.hide(1);
+            // button.hide(1);
+            // picture.hide(1);
+            //
+            // $('.frame-A').css({'opacity':'0'})
+            // setTimeout(()=>{
+            //     $('.frame-A').css({'transform':'scale(0)', 'margin-bottom':'-345px'})
+            // }, 1000)
+            //
+            // setTimeout(()=>{
+            //
+            //     box.transition('', 'C-4', 0, 0, 1, 0);
+            //     $('.frame-A').css({'margin-top':'-100px'});
+            //     setTimeout(()=>{
+            //         box.button.show('C-4');
+            //     }, 1750)
+            //
+            // }, 1500)
 
-            picture.hide(1);
+            button.hide(0.1);
+            picture.hide(0.1);
 
-            $('.frame-A').css({'opacity':'0'})
             setTimeout(()=>{
-                $('.frame-A').css({'transform':'scale(0)', 'margin-bottom':'-345px'})
-            }, 1000)
+                go.show(0.1);
+                box.transition('', 'C-31', 0, 0, 1, 0);
+                listener.c3 = true;
+            }, 150)
+
+        }
+
+        if(listener.c3) {
+
+            listener.c3 = false;
+            box.updateProgressBar();
+
+            console.log('node.emit(stopTutoTimer) c3');
+            node.emit('stopTutoTimer');
+
+            button.hide(0.1);
+            picture.hide(0.1);
+
+            setTimeout(()=>{
+                go.show(0.1);
+                $('#box-C-31').css({'opacity':'1'});
+                listener.c4 = true;
+            }, 150)
+
+        }
+
+        if(listener.c4) {
+
+            listener.c4 = false;
+            box.updateProgressBar();
+
+            console.log('node.emit(stopTutoTimer) c4');
+            node.emit('stopTutoTimer');
+
+            button.hide(0.1);
+            picture.hide(0.1);
 
             setTimeout(()=>{
 
-                box.transition('', 'C-4', 0, 0, 1, 0);
-                $('.frame-A').css({'margin-top':'-100px'});
+                $('.frame-A').css({'opacity':'0'})
                 setTimeout(()=>{
-                    box.button.show('C-4');
-                }, 1750)
+                    $('.frame-A').css({'transform':'scale(0)', 'margin-bottom':'-345px'})
+                }, 1000)
 
-            }, 1500)
+                setTimeout(()=>{
+
+                    box.transition('', 'C-4', 0, 0, 1, 0);
+                    $('.frame-A').css({'margin-top':'-100px'});
+                    setTimeout(()=>{
+                        box.button.show('C-4');
+                    }, 1750)
+
+                }, 1500)
+
+            }, 150)
 
         }
 
@@ -468,6 +573,8 @@ window.onload = function() {
 
         if(listener.b5) {
 
+            box.updateProgressBar();
+
             listener.b5 = false;
 
             // console.log('node.emit(stopTutoTimer) b5');
@@ -498,13 +605,14 @@ window.onload = function() {
 
             listener.c1 = false;
 
+            box.updateProgressBar();
+
             console.log('node.emit(stopTutoTimer) c1');
             node.emit('stopTutoTimer');
             // timer.stop = true;
 
-            button.hide(1);
-
-            picture.hide(1);
+            button.hide(0.1);
+            picture.hide(0.1);
 
             box.transition('', 'C-2', 0, 0, 1, 0);
             $('.frame-A').css({'margin-top':'-100px'});
@@ -515,39 +623,99 @@ window.onload = function() {
                 box.button.show('C-2');
             }, 2750)
 
+            go.active = false;
+            $('.transitionButtonBlocker').css({'display':'block'});
             setTimeout(()=>{
-                go.active = false;
                 go.show(1);
-            }, 3000)
+            }, 2000)
 
         }
 
         if(listener.c2) {
 
             listener.c2 = false;
+            box.updateProgressBar();
 
             console.log('node.emit(stopTutoTimer) c2');
             node.emit('stopTutoTimer');
-            // timer.stop = true;
 
-            button.hide(1);
+            // button.hide(1);
+            // picture.hide(1);
+            //
+            // $('.frame-A').css({'opacity':'0'})
+            // setTimeout(()=>{
+            //     $('.frame-A').css({'transform':'scale(0)', 'margin-bottom':'-345px'})
+            // }, 1000)
+            //
+            // setTimeout(()=>{
+            //
+            //     box.transition('', 'C-4', 0, 0, 1, 0);
+            //     $('.frame-A').css({'margin-top':'-100px'});
+            //     setTimeout(()=>{
+            //         box.button.show('C-4');
+            //     }, 1750)
+            //
+            // }, 1500)
 
-            picture.hide(1);
+            button.hide(0.1);
+            picture.hide(0.1);
 
-            $('.frame-A').css({'opacity':'0'})
             setTimeout(()=>{
-                $('.frame-A').css({'transform':'scale(0)', 'margin-bottom':'-345px'})
-            }, 1000)
+                go.show(0.1);
+                box.transition('', 'C-31', 0, 0, 1, 0);
+                listener.c3 = true;
+            }, 150)
+
+        }
+
+        if(listener.c3) {
+
+            listener.c3 = false;
+            box.updateProgressBar();
+
+            console.log('node.emit(stopTutoTimer) c3');
+            node.emit('stopTutoTimer');
+
+            button.hide(0.3);
+            picture.hide(0.3);
+
+            setTimeout(()=>{
+                go.show(0.2);
+                $('#box-C-31').css({'opacity':'1'});
+                listener.c4 = true;
+            }, 350)
+
+        }
+
+        if(listener.c4) {
+
+            listener.c4 = false;
+            box.updateProgressBar();
+
+            console.log('node.emit(stopTutoTimer) c4');
+            node.emit('stopTutoTimer');
+
+            button.hide(0.1);
+            picture.hide(0.1);
 
             setTimeout(()=>{
 
-                box.transition('', 'C-4', 0, 0, 1, 0);
-                $('.frame-A').css({'margin-top':'-100px'});
+                $('.frame-A').css({'opacity':'0'})
                 setTimeout(()=>{
-                    box.button.show('C-4');
-                }, 1750)
+                    $('.frame-A').css({'transform':'scale(0)', 'margin-bottom':'-345px'})
+                }, 1000)
 
-            }, 1500)
+                setTimeout(()=>{
+
+                    box.transition('', 'C-4', 0, 0, 1, 0);
+                    $('.frame-A').css({'margin-top':'-100px'});
+                    setTimeout(()=>{
+                        box.button.show('C-4');
+                    }, 1750)
+
+                }, 1500)
+
+            }, 150)
 
         }
 
@@ -582,7 +750,41 @@ window.onload = function() {
 
     // --- B --- //
 
+    $('#btn-B-6').click(function() {
+
+        box.updateProgressBar();
+
+        // as a reminder
+        button.active = false;
+
+        box.transition('B-6', 'B-7', 0, 0, 1, 750);
+
+        $('.facePicture').css({'filter':'brightness(1) opacity(1) blur(0px) saturate(1) grayscale(0)'})
+
+        setTimeout(()=>{
+            picture.set(1);
+            setTimeout(()=>{
+                picture.show(1);
+            }, 750)
+        }, 750)
+
+        $('.frame-A').css({'transform':'scale(0.7)'});
+
+        setTimeout(()=>{
+            button.show(1);
+        }, 500)
+        setTimeout(()=>{
+            node.emit('justShowTutoTimer')
+        }, 150)
+        setTimeout(()=>{
+            box.button.show('B-7');
+        }, 2750)
+
+    });
+
     $('#btn-B-7').click(function() {
+
+        box.updateProgressBar();
 
         console.log('NODE.EMIT(SHOWTUTOTIMER)');
         node.emit('showTutoTimer');
@@ -602,10 +804,13 @@ window.onload = function() {
     listener.c1 = false;
     $('#btn-B-8').click(function() {
 
+        box.updateProgressBar();
+
         console.log('NODE.EMIT(HIDETUTOTIMER)');
         node.emit('hideTutoTimer');
 
         box.transition('B-8', '', 0, 0, 1, 0);
+        $('.frame-A').css({'margin-top':'-50px'});
 
         // as a reminder
         button.active = false;
@@ -622,20 +827,14 @@ window.onload = function() {
             }, 300);
         }, 500)
 
-
-
         $('#go').html('START');
         setTimeout(()=>{
-            go.show(2);
-        }, 2000)
+            go.show(1);
+        }, 1000)
 
         setTimeout(()=>{
-
             listener.c1 = true;
-
             box.transition('', 'C-1', 0, 0, 1, 0);
-            $('.frame-A').css({'margin-top':'-50px'});
-
         }, 800)
 
     });
@@ -718,11 +917,13 @@ window.onload = function() {
 
         if(key === 'c1') {
 
+            box.updateProgressBar();
+
             listener.c1 = false;
 
-            button.hide(1);
+            button.hide(0.1);
 
-            picture.hide(1);
+            picture.hide(0.1);
 
             box.transition('', 'C-2', 0, 0, 0, 0);
             $('.frame-A').css({'margin-top':'-100px'});
@@ -733,36 +934,100 @@ window.onload = function() {
                 box.button.show('C-2');
             }, 2750)
 
+            go.active = false;
+            $('.transitionButtonBlocker').css({'display':'block'});
             setTimeout(()=>{
-                go.active = false;
                 go.show(1);
-            }, 3000)
+            }, 2000)
 
         }
 
         if(key === 'c2') {
 
             listener.c2 = false;
+            box.updateProgressBar();
 
-            button.hide(1);
+            // button.hide(1);
+            // picture.hide(1);
+            //
+            // $('.frame-A').css({'opacity':'0'})
+            // setTimeout(()=>{
+            //     $('.frame-A').css({'transform':'scale(0)', 'margin-bottom':'-345px'})
+            // }, 1000)
+            //
+            // setTimeout(()=>{
+            //
+            //     box.transition('', 'C-4', 0, 0, 0, 0);
+            //     $('.frame-A').css({'margin-top':'-100px'});
+            //
+            //     setTimeout(()=>{
+            //         box.button.show('C-4');
+            //     }, 2750)
+            //
+            // }, 2000)
 
-            picture.hide(1);
+            console.log('node.emit(stopTutoTimer) c2');
+            node.emit('stopTutoTimer');
 
-            $('.frame-A').css({'opacity':'0'})
+            button.hide(0.1);
+            picture.hide(0.1);
+
             setTimeout(()=>{
-                $('.frame-A').css({'transform':'scale(0)', 'margin-bottom':'-345px'})
-            }, 1000)
+                go.show(0.1);
+                box.transition('', 'C-31', 0, 0, 1, 0);
+                listener.c3 = true;
+            }, 150)
+
+        }
+
+        if(key === 'c3') {
+
+            listener.c3 = false;
+            box.updateProgressBar();
+
+            console.log('node.emit(stopTutoTimer) c3');
+            node.emit('stopTutoTimer');
+
+            button.hide(0.1);
+            picture.hide(0.1);
+
+            setTimeout(()=>{
+                go.show(0.1);
+                $('#box-C-31').css({'opacity':'1'});
+                listener.c4 = true;
+            }, 150)
+
+        }
+
+        if(key === 'c4') {
+
+            listener.c4 = false;
+            box.updateProgressBar();
+
+            console.log('node.emit(stopTutoTimer) c4');
+            node.emit('stopTutoTimer');
+
+            button.hide(0.1);
+            picture.hide(0.1);
 
             setTimeout(()=>{
 
-                box.transition('', 'C-4', 0, 0, 0, 0);
-                $('.frame-A').css({'margin-top':'-100px'});
+                $('.frame-A').css({'opacity':'0'})
+                setTimeout(()=>{
+                    $('.frame-A').css({'transform':'scale(0)', 'margin-bottom':'-345px'})
+                }, 1000)
 
                 setTimeout(()=>{
-                    box.button.show('C-4');
-                }, 2750)
 
-            }, 2000)
+                    box.transition('', 'C-4', 0, 0, 1, 0);
+                    $('.frame-A').css({'margin-top':'-100px'});
+                    setTimeout(()=>{
+                        box.button.show('C-4');
+                    }, 1750)
+
+                }, 1500)
+
+            }, 150)
 
         }
 
@@ -788,7 +1053,7 @@ window.onload = function() {
     box.transition('', 'A-1', 0, 0, 1, 750);
 
     setTimeout(()=>{
-        box.button.show('A-1');
+        box.button.show2('A-1');
     }, 2000)
 
 

@@ -20,6 +20,12 @@
 
     <div id=start></div>
 
+    <div class="container myContainer">
+        <div class="progress myProgress">
+            <div class="progress-bar myProgressBar" role="progressbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+    </div>
+
     <div class = 'wrap  noselect' style='margin-top:10px;'>
 
         <div class='debugInfoBoxText'>
@@ -30,14 +36,13 @@
 
         <div class = 'all'>
 
-            <!-- #################### DYNAMIC TITLE ######################## -->
-
             <div class=welcomeTitle>
                 <p class ='title1'>
                     <span id='mainmainTitle'></span>
                 </p>
             </div>
 
+            <!-- BUTTONS DIV -->
             <div class='frame-B'>
 
                 <div class='frame-B-0'>
@@ -48,7 +53,9 @@
                             <img id='lB' class='iconButton' src='images/decisionIcons/false.png'/>
                             <div class=leftButtonExplanation>
                                 <p>
-                                    <strong>NOT</strong> same
+                                    Different
+                                    <br />
+                                    person
                                 </p>
                             </div>
                         </div>
@@ -58,6 +65,8 @@
                             <div class=rightButtonExplanation>
                                 <p>
                                     Same
+                                    <br />
+                                    person
                                 </p>
                             </div>
                         </div>
@@ -68,7 +77,7 @@
 
             </div>
 
-
+            <!-- FACIAL IMAGE PAIR DIV -->
             <div class='frame-A'>
 
                 <div class='frame-A-0' id='frame-0'>
@@ -90,12 +99,18 @@
             </div>
 
 
-            <div class='boxbox' id='boxbox-A' style='display:block;'></div>
+            <!-- TUTO BOX A CONTAINER -->
+            <div class='boxbox' id='boxbox-A' style='display:block;'>
+
+            </div>
+
+            <!-- TUTO BOX B CONTAINER -->
+            <div class='boxbox' id='boxbox-B' style='display:none;'>
+
+            </div>
 
 
-            <div class='boxbox' id='boxbox-B' style='display:none;'></div>
-
-
+            <!-- NEXT/GO BUTTON -->
             <div class='frame-C'>
 
                 <div class='frame-C-0'>
@@ -110,6 +125,10 @@
 
                         </div>
 
+                        <div class='transitionButtonBlocker'>
+
+                        </div>
+
                     </div>
 
                 </div>
@@ -117,6 +136,7 @@
             </div>
 
 
+            <!-- TUTO BOX C CONTAINER -->
             <div class='boxbox' id='boxbox-C' style='display:none;'></div>
 
 
@@ -125,11 +145,16 @@
 
     </div>
 
+
+
+
     <div id=end></div>
 
 
 
     <div class=boxStorage>
+
+        <!-- A -->
 
         <div class=boxwrap id='boxwrap-A-1'>
 
@@ -137,11 +162,8 @@
 
                 <div class=text>
                     <p>
-                        Welcome to our experiment!
-                        <br />
-                        <br />
                         Please click the <strong>OK</strong> button to begin
-                        the <i>tutorial</i>.
+                        the <span class=b>tutorial</span>.
                     </p>
                 </div>
 
@@ -155,29 +177,7 @@
 
             </div>
 
-        </div>
 
-        <div class=boxwrap id='boxwrap-A-2'>
-
-            <div class='box' id='box-A-2'>
-
-                <div class=text>
-                    <p>
-                        During this tutorial,
-                        <br />
-                        you will encounter yellow information boxes such as this one.
-                    </p>
-                </div>
-
-                <div class=buttonWrap>
-                    <div class=button id='btn-A-2'>
-                        <p>
-                            OK
-                        </p>
-                    </div>
-                </div>
-
-            </div>
 
         </div>
 
@@ -187,9 +187,15 @@
 
                 <div class=text>
                     <p>
-                        You are expected to <i>carefully</i> read its content,
+                        This is an information box.
                         <br />
-                        then click the <strong>OK</strong> button to proceed.
+                        <br />
+                        You are expected to carefully read its content,
+                        <br />
+                        <!-- and click the <strong>OK</strong> button to proceed
+                        when you are ready. -->
+                        and click the <strong>OK</strong> button
+                        when you are ready.
                     </p>
                 </div>
 
@@ -203,59 +209,11 @@
 
             </div>
 
-        </div>
-
-        <div class=boxwrap id='boxwrap-A-4'>
-
-            <div class='box' id='box-A-4'>
-
-                <div class=text>
-                    <p>
-                        At times,
-                        <br />
-                        the <strong>OK</strong> button will appear
-                        <i>only after</i> you perform a
-                        <i>required</i> action.
-                    </p>
-                </div>
-
-                <div class=buttonWrap>
-                    <div class=button id='btn-A-4'>
-                        <p>
-                            OK
-                        </p>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-
-        <div class=boxwrap id='boxwrap-A-6'>
-
-            <div class='box' id='box-A-6'>
-
-                <div class=text>
-                    <p>
-
-                        Please click the <strong>OK</strong> button to proceed
-                        to the main section of the tutorial.
-                    </p>
-                </div>
-
-                <div class=buttonWrap>
-                    <div class=button id='btn-A-6'>
-                        <p>
-                            OK
-                        </p>
-                    </div>
-                </div>
-
-            </div>
 
         </div>
 
 
+        <!-- B -->
 
         <div class=boxwrap id='boxwrap-B-1'>
 
@@ -264,10 +222,10 @@
                 <div class=text>
 
                     <p>
-                        In the experiment,
-                        <br />
+                        In this experiment,
                         you will be presented with a pair of
-                        facial images on the <i>above</i> A and B frames.
+                        facial images <br /> on the <strong>A</strong>
+                        and <strong>B</strong> frames above.
                     </p>
 
                 </div>
@@ -291,10 +249,10 @@
                 <div class=text>
 
                     <p>
-                        You will be asked to evaluate whether the pair of facial images
+                        You will be asked to determine whether the pair of facial images
                         <br />
-                        belong to the <span class=b>same person</span>
-                        or <span class=b>not</span>.
+                        belong to the <strong>same</strong> person
+                        or to two <strong>different</strong> person.
                     </p>
 
                 </div>
@@ -319,7 +277,11 @@
 
                     <p>
                         Click <img class='infoBoxIconButton' src='images/decisionIcons/true.png'/>
-                        button if you think the pair belongs the <span class=b>same</span> person.
+                        <br />
+                        when you think
+                        <!-- <br /> -->
+                        the images are from the <strong>same</strong> person.
+                        <!-- to state that the pair belongs the <span class=b>same</span> person. -->
                     </p>
 
                 </div>
@@ -344,9 +306,12 @@
 
                     <p>
                         Click <img class='infoBoxIconButton' src='images/decisionIcons/false.png'/>
-                        button if you think the pair
-                        does <span class=b>NOT</span> belong to the <i>same</i>
-                        person.
+                        <br />
+                        when you think
+                        <!-- <br /> -->
+                        the images are from two <strong>different</strong> person.
+                        <!-- does <span class=b>NOT</span> belong to the <i>same</i> -->
+                        <!-- person. -->
                     </p>
 
                 </div>
@@ -365,12 +330,14 @@
 
         <div class=boxwrap id='boxwrap-B-5'>
 
-            <div class='box' id='box-B-5'>
+            <div class='box' id='box-B-5' style='box-shadow:0px 0px white; background:transparent;transform-origin: center;'>
 
-                <div class=text>
+                <div class=text style="width:1000px; text-align:center;">
 
                     <p>
-                        Please indicate whether the pair belongs to the same person or not.
+                        Please evaluate the above pair by clicking one of the buttons
+                        (<img class='smallerInfoBoxIconButton' src='images/decisionIcons/false.png'/>
+                        /<img class='smallerInfoBoxIconButton' src='images/decisionIcons/true.png'/>)
                     </p>
 
                 </div>
@@ -387,9 +354,10 @@
                 <div class=text>
 
                     <p>
-                        In the experiment,
+                        In this experiment,
                         <br />
-                        you will be asked to evaluate <span class=b>30</span>
+                        you are tasked with evaluating <span class=b>30</span>
+                        <!-- you will be asked to evaluate <span class=b>30</span> -->
                         pairs of facial images in this fashion.
                     </p>
 
@@ -414,8 +382,8 @@
                 <div class=text>
 
                     <p>
-                        You will <i>only</i> have <span class=b id=dtd1></span> seconds
-                        to evaluate <i>each</i> pair.
+                        You will have <span class=b id=dtd1>10</span> seconds
+                        to evaluate a pair.
                     </p>
 
                 </div>
@@ -439,8 +407,7 @@
                 <div class=text>
 
                     <p>
-                        The timer will be displayed on the <i>top right corner</i>
-                        of your screen.
+                        The timer is displayed on the <span class=b>top right corner</span>.
                     </p>
 
                 </div>
@@ -457,15 +424,18 @@
 
         </div>
 
+
+        <!-- C -->
+
         <div class=boxwrap id='boxwrap-C-1'>
 
-            <div class='box' id='box-C-1'>
+            <div class='box' id='box-C-1' style='box-shadow:0px 0px white; background:transparent;transform-origin: center;'>
 
-                <div class=text>
+                <div class=text style="width:1000px; text-align:center;">
 
                     <p>
                         Please click the <span class=b>START</span> button
-                        <i>above</i> to practice the task with the timer.
+                        to practice the task with the timer.
                     </p>
 
                 </div>
@@ -483,10 +453,10 @@
 
                     <p>
                         After you make a decision or after your time is up,
-                        <br />
+
                         the photos and the decision buttons disappear,
-                        <br />
-                        and the <i>above</i>
+
+                        and the
                         <span class=b>NEXT</span> button appears.
                     </p>
 
@@ -512,8 +482,9 @@
                 <div class=text>
 
                     <p>
-                        You will need to click the <span class=b>NEXT</span> button
-                        to begin evaluating <br /> the <i>next pair</i> of facial images.
+                        You are expected to click the <span class=b>NEXT</span> button
+                        when you are ready to evaluate the <strong>next</strong> pair of facial images.
+                        <!-- to begin evaluating <br /> the <i>next pair</i> of facial images. -->
                     </p>
 
                 </div>
@@ -530,14 +501,55 @@
 
         </div>
 
-        <div class=boxwrap id='boxwrap-C-3'>
+        <div class=boxwrap id='boxwrap-C-202'>
 
-            <div class='box' id='box-C-3'>
+            <div class='box' id='box-C-202'>
 
                 <div class=text>
 
                     <p>
+                        Let's do three practice rounds!
+                    </p>
+
+                </div>
+
+                <div class=buttonWrap>
+                    <div class=button id='btn-C-202'>
+                        <p>
+                            OK
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class=boxwrap id='boxwrap-C-3'>
+
+            <div class='box' id='box-C-3' style='box-shadow:0px 0px white; background:transparent;transform-origin:center;transform-origin: center;'>
+
+                <div class=text style="width:1000px; text-align:center;">
+
+                    <p>
                         Please click the <span class=b>NEXT</span> button
+                        to proceed to the next practice pair.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class=boxwrap id='boxwrap-C-31'>
+
+            <div class='box' id='box-C-31' style='box-shadow:0px 0px white; background:transparent;transform-origin: center;'>
+
+                <div class=text style="width:1000px; text-align:center;font-size:20px;">
+
+                    <p>
+                        Click the <span class=b>NEXT</span> button
                         to proceed to the next practice pair.
                     </p>
 
@@ -555,7 +567,8 @@
                 <div class=text>
 
                     <p>
-                        You are almost done with the tutorial!
+                        Your total number of correct evaluations will be reported
+                        <strong>after</strong> you answer <strong>all</strong> 30 pairs.
                     </p>
 
                 </div>
@@ -579,7 +592,7 @@
                 <div class=text>
 
                     <p>
-                        <u>A final yet crucial information</u>
+                        <!-- <u>A final yet crucial information</u>
                         <br />
                         <br />
                         During the experiment,
@@ -590,7 +603,9 @@
                             This is the beta testing of our experiment for friends and family.
                             <br />
                             Instead, we own you a beer for the next time we meet!
-                        </span>
+                        </span> -->
+                        You will be paid <strong>10 cents</strong> for
+                        <strong>every correct evaluation</strong> you make.
                     </p>
 
                 </div>
@@ -609,9 +624,9 @@
 
         <div class=boxwrap id='boxwrap-C-6'>
 
-            <div class='box' id='box-C-6' style='margin-top:5px;'>
+            <div class='box' id='box-C-6'  style='box-shadow:0px 0px white; background:transparent;transform-origin: center;'>
 
-                <div class=text>
+                <div class=text style="width:1000px; text-align:center;">
 
                     <p>
                         You are done with the tutorial!
@@ -638,6 +653,7 @@
             </div>
 
         </div>
+
 
         <div class='boxwrap specialBoxWrap2' id='boxwrap-C-7' style='margin-top:240px;'>
 
@@ -670,6 +686,7 @@
             </div>
 
         </div>
+
 
     </div>
 

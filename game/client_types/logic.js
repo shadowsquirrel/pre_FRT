@@ -125,239 +125,11 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         ]
 
 
-        // --------------------------------- //
-        // ----- IBT PSEUDO ORDER DATA ----- //
-        // --------------------------------- //
 
-        node.game.ibt = {}
-
-        node.game.ibt.buttonSetupList = [
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-            1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,1,0,
-        ]
-
-        node.game.ibt.stateList = [
-            0, 0, 0, 0, 0, 0,
-            1, 0, 1, 0, 1, 0,
-            0, 1, 0, 1, 0, 1,
-            1, 0, 1, 1, 0, 0,
-            1, 1, 0, 1, 0, 1,
-            0, 0, 1, 0, 0, 1,
-            0, 1, 0, 1, 1, 0,
-            1, 1, 0, 1, 0, 1,
-            1, 0, 1, 1, 0, 1,
-            1, 0, 1, 0, 1, 1
-        ];
-
-        // for debug the data lists wont match this
-        // and we will have errors at the end
-        // node.game.ibt.stateList = [
-        //     1, 1, 1, 1, 1, 1,
-        //     1, 1, 1, 1, 1, 1,
-        //     1, 1, 1, 1, 1, 1,
-        //     1, 1, 1, 1, 1, 1,
-        //     1, 1, 1, 1, 1, 1,
-        //     1, 1, 1, 1, 1, 1,
-        //     1, 1, 1, 1, 1, 1,
-        //     1, 1, 1, 1, 1, 1,
-        //     1, 1, 1, 1, 1, 1,
-        //     1, 0, 1, 0, 1, 1
-        // ];
-
-        // there are 4 photos plus no photo
-        // no photo index is 0
-        // for either icon (house or person) we have a random list
-        // at each trial the first element from the relevant list is pushed
-        // the pushed index is used to show the relevant photo
-        node.game.ibt.photoList = [
-
-            // hidden photo primer list for houses
-            [
-                0, 2, 3, 2, 4, 2,
-                4, 2, 4, 1, 3, 0,
-                3, 2, 0, 1, 4, 1,
-                2, 0, 3, 4, 3, 3,
-                1, 1, 0, 4, 1, 0
-            ],
-
-            // hidden photo primer list for persons
-            [
-                0, 4, 2, 1, 3, 2,
-                1, 4, 1, 0, 3, 0,
-                3, 1, 0, 3, 2, 4,
-                2, 4, 1, 2, 0, 3,
-                4, 0, 1, 2, 3, 4
-            ]
-
-            // // debug setup will fail to cover all
-            // [
-            //     1, 2, 3, 4, 1, 2,
-            //     3, 4, 1, 2, 3, 4,
-            //     1, 2, 3, 4, 1, 2,
-            //     3, 4, 1, 2, 3, 4,
-            //     1, 2, 3, 4, 1, 2,
-            // ]
-
-        ];
-
-        // this will be used for the primer placement
-        // for the alternative setup
-        // altought there are two sets the one for house primer
-        // is not really used. It is only there to make the code not crash
-        node.game.ibt.primerPlacement = [
-
-            [
-                0,1,0,1,1,0,
-                1,0,1,0,1,0,
-                0,1,0,1,0,1,
-                0,0,1,1,0,1,
-                1,0,1,1,0,0
-            ],
-
-            [
-                0,1,0,1,1,0,
-                1,0,1,0,1,0,
-                0,1,0,1,0,1,
-                0,0,1,1,0,1,
-                1,0,1,1,0,0
-            ]
-
-        ]
-
-        // there are 6 adjectives for house and 6 for persons
-        // each have their own index list of lists as below
-        // each list (2 of them) contains 5 lists
-        // each list (5 of them) represents the random ordering of the indexes for adjectives
-        // pushed state list is used to get the relevant list of lists
-        // pushed photo index is then used to get the relevant list from the picked list
-        // the first element from this list is pushed to be used as the adj index
-        // adj index is then used to get the adjective from the list of adjectives defined on top
-        node.game.ibt.adjList = [
-
-            // adj list for houses for each hidden photo primer
-            [
-                [3, 4, 5, 2, 0, 1], // 0
-                [3, 1, 5, 2, 0, 4], // 1
-                [0, 4, 1, 5, 3, 2], // 2
-                [1, 5, 4, 0, 2, 3], // 3
-                [3, 2, 1, 0, 5, 4]  // 4
-            ],
-
-            // adj list for persons for each hidden photo primer
-            [
-                [1, 5, 0, 2, 3, 4], // 0
-                [3, 5, 1, 0, 4, 2], // 1
-                [1, 3, 2, 5, 4, 0], // 2
-                [5, 2, 3, 1, 4, 0], // 3
-                [3, 5, 2, 1, 4, 0]  // 4
-            ]
-
-
-        ]
 
         // ----------------------------- //
         // -------- INITIATION -------- //
         // ----------------------------- //
-
-        // init player button position and decision time duration
-        // randomly determined for each player
-        node.game.initPlayerFundamentals = function(player) {
-
-            this.introFunction('initPlayerFundamentals');
-
-            // check if the player is already initiated
-            if(player.fundamentalsInitiated === undefined) {
-
-                this.talk('INITIATING PLAYER\'S EXPERIMENTAL SETUP PARAMETERS');
-
-                player.fundamentalsInitiated = true;
-
-                // ---- determine player's dtd ---- //
-
-                let myDtdList = J.shuffle([5000, 8000, 10000]);
-
-                this.talk('PLAYER (' + player.id + ') SHUFFLED DTD LIST: '
-                + myDtdList);
-
-                player.dtd = myDtdList[0];
-
-                this.talk('PLAYER (' + player.id + ') DECISION TIME ' +
-                ' DURATION IS DETERMINED TO BE: ' + player.dtd);
-
-
-                // ---- determine player's button position ---- //
-
-                if(Math.random() > 0.005) {
-
-                    player.buttonTop = true;
-
-                } else {
-
-                    player.buttonTop = false;
-
-                }
-
-                this.talk('PLAYER (' + player.id + ') IS BUTTON ON TOP -> ' +
-                player.buttonTop);
-
-            } else {
-
-                this.talk('PLAYER ' + player.id + ' is already initiated');
-                this.talk('PLAYER (' + player.id + ') DECISION TIME ' +
-                ' DURATION WAS DETERMINED TO BE: ' + player.dtd);
-                this.talk('PLAYER (' + player.id + ') WAS BUTTON ON TOP -> ' +
-                player.buttonTop);
-
-            }
-
-            this.talk('SENDING FUNDAMENTAL PLAYER DATA TO CLIENT');
-
-            let myData = {
-                bp: player.buttonTop,
-                dtd: player.dtd
-            }
-
-            node.say('LOGIC-init', player.id, myData);
-
-        }
 
 
         // init player for face test: generating the shuffled index etc
@@ -385,6 +157,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
                 var shuffledAnswers = [];
 
+                // Notice that for each subject another random list is generated but only once
                 // generate shuffled pair index for each player
                 player.shuffled.pairIndexList = J.shuffle(node.game.pairIndexList);
 
@@ -414,48 +187,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
                 player.score = undefined;
 
-                player.ibt = {};
-
-                player.ibt.buttonSetup = node.game.ibt.buttonSetupList.shift();
-
-                player.ibt.primerPlacement = [[],[]];
-
-                player.ibt.photoList = [[],[]];
-
-                player.ibt.adjList = [
-                    [
-                        [],
-                        [],
-                        [],
-                        [],
-                        [],
-                    ],
-                    [
-                        [],
-                        [],
-                        [],
-                        [],
-                        [],
-                    ]
-                ]
-
-                // generate deep copy of state list
-                player.ibt.stateList = [...node.game.ibt.stateList];
-
-                player.ibt.primerPlacement[0] = [...node.game.ibt.primerPlacement[0]];
-                player.ibt.primerPlacement[1] = [...node.game.ibt.primerPlacement[1]];
-
-                // gemerate deep copy of photoList
-                player.ibt.photoList[0] = [...node.game.ibt.photoList[0]];
-                player.ibt.photoList[1] = [...node.game.ibt.photoList[1]];
-
-                // generate deep copy of adjList
-                for(var i = 0; i < 2; i++) {
-                    for(var j = 0; j < 5; j++) {
-                        player.ibt.adjList[i][j] = [...node.game.ibt.adjList[i][j]];
-                    }
-                }
-
 
             } else {
 
@@ -478,12 +209,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             console.log(player.givenAnswerList);
             this.talk('STARTING PLAYER PAIR INDEX: ' + player.cpx);
             this.talk('STARTING PLAYER PAIR NUMBER: ' + player.shuffled.pairIndexList[player.cpx]);
-            this.talk('--- player.ibt.stateList ---')
-            console.log(player.ibt.stateList);
-            this.talk('--- player.ibt.photoList ---')
-            console.log(player.ibt.photoList);
-            this.talk('--- player.ibt.adjList ---');
-            console.log(player.ibt.adjList);
 
         }
 
@@ -492,9 +217,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         node.game.initPlayer = function(player) {
 
             this.introFunction('initPlayer')
-
-            node.game.initPlayerFundamentals(player);
             node.game.initPlayerLists(player);
+
+            // if needed additional initiation function can be added here
 
         }
 
@@ -511,54 +236,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         })
 
 
-        // alternative method to send the client experimental setup parameters
-        node.on('get.mySetup', function(msg) {
-
-            this.introFunction('node.on(get.mySetup)');
-
-            let player = node.game.pl.get(msg.from);
-
-            let info = {
-                bt: player.buttonTop,
-                dtd: player.dtd
-            }
-
-            this.talk('inside node.on(get.mySetup)');
-            this.talk('get.setup activated by CLIENT');
-            this.talk('sending button and time setups');
-            console.log(info);
-
-            return info;
-
-        })
-
-
-        // debug
-        node.on.data('rnd-LOGIC', function(msg) {
-
-            let randomNumber = Math.random();
-
-            this.introFunction('node.on.data(rnd-LOGIC)');
-            this.talk('RANDOM NUMBER IS: ' + randomNumber);
-
-            let player = node.game.pl.get(msg.from);
-
-            if(player.randomNumberAssigned) {
-
-                this.talk('Random number already assigned...');
-
-            } else {
-
-                this.talk('Assigning the random number to player');
-                player.randomNumber = randomNumber
-
-            }
-
-            this.talk('Sending the random number to client');
-
-            node.say('LOGIC-rnd', player.id, randomNumber);
-
-        })
 
 
 
@@ -580,6 +257,21 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         }
 
+        // gets the index of the photo pair and the correct answer for the pair
+        // sends these as a data object to player through LOGIC-nextPicture
+        node.game.nextPicture = function(player) {
+
+            var currentIndex = player.shuffled.pairIndexList[player.cpx];
+            var currentCorrectAnswer = player.shuffled.correctAnswerList[player.cpx];
+
+            var data = {
+                index: currentIndex,
+                correctAnswer: currentCorrectAnswer
+            }
+
+            node.say('LOGIC-nextPicture', player.id, data);
+
+        }
 
         // AFTER updateCurrenIndex checks if the current index reached the size
         // od the index list (i.e. exhausted the list)
@@ -638,7 +330,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         node.on.data('diffPerson-LOGIC', function(msg) {
 
             this.introFunction('node.on.data(diffPerson-LOGIC)')
-
             this.talk('CLIENT DIFF PERSON RESPONSE RECEIVED BY LOGIC');
 
             let player = node.game.pl.get(msg.from);
@@ -656,15 +347,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
             } else {
 
-                var currentIndex = player.shuffled.pairIndexList[player.cpx];
-                var currentCorrectAnswer = player.shuffled.correctAnswerList[player.cpx];
-
-                var data = {
-                    index: currentIndex,
-                    correctAnswer: currentCorrectAnswer
-                }
-
-                node.say('LOGIC-nextPicture', player.id, data);
+                node.game.nextPicture(player);
 
             }
 
@@ -680,7 +363,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         node.on.data('samePerson-LOGIC', function(msg) {
 
             this.introFunction('node.on.data(samePerson-LOGIC)')
-
             this.talk('CLIENT SAME PERSON RESPONSE RECEIVED BY LOGIC');
 
             let player = node.game.pl.get(msg.from);
@@ -689,23 +371,14 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
             node.game.updateCurrentIndex(player);
 
+            // check it the test ended
             if(node.game.checkEnd(player)) {
 
-                var msg = 'DONE';
+                node.game.endTest(player);
 
-                node.say('LOGIC-finishTest', player.id, msg);
+            } else { // else go to the next picture
 
-            } else {
-
-                var currentIndex = player.shuffled.pairIndexList[player.cpx];
-                var currentCorrectAnswer = player.shuffled.correctAnswerList[player.cpx];
-
-                var data = {
-                    index: currentIndex,
-                    correctAnswer: currentCorrectAnswer
-                }
-
-                node.say('LOGIC-nextPicture', player.id, data);
+                node.game.nextPicture(player);
 
             }
 
@@ -721,7 +394,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         node.on.data('noAnswer-LOGIC', function(msg) {
 
             this.introFunction('node.on.data(noAnswer-LOGIC)');
-            console.log('CLIENT NO ANSWER RESPONSE RECEIVED BY LOGIC');
+            this.talk('CLIENT NO ANSWER RESPONSE RECEIVED BY LOGIC');
 
             let player = node.game.pl.get(msg.from);
 
@@ -729,23 +402,14 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
             node.game.updateCurrentIndex(player);
 
+            // check it the test ended
             if(node.game.checkEnd(player)) {
 
-                var msg = 'DONE';
-
-                node.say('LOGIC-finishTest', player.id, msg);
+                node.game.endTest(player);
 
             } else {
 
-                var currentIndex = player.shuffled.pairIndexList[player.cpx];
-                var currentCorrectAnswer = player.shuffled.correctAnswerList[player.cpx];
-
-                var data = {
-                    index: currentIndex,
-                    correctAnswer: currentCorrectAnswer
-                }
-
-                node.say('LOGIC-nextPicture', player.id, data);
+                node.game.nextPicture(player);
 
             }
 
@@ -980,7 +644,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 'answer',
                 'correct',
                 'dtd',
-                'bt'
+                // add a response time variable too
             ],
 
             keepUpdated: true
@@ -1134,79 +798,35 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             node.game.talk('Player Object');
             console.log(player);
 
-            // test stage
-            if(player.disconnectedStage.stage === 2) {
-                if(player.buttonTop) {
-                    reconOpts.plot.frame = 'test2.htm';
-                } else {
-                    reconOpts.plot.frame = 'test1.htm';
-                }
-            }
-
-            // instruction stage
-            if(player.disconnectedStage.stage === 3) {
-                if(player.buttonTop) {
-                    reconOpts.plot.frame = 'instructions_alt.htm';
-                } else {
-                    reconOpts.plot.frame = 'instructions.htm';
-                }
-            }
-
-            // instruction stage
-            if(player.disconnectedStage.stage === 4) {
-                if(player.buttonTop) {
-                    reconOpts.plot.frame = 'identifyFaces_alt.htm';
-                } else {
-                    reconOpts.plot.frame = 'identifyFaces.htm';
-                }
-            }
-
+            node.game.talk('We can change anything we want through the reconOpts below')
+            node.game.talk('e.g. recontsOpts.plot.frame = xx.htm given ' + player.disconnectedStage.stage
+            + 'for the stage disconnected')
             console.log(reconOpts);
+
+            // test stage
+            // if(player.disconnectedStage.stage === 2) {
+            //     if(player.buttonTop) {
+            //         reconOpts.plot.frame = 'test2.htm';
+            //     } else {
+            //         reconOpts.plot.frame = 'test1.htm';
+            //     }
+            // }
 
         }
 
         // Reconnection.
-        // node.on.preconnect(function(player) {
-        //     console.log('A previously disconnected player reconnected to the game: ' + p.id);
-        // });
+        node.on.preconnect(function(player, reconOpts) {
 
-    });
-
-    stager.extendStep('hiddenStep', {
-
-        reconnect: function(player, reconOpts) {
-
-            console.log();
-            console.log();
-            console.log(' ---------------------------------------- ');
-            console.log(' ---------------------------------------- ');
-            console.log(' --- INSIDE HIDDEN STEP RECONNECT OPT --- ');
-            console.log(' ---------------------------------------- ');
-            console.log(' ---------------------------------------- ');
-            console.log();
-            console.log();
+            node.game.space(2);
+            node.game.introFunction('reconnect')
+            console.log('A previously disconnected player reconnected to the game: ' + player.id);
 
             node.game.disconnected.yusufAtilgan(player, reconOpts);
 
-        },
-
-
-        init: function() {
-
-            console.log();
-            console.log();
-            console.log('********************************');
-            console.log('********************************');
-            console.log('********   HIDDEN STEP   *******');
-            console.log('********************************');
-            console.log('********************************');
-            console.log();
-            console.log();
-
-        },
-
+        });
 
     });
+
 
 
     stager.extendStep('instructions', {
@@ -1234,46 +854,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             console.log();
             console.log('********************************');
             console.log('********************************');
-            console.log('*******   TINSTRUCTIONS   ******');
+            console.log('*******    INSTRUCTIONS   ******');
             console.log('********************************');
             console.log('********************************');
-            console.log();
-            console.log();
-
-        },
-
-
-    });
-
-
-    stager.extendStep('testStep', {
-
-        reconnect: function(player, reconOpts) {
-
-            console.log();
-            console.log();
-            console.log(' ---------------------------------------- ');
-            console.log(' ---------------------------------------- ');
-            console.log(' --- INSIDE TEST STEP RECONNECT OPT --- ');
-            console.log(' ---------------------------------------- ');
-            console.log(' ---------------------------------------- ');
-            console.log();
-            console.log();
-
-            // node.game.disconnected.reIntroduce(player);
-            reconOpts.plot.frame = 'test2.htm';
-
-        },
-
-        init: function() {
-
-            console.log();
-            console.log();
-            console.log('*****************************');
-            console.log('*****************************');
-            console.log('*******   TEST STEP   ******');
-            console.log('*****************************');
-            console.log('*****************************');
             console.log();
             console.log();
 
@@ -1285,18 +868,15 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
     stager.extendStep('identifyFaces', {
 
+        reconnect: function(player, reconOpts) {
+
+            node.game.disconnected.yusufAtilgan(player, reconOpts);
+
+        },
+
 
         init: function() {
 
-            console.log();
-            console.log();
-            console.log('*****************************');
-            console.log('*****************************');
-            console.log('*******   TEST PHASE   ******');
-            console.log('*****************************');
-            console.log('*****************************');
-            console.log();
-            console.log();
 
         },
 
