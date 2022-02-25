@@ -668,7 +668,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
     stager.extendStep('identifyFaces', {
 
-        frame: 'identifyFaces.htm',
+        frame: 'identifyFaces_alt.htm',
 
     });
 

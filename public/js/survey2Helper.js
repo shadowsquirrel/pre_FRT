@@ -51,7 +51,7 @@ question.next = function() {
 
         order.index++;
 
-        question.numberUpdate();
+        // progressBar.numberUpdate();
         progressBar.update();
 
         question.previous = question.active;
@@ -103,18 +103,6 @@ question.switch = function(class1, class2) {
 
 }
 
-question.numberUpdate = function() {
-
-    $('#questionIndex').css({'transition':'0.25s', 'opacity':'0'})
-    setTimeout(()=>{
-        $('#questionIndex').html(order.index + 1)
-        setTimeout(()=>{
-            $('#questionIndex').css({'transition':'0.25s', 'opacity':'1'})
-        }, 10)
-    }, 260)
-
-
-}
 
 // helper to question.switch(): transition between different questions
 question.transition = function() {
@@ -133,6 +121,8 @@ question.transition = function() {
 
 progressBar.update = function() {
 
+    progressBar.numberUpdate();
+
     var totalSize = order.active.length;
     var currentSize = order.index + 1;
 
@@ -141,6 +131,28 @@ progressBar.update = function() {
     pp = pp + '%';
 
     $('.progress-bar').css({'width':pp});
+
+}
+
+progressBar.show = function() {
+
+    setTimeout(()=>{
+        $('.questionIndexText').css({'opacity':'1'});
+        $('.container').css({'transition':'1s', 'opacity':'1'});
+    }, 500)
+
+}
+
+progressBar.numberUpdate = function() {
+
+    $('#questionIndex').css({'transition':'0.25s', 'opacity':'0'})
+    setTimeout(()=>{
+        $('#questionIndex').html(order.index + 1)
+        setTimeout(()=>{
+            $('#questionIndex').css({'transition':'0.25s', 'opacity':'1'})
+        }, 10)
+    }, 260)
+
 
 }
 
@@ -157,24 +169,21 @@ experiment.generate = function() {
     order.index = 0;
 
     order.active = [
-        'tutorial',
+        // 'tutorial',
         'enoughTime',
-        'needMoreTime',
-        'decisionScreen',
+        // 'needMoreTime',
+        // 'decisionScreen',
         'imageSize',
         'buttonPlacement',
-        'numOfImages_tired',
-        'numOfImages_bored'
+        // 'numOfImages_tired',
+        // 'numOfImages_bored'
     ];
 
     $('#numOfQuestion').html(order.active.length);
 
-    question.numberUpdate();
+    // progressBar.numberUpdate();
     progressBar.update();
-    setTimeout(()=>{
-        $('.questionIndexText').css({'opacity':'1'});
-        $('.container').css({'transition':'1s', 'opacity':'1'});
-    }, 500)
+    progressBar.show();
 
     console.log('order index: ' + order.index);
     console.log('for question order: ' + order.active);

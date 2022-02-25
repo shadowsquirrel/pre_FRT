@@ -23,7 +23,7 @@ window.onload = function() {
 
     var node = parent.node;
 
-    box.global.NoB = 16;
+    box.global.NoB = 23;
     // box.updateProgressBar();
 
     // --------------- //

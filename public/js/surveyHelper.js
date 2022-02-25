@@ -95,7 +95,7 @@ question.switch = function(class1, class2) {
             $(class2).css({'display':'flex', 'opacity':'0'});
         } else {
             $(class2).css({'display':'block', 'opacity':'0'});
-        }            
+        }
         setTimeout(()=>{
             $(class2).css({'transition':'0.2s', 'opacity':'1'});
         }, 50)
@@ -157,14 +157,14 @@ experiment.generate = function() {
 
     order.active = [
         'gender',
-        'age',
+        // 'age',
         'race',
-        'education',
-        'employment',
-        'location',
-        'knowledgeAI',
-        'supportAI',
-        'ladder'
+        // 'education',
+        // 'employment',
+        // 'location',
+        // 'knowledgeAI',
+        // 'supportAI',
+        // 'ladder'
     ];
 
     $('#numOfQuestion').html(order.active.length);

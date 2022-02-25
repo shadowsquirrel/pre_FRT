@@ -5,16 +5,19 @@ window.onload = function() {
     node.emit('HTML-startSecretSurvey2Timer');
 
     // retreiving dtd for memory purposes
-    node.on('requestDtd-HTML', function(msg) {
+    // node.on('requestDtd-HTML', function(msg) {
+    //
+    //     console.log('HTML: DTD RECEIVED FROM HTML ' + msg);
+    //
+    //     decision.dtd = msg;
+    //
+    // })
+    //
+    // node.emit('HTML-requestDtd');
 
-        console.log('HTML: DTD RECEIVED FROM HTML ' + msg);
+    decision.dtd = 10;
 
-        decision.dtd = msg;
-
-    })
-
-    node.emit('HTML-requestDtd');
-
+    // INTRO ANIMATION
     setTimeout(()=>{
         $('.frame-C').css({'opacity':'1'});
     }, 1000)

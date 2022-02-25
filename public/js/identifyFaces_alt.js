@@ -38,6 +38,7 @@ window.onload = function() {
 
     button.isClicked = false;
 
+    go.isClicked = false;
 
     go.show = function() {
 
@@ -88,6 +89,7 @@ window.onload = function() {
 
 
     }
+
 
     picture.set = function(index) {
 
@@ -155,6 +157,8 @@ window.onload = function() {
 
 
     $('#go').click(function() {
+
+        go.isClicked = true;
 
         go.hide();
 
@@ -377,5 +381,127 @@ window.onload = function() {
         }
 
     })
+
+
+
+
+    // ------------ MOUSE TRACKING ----------- //
+
+    var x = [];
+    var y = [];
+    var t = [];
+    var firstTime = true;
+    var translated = false;
+    var t0 = undefined;
+    var t1 = undefined;
+    var prevT = undefined;
+    var dt = undefined;
+
+    var getLast = (array)=>{
+        return array[array.length - 1];
+    }
+
+    var getFirst = (array)=>{
+        return array[0];
+    }
+
+    $('.all').mousemove(function(e) {
+
+        // console.log('go clicked: ' + go.clicked);
+        // console.log('button clicked: ' + button.isClicked);
+
+        if(go.isClicked && !button.isClicked) {
+
+            if(firstTime) {
+                console.log('START RECORDING');
+                t0 = e.timeStamp;
+                firstTime = false;
+            }
+
+            if(t.length != 0) {
+                prevT = getLast(t);
+            } else {
+                prevT = 0;
+            }
+
+            t1 = e.timeStamp - t0;
+            dt = t1 - prevT;
+
+            var newX = (e.pageX - 960)/235;
+            var newY = -(e.pageY - 605);
+
+            x.push(newX);
+            y.push(newY);
+            t.push(t1)
+
+
+            // console.log('------');
+            // console.log(x);
+            // console.log(y);
+            // console.log(t);
+            // console.log('------');
+
+
+            $('#xCoor').html(getLast(x));
+            $('#yCoor').html(getLast(y));
+            $('#timeS').html(getLast(t));
+            $('#deltaT').html(dt);
+
+        }
+
+        if(go.isClicked && button.isClicked) {
+
+            if(!translated) {
+
+                console.log('go clicked and button is clicked!');
+
+                translated = true;
+                translate();
+
+            }
+
+        }
+
+    })
+
+
+    var translate = function() {
+
+        var x0 = getFirst(x);
+        var y0 = getFirst(y);
+        var lastX = getLast(x);
+        var sign = (lastX < x0) ? -1 : 1;
+        var xTemp = undefined;
+
+        console.log('before translation 1');
+        console.log('x0: ' + getFirst(x));
+        console.log('xLast: ' + getLast(x));
+
+        x = x.map(i => i - x0);
+        // if(x0 < 0) {
+        // } else {
+        //     x = x.map(i => i + x0);
+        // }
+
+        console.log('after translation 1');
+        console.log('x0: ' + getFirst(x));
+        console.log('xLast: ' + getLast(x));
+
+        // normalize the distance between the last and first to 1
+        x = x.map(i => (i / Math.abs(getLast(x))));
+
+
+
+        console.log('after translation 2');
+        console.log('x0: ' + getFirst(x));
+        console.log('xLast: ' + getLast(x));
+
+        console.log('X after translations');
+        console.log(x);
+
+        console.log('Y list');
+        console.log(y);
+
+    }
 
 }
