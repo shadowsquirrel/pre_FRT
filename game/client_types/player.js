@@ -527,6 +527,26 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
 
+        node.on('HTML-mouse', function(msg) {
+
+            this.talk('MOUSE TRACKING DATA RECEIVED')
+
+            this.talk('-----------');
+            // this.talk(msg.dataType);
+            // this.talk(msg.xCoor);
+            this.talk('-----------');
+
+            node.set({
+                dataType: msg.dataType,
+                xCoor: msg.xCoor,
+                yCoor: msg.yCoor,
+                tCoor: msg.tCoor
+            })
+
+            node.say('mouseData', 'SERVER');
+
+        })
+
 
         // ---- first index listener and requester ---- //
 

@@ -115,14 +115,14 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // -- main debug data -- //
         // --------------------- //
 
-        node.game.pairIndexList = [
-            1,2,3
-        ]
-
-
-        node.game.correctAnswerList = [
-            0,1,0
-        ]
+        // node.game.pairIndexList = [
+        //     1,2,3
+        // ]
+        //
+        //
+        // node.game.correctAnswerList = [
+        //     0,1,0
+        // ]
 
 
 
@@ -729,6 +729,55 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             keepUpdated: true
 
         })
+
+
+        node.on.data('mouseData', function() {
+
+            this.introFunction('node.on.data(mouseData, ...)')
+
+            memory
+            .select('dataType', '=', 'mouse')
+            .save('mouse.csv', {
+
+                header: [
+                    'player',
+                    'xCoor',
+                    'yCoor',
+                    'tCoor'
+                ],
+
+                flattenByGroup:'player',
+
+                flatten:true,
+
+                keepUpdated: true
+
+            })
+
+            let test1 = memory.select('dataType', '=', 'mouse').fetch();
+            // this.talk(test1);
+            console.log(test1);
+
+        })
+
+        // did not work
+        // memory.view('xCoor').save('mouse.csv', {
+        //
+        //     header: [
+        //         'player',
+        //         'xCoor',
+        //         'yCoor',
+        //         'tCoor'
+        //     ],
+        //
+        //     flattenByGroup:'player',
+        //
+        //     flatten:true,
+        //
+        //     keepUpdated: true
+        //
+        // })
+
 
         // Feedback.
         memory.view('feedback').save('feedback.csv', {

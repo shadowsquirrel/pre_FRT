@@ -303,6 +303,8 @@ window.onload = function() {
             picture.set(currentIndex);
         }, 250)
 
+        // related to mouse tracking
+        resetSwitches();
 
     })
 
@@ -397,6 +399,13 @@ window.onload = function() {
     var prevT = undefined;
     var dt = undefined;
 
+    var resetSwitches = ()=>{
+        firstTime = true;
+        translated = false;
+        go.isClicked = false;
+        button.isClicked = false;
+    }
+
     var getLast = (array)=>{
         return array[array.length - 1];
     }
@@ -406,9 +415,6 @@ window.onload = function() {
     }
 
     $('.all').mousemove(function(e) {
-
-        // console.log('go clicked: ' + go.clicked);
-        // console.log('button clicked: ' + button.isClicked);
 
         if(go.isClicked && !button.isClicked) {
 
@@ -501,6 +507,20 @@ window.onload = function() {
 
         console.log('Y list');
         console.log(y);
+
+        console.log('Time list');
+        console.log(t);
+
+
+        console.log('EMITTING MOUSE DATA');
+        let msg = {
+            dataType: 'mouse',
+            xCoor: x,
+            yCoor: y,
+            tCoor: t
+        }
+
+        node.emit('HTML-mouse', msg);
 
     }
 
