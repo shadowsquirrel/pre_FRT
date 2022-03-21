@@ -22,7 +22,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     stager.setDefaultStepRule(ngc.stepRules.SOLO);
 
     // Must implement the stages here.
-
     stager.setOnInit(function() {
 
 
@@ -115,14 +114,14 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // -- main debug data -- //
         // --------------------- //
 
-        // node.game.pairIndexList = [
-        //     1,2,3
-        // ]
-        //
-        //
-        // node.game.correctAnswerList = [
-        //     0,1,0
-        // ]
+        node.game.pairIndexList = [
+            1,2,3,4,5,6
+        ]
+
+
+        node.game.correctAnswerList = [
+            0,1,0,1,0,1,0
+        ]
 
 
 
@@ -511,78 +510,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         })
 
 
-        // ----------------------------------------------------------- //
-        // -------------------- IBT MAIN FUNCTIONS ------------------- //
-        // ----------------------------------------------------------- //
-
-        node.on.data('request-IBT-trial-LOGIC', function(msg) {
-
-            this.introFunction('node.on.data(request-IBT-trial-LOGIC)')
-
-            let player = node.game.pl.get(msg.from);
-
-            // every time disconnect reconnect IBT trials start over
-
-            // this.talk('=====   BEFORE THE PUSH   ====')
-            // console.log();
-            // this.talk('--- node.game.ibt.stateList ---')
-            // console.log(node.game.ibt.stateList);
-            // this.talk('--- node.game.ibt.photoList ---')
-            // console.log(node.game.ibt.photoList);
-            // this.talk('--- node.game.ibt.adjList ---');
-            // console.log(node.game.ibt.adjList);
-            // console.log();
-            // this.talk('--- player.ibt.stateList ---')
-            // console.log(player.ibt.stateList);
-            // this.talk('--- player.ibt.photoList ---')
-            // console.log(player.ibt.photoList);
-            // this.talk('--- player.ibt.adjList ---');
-            // console.log(player.ibt.adjList);
-            // console.log();
-
-            var buttonSetup = player.ibt.buttonSetup;
-            var trialRound = player.stage.round;
-            var currentIconIndex = player.ibt.stateList.shift();
-            var currentIcon = currentIconIndex ? 'person' : 'house';
-            var currentPhotoPlacement = player.ibt.primerPlacement[currentIconIndex].shift();
-            var currentPhotoIndex = player.ibt.photoList[currentIconIndex].shift();
-            var currentAdjIndex = player.ibt.adjList[currentIconIndex][currentPhotoIndex].shift();
-
-            // this.talk('=====  AFTER THE PUSH   ====')
-            // this.space()
-            // this.talk('----------- TRIAL ' + trialRound + ' ------------')
-            // this.space()
-            // this.talk('--- node.game.ibt.stateList ---')
-            // console.log(node.game.ibt.stateList);
-            // this.talk('--- node.game.ibt.photoList ---')
-            // console.log(node.game.ibt.photoList);
-            // this.talk('--- node.game.ibt.adjList ---');
-            // console.log(node.game.ibt.adjList);
-            // console.log();
-            // this.talk('--- player.ibt.stateList ---')
-            // console.log(player.ibt.stateList);
-            // this.talk('--- player.ibt.photoList ---')
-            // console.log(player.ibt.photoList);
-            // this.talk('--- player.ibt.adjList ---');
-            // console.log(player.ibt.adjList);
-            // console.log();
-
-            var trial = {
-                buttonSetup: buttonSetup,
-                round: trialRound,
-                icon: currentIcon,
-                placement: currentPhotoPlacement,
-                photo: currentPhotoIndex,
-                adj: currentAdjIndex
-            }
-
-            this.talk('TRIAL to be sent');
-            console.log(trial);
-
-            node.say('LOGIC-IBT-trial', player.id, trial);
-
-        })
-
 
         // ---- Decision Time Duration Listener ---- //
 
@@ -621,8 +548,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                     'tutoTime',
                     'expTime',
                     'surveyTime',
-                    'surveyTime2',
-                    'ibtTime'
+                    'surveyTime2'
                 ],
 
                 flattenByGroup:'player',
@@ -662,32 +588,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             keepUpdated: true
 
         })
-
-
-        // saving experiment data
-        memory.view('ibt_Icon').save('ibt.csv', {
-
-            header: [
-                'player',
-
-                'ibt_Icon',
-                'ibt_PhotoIndex',
-                'ibt_IconIndex',
-                'ibt_AdjIndex',
-                'ibt_Adjective',
-
-                'ibt_Answer',
-                'ibt_isAnswerRelevant',
-                'ibt_isAnswerCorrect',
-
-                'ibt_IntroTimeDuration',
-                'ibt_PrimerDisplayDuration',
-                'ibt_ReactionTime'
-            ],
-
-            keepUpdated: true
-
-        });
 
 
         // saving subject survey data

@@ -157,7 +157,7 @@ experiment.generate = function() {
 
     order.active = [
         'gender',
-        // 'age',
+        'age',
         'race',
         // 'education',
         // 'employment',

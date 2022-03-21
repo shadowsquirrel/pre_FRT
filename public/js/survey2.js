@@ -15,7 +15,7 @@ window.onload = function() {
     //
     // node.emit('HTML-requestDtd');
 
-    decision.dtd = 10;
+    decision.dtd = 6;
 
     // INTRO ANIMATION
     setTimeout(()=>{

@@ -33,10 +33,12 @@ window.onload = function() {
 
     // --------------- //
 
+
+    // --------------------------------------------- //
+    // ---------------  NEXT BUTTON ---------------- //
+    // --------------------------------------------- //
+
     $('#go').html('START');
-
-
-    button.isClicked = false;
 
     go.isClicked = false;
 
@@ -67,7 +69,6 @@ window.onload = function() {
         }
 
 
-
         // hide the go button
         $('.frame-C').css({'transition':'0.1s',
         'opacity':'0', 'z-index':'0'});
@@ -90,6 +91,9 @@ window.onload = function() {
 
     }
 
+    // ---------------------------------------------------- //
+    // ----------------  PICTURE HELPERS ------------------ //
+    // ---------------------------------------------------- //
 
     picture.set = function(index) {
 
@@ -125,6 +129,11 @@ window.onload = function() {
 
     }
 
+    // ----------------------------------------------------- //
+    // -------------- MATCH / NO MATCH HELPERS ------------- //
+    // ----------------------------------------------------- //
+
+    button.isClicked = false;
 
     button.hide = function() {
 
@@ -155,6 +164,12 @@ window.onload = function() {
 
     }
 
+
+    // --------------------------------------------------------------------- //
+    // --------------------------------------------------------------------- //
+    // ------------- BUTTON ACTION EMITTING THE RESULT TO SERVER ----------- //
+    // --------------------------------------------------------------------- //
+    // --------------------------------------------------------------------- //
 
     $('#go').click(function() {
 
@@ -243,6 +258,11 @@ window.onload = function() {
 
     })
 
+
+    // ---------------------------------------------- //
+    // ------- MATCH/NO MATCH BUTTONS HOVERS -------- //
+    // ---------------------------------------------- //
+
     $('#lB').hover(
         function() {
             $(this).css({'transition':'0.1s', 'filter':'brightness(0.5)'});
@@ -266,9 +286,17 @@ window.onload = function() {
     )
 
 
+    // ----------------------------- //
+    // ------- INTIAL SETUP -------- //
+    // ----------------------------- //
+
     button.hide();
     picture.hide();
 
+
+    // -------------------------------------------------------- //
+    // ----------- LISTENING FOR THE NEXT PICTURE ------------- //
+    // -------------------------------------------------------- //
 
     node.on('nextPicture-HTML', function(msg) {
 
@@ -301,13 +329,17 @@ window.onload = function() {
 
         setTimeout(()=>{
             picture.set(currentIndex);
-        }, 250)
+        }, 1000)
 
         // related to mouse tracking
         resetSwitches();
 
     })
 
+
+    // ---------------------------------------------------------------- //
+    // ------- INITIATE THE PAGE BY REQUESTING THE FIRST PICTURE ------ //
+    // ---------------------------------------------------------------- //
 
     node.on('firstPicture-HTML', function(msg) {
 
@@ -342,25 +374,30 @@ window.onload = function() {
 
         setTimeout(()=>{
             picture.set(currentIndex);
-        }, 500)
+        }, 1000)
 
-
+        // related to mouse tracking
+        resetSwitches();
 
     })
 
     node.emit('HTML-requestFirstIndex');
 
 
+    // TIME UP SETUP CAN BE DIFFERENT THEN ANSWERING THE QUESTION WHERE
+    // WE DO NOT ASK THE CONFIDENCE QUESTION
     node.on('timeUp', function() {
 
         if(!button.isClicked) {
 
             button.isClicked = true;
 
+            // CHANGE !!!
             go.show();
 
             button.hide();
 
+            // MAYBE CHANGE !!! ?
             picture.hide();
 
             var isAnswerCorrect = (button.answer === picture.correctAnswer)
@@ -399,11 +436,13 @@ window.onload = function() {
     var prevT = undefined;
     var dt = undefined;
 
-    var resetSwitches = ()=>{
+    var resetSwitches = () => {
+
         firstTime = true;
         translated = false;
         go.isClicked = false;
         button.isClicked = false;
+
     }
 
     var getLast = (array)=>{
