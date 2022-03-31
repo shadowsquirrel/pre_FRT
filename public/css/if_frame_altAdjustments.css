@@ -29,8 +29,9 @@
     position: absolute;
     color: #e63333;
     font-size: 45px;
-    top: 26px;
-    margin-left: 150px;
+    /* top: 26px; */
+    /* margin-left: 150px; */
+    margin-left: -241px;
     width: 280px;
     transition: 0.3s;
     z-index: -10;
@@ -41,8 +42,9 @@
     position: absolute;
     color: #6ac258;
     font-size: 45px;
-    top: 26px;
-    margin-left: -328px;
+    /* top: 26px; */
+    /* margin-left: -328px; */
+    margin-left:28px;
     width: 280px;
     transition: 0.3s;
     z-index: -10;

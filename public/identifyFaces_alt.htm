@@ -5,6 +5,8 @@
     <link rel="stylesheet" href="css/frame.css">
     <link rel="stylesheet" href="css/if_frame.css">
     <link rel="stylesheet" href="css/if_frame_altAdjustments.css">
+    <link rel="stylesheet" href="css/confidence.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
 
@@ -13,7 +15,7 @@
 </head>
 <body>
 
-    <div class=debug style='position:absolute; left:2%;'>
+    <div class=debug style='position:absolute; left:2%; display:none;'>
         <div class=coordinates>
             <p>
                 x-coordinate: <span id=xCoor></span>
@@ -30,31 +32,74 @@
     <div class = 'wrap  noselect' style='margin-top:10px;'>
 
 
-        <div class = 'all'>
+        <div class = 'all' id='all'>
 
+            <div class=step-1>
 
-            <div class='frame-B'>
+                <div class='frame-B'>
 
-                <div class='frame-B-0'>
+                    <div class='frame-B-0'>
 
-                    <div class='frame-B-0-0'>
+                        <div class='frame-B-0-0'>
 
-                        <div class='leftButton buttonWrap'>
-                            <img id='lB' class='iconButton' src='images/decisionIcons/false.png'/>
-                            <div class=leftButtonExplanation>
-                                <p>
-                                    <strong>different</strong>
-                                </p>
+                            <div class='leftButton buttonWrap'>
+                                <div class=leftButtonExplanation>
+                                    <p>
+                                        different
+                                    </p>
+                                </div>
+                                <img id='lB' class='iconButton' src='images/decisionIcons/false.png'/>
                             </div>
-                        </div>
 
-                        <div class='rightButton buttonWrap'>
-                            <img id='rB' class='iconButton' src='images/decisionIcons/true.png'/>
-                            <div class=rightButtonExplanation>
-                                <p>
-                                    <strong>same</strong>
-                                </p>
+                            <div class='rightButton buttonWrap'>
+                                <div class=rightButtonExplanation>
+                                    <p>
+                                        same
+                                    </p>
+                                </div>
+                                <img id='rB' class='iconButton' src='images/decisionIcons/true.png'/>
                             </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class='frame-A'>
+
+                    <div class='frame-A-0' id='frame-0'>
+
+                        <div class='frame-A-0-0' id='frame-0-0'>
+
+                            <div class='leftFace innerWrap'>
+                                <img id='lF' class='facePicture' src='faces/exp/1a.jpg'/>
+                            </div>
+
+                            <div class='rightFace innerWrap'>
+                                <img id='rF' class='facePicture' src='faces/exp/1b.jpg'/>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class='frame-C'>
+
+                    <div class='frame-C-0'>
+
+                        <div class='frame-C-0-0'>
+
+                            <div class='transitionButton' id='go'>
+
+                                <p>
+                                    <span id=go></span>
+                                </p>
+
+                            </div>
+
                         </div>
 
                     </div>
@@ -63,46 +108,59 @@
 
             </div>
 
-            <div class='frame-A'>
+            <div class='step-2'>
 
-                <div class='frame-A-0' id='frame-0'>
+                <div class=main-column>
+                    <div class=main-row>
+                        <div class=main-main>
+                            <div class = confidence-text-slider-text-container>
 
-                    <div class='frame-A-0-0' id='frame-0-0'>
+                                <div class=confidence-text-container-top>
+                                    <p>
+                                        How confident are you on the choice you just made?
+                                    </p>
+                                </div>
 
-                        <div class='leftFace innerWrap'>
-                            <img id='lF' class='facePicture' src='faces/exp/1a.jpg'/>
+                                <div class='confidence-slider-bar-container'>
+                                    <input type='range' min = '0' max = '5' class = 'confidence-slider' value = '0' id = 'confidence-slider' />
+                                    <div id = 'confidence-bar' class = 'confidence-bar'></div>
+                                </div>
+
+                                <div class='confidence-slider-range-text-container'>
+                                    <div class=confidence-min-text>
+                                        Not confident at all
+                                    </div>
+                                    <div class=confidence-max-text>
+                                        Totally confident
+                                    </div>
+                                </div>
+
+                                <div class=confidence-text-container-bottom>
+                                    <div class=confidence-dynamic-text>
+                                        <p>
+                                            <span id=confidence-text>
+                                                Select your confidence level on the above slider
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class=confidence-button-submit-container>
+                                    <div class=confidence-button-submit>
+                                        <p>
+                                            SUBMIT
+                                        </p>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
                         </div>
-
-                        <div class='rightFace innerWrap'>
-                            <img id='rF' class='facePicture' src='faces/exp/1b.jpg'/>
-                        </div>
-
                     </div>
-
                 </div>
 
             </div>
-
-            <div class='frame-C'>
-
-                <div class='frame-C-0'>
-
-                    <div class='frame-C-0-0'>
-
-                        <div class='transitionButton' id='go'>
-
-                            <p>
-                                <span id=go></span>
-                            </p>
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-            </div>
-
 
         </div>
 
@@ -110,6 +168,7 @@
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src='js/confidence.js'></script>
     <script src="js/identifyFaces_alt.js"></script>
 
 </body>

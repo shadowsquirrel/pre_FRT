@@ -1,7 +1,20 @@
 
+var data = {
+    index: undefined,
+    answer: undefined,
+    isCorrect: undefined,
+    // mouse tracking
+    xCoor: undefined,
+    yCoor: undefined,
+    tCoor: undefined,
+    // confidence
+    confidence: undefined
+}
 var picture = {};
 var button = {};
 var go = {};
+var transitionTo = {};
+
 var dtd = undefined;
 
 picture.index = undefined;
@@ -111,7 +124,10 @@ window.onload = function() {
 
     picture.hide = function() {
 
-        $('.facePicture').css({'transition':'0.35s', 'opacity':'0'});
+        $('.facePicture').css({
+            'transition':'0.1s',
+            'opacity':'0'
+        });
 
         console.log('');
         console.log('HIDE PICTURE');
@@ -121,11 +137,98 @@ window.onload = function() {
 
     picture.show = function() {
 
-        $('.facePicture').css({'transition':'0.2s', 'opacity':'1'});
+        $('.facePicture').css({
+            'transition':'0.1s',
+            'opacity':'1'
+        });
 
         console.log('');
         console.log('SHOW PICTURE');
         console.log('');
+
+    }
+
+    picture.min = () => {
+
+        $('.step-1').css({
+            'transition':'0.5s',
+            'transform-origin':'top',
+            'transform':'scale(0.4)',
+            'margin-bottom':'-50%'
+        })
+
+    }
+
+    picture.max = () => {
+
+        $('.step-1').css({
+            'transition':'0s',
+            'transform':'scale(1)',
+            'margin-bottom':'0'
+        })
+
+    }
+
+    // ---------------------------------------------------- //
+    // -------------  TRANSITION BETWEEN STEPS ------------ //
+    // ---------------------------------------------------- //
+
+    transitionTo.step2 = () => {
+
+        picture.min();
+
+        confidence.show();
+
+    }
+
+    transitionTo.next = (currentIndex) => {
+
+        // hide step 2
+        confidence.hide(0.1);
+
+        // hide buttons
+        button.hide();
+
+        // hide picture
+        picture.hide();
+
+        // show next button
+        setTimeout(()=>{
+            go.show();
+        }, 1000)
+
+
+        // hide step-1 again
+        $('.step-1').css({
+            'transition':'0.1s',
+            'opacity':'0',
+        });
+
+        // kill step 2
+        setTimeout(()=>{
+            $('.step-2').css({
+                'display':'none'
+            })
+            picture.max();
+        }, 350)
+
+        // set the new picture
+        setTimeout(()=>{
+            picture.set(currentIndex);
+        }, 500)
+
+
+        setTimeout(()=>{
+            $('.step-1').css({
+                'transition':'0.3s',
+                'opacity':'1'
+            });
+        }, 1000)
+
+
+
+
+
 
     }
 
@@ -135,13 +238,51 @@ window.onload = function() {
 
     button.isClicked = false;
 
-    button.hide = function() {
+    button.hide = function(side) {
 
-        $('#lB, #rB, .leftButtonExplanation, .rightButtonExplanation').css({'transition':'0.35s', 'opacity':'0'})
+        if(side === -2 || side === undefined) {
 
-        setTimeout(()=>{
-            $('#lB, #rB').css({'transform':'scale(0)'})
-        }, 400)
+            $('#lB, #rB, .leftButtonExplanation, .rightButtonExplanation').css({
+                'transition':'0.1s',
+                'opacity':'0'
+            })
+
+            setTimeout(()=>{
+                $('#lB, #rB').css({'transform':'scale(0)'})
+            }, 400)
+
+        }
+
+        if(side === 0) {
+
+            console.log('left button picked, right button is killed');
+
+            $('#rB, .rightButtonExplanation').css({
+                'transition':'0.1s',
+                'opacity':'0'
+            })
+
+            setTimeout(()=>{
+                $('#rB').css({'transform':'scale(0)'})
+            }, 400)
+
+        }
+
+        if(side === 1) {
+
+            console.log('right button picked, left button is killed');
+
+            $('#lB, .leftButtonExplanation').css({
+                'transition':'0.1s',
+                'opacity':'0'
+            })
+
+            setTimeout(()=>{
+                $('#lB').css({'transform':'scale(0)'})
+            }, 400)
+
+
+        }
 
         console.log('');
         console.log('HIDE BUTTON');
@@ -155,7 +296,9 @@ window.onload = function() {
 
         $('#lB, #rB').css({'transition':'0s', 'transform':'scale(1)'})
         setTimeout(()=>{
-            $('#lB, #rB').css({'transition':'0.19s', 'opacity':'1'})
+            $('#lB, #rB').css({
+                'transition':'0.1s',
+                'opacity':'1'})
         }, 10)
 
         console.log('');
@@ -164,10 +307,95 @@ window.onload = function() {
 
     }
 
+    button.click = (isTimeUp) => {
+
+        isTimeUp = isTimeUp === undefined ? false : isTimeUp;
+
+        if(!button.isClicked) {
+
+            // disable button
+            button.isClicked = true;
+
+            // stop server timer
+            node.emit('stopTime');
+
+            // hide unpicked button or buttons
+            button.hide(button.answer);
+
+            // hide pictures
+            // picture.hide();
+
+            // transform recorded mouse data
+            var mouseData = translate();
+
+            // update data - if no answer given then code -2
+            data.index = picture.index;
+            data.answer = button.answer;
+            data.isCorrect = (data.answer === picture.correctAnswer);
+
+            // update mouse tracking data
+            data.xCoor = mouseData.xCoor;
+            data.yCoor = mouseData.yCoor;
+            data.tCoor = mouseData.tCoor;
+
+            // send decision data to client.js
+            if(isTimeUp) {
+                node.emit('HTML-answer-CLIENT', data);
+                data.confidence = -1; // -1 when no answer is given no conf is asked
+            } else {
+
+                // hide decision screen and show confidence screen
+                // $('.step-1').css({
+                //     'transition':'0.1s',
+                //     'opacity':'0'
+                // });
+                // setTimeout(()=>{
+                //     $('.step-1').css({
+                //         'display':'none'
+                //     });
+                //     confidence.show();
+                // }, 150)
+                transitionTo.step2();
+
+            }
+
+        }
+
+    }
+
+    button.submit = () => {
+
+        // debug
+        console.log('');
+        console.log('---- DATA SENT TO CLIENT.JS ----');
+        console.log('');
+        console.log(data);
+        console.log('');
+        console.log('--------------------------------');
+        console.log('');
+
+        $('.step-1, .step-2').css({
+            'transition':'0.1s',
+            'opacity':'0'
+        })
+
+        button.hide(0.2);
+
+        setTimeout(()=>{
+            confidence.reset();
+            confidence.button.submit.hide();
+        }, 1000)
+
+        node.emit('HTML-answer-CLIENT', data);
+
+    }
+
+    $('.confidence-button-submit').click(button.submit)
+
 
     // --------------------------------------------------------------------- //
     // --------------------------------------------------------------------- //
-    // ------------- BUTTON ACTION EMITTING THE RESULT TO SERVER ----------- //
+    // -------------     NEXT & SAME / DIFFERENT BUTTONS         ----------- //
     // --------------------------------------------------------------------- //
     // --------------------------------------------------------------------- //
 
@@ -181,83 +409,34 @@ window.onload = function() {
 
     $('#lB').click(function() {
 
-        if(!button.isClicked) {
-
-            button.isClicked = true;
-
-            button.answer = 0;
-
-            setTimeout(()=>{
-                go.show();
-            }, 500)
-
-
-            node.emit('stopTime');
-
-            button.hide();
-
-            picture.hide();
-
-            var isAnswerCorrect = (button.answer === picture.correctAnswer)
-
-            var data = {
-                index: picture.index,
-                answer: button.answer,
-                correct: isAnswerCorrect
-            }
-
-            console.log('');
-            console.log('');
-            console.log('LEFT BUTTON - data to be sent to CLIENT');
-            console.log(data);
-            console.log('');
-            console.log('');
-
-            node.emit('HTML-diffPerson', data);
-
-        }
+        // for labeling/understanding the binary code
+        var differentPerson = 0;
+        button.answer = differentPerson;
+        button.click();
 
     })
 
     $('#rB').click(function() {
 
-        if(!button.isClicked) {
-
-            button.isClicked = true;
-
-            button.answer = 1;
-
-            setTimeout(()=>{
-                go.show();
-            }, 500)
-
-            node.emit('stopTime');
-
-            button.hide();
-
-            picture.hide();
-
-            var isAnswerCorrect = (button.answer === picture.correctAnswer)
-
-            var data = {
-                index: picture.index,
-                answer: button.answer,
-                correct: isAnswerCorrect
-            }
-
-            console.log('');
-            console.log('');
-            console.log('RIGHT BUTTON - data to be sent to CLIENT');
-            console.log(data);
-            console.log('');
-            console.log('');
-
-            node.emit('HTML-samePerson', data);
-
-        }
+        // for labeling/understanding the binary code
+        var samePerson = 1;
+        button.answer = samePerson;
+        button.click();
 
     })
 
+    // TIME UP SETUP CAN BE DIFFERENT THEN ANSWERING THE QUESTION WHERE
+    // WE DO NOT ASK THE CONFIDENCE QUESTION
+    node.on('timeUp', function() {
+
+        // for labeling/understanding the binary code
+        var noAnswer = -2;
+        var timeIsUp = true;
+
+        button.answer = noAnswer;
+        button.click(timeIsUp);
+
+    })
 
     // ---------------------------------------------- //
     // ------- MATCH/NO MATCH BUTTONS HOVERS -------- //
@@ -286,36 +465,11 @@ window.onload = function() {
     )
 
 
-    // ----------------------------- //
-    // ------- INTIAL SETUP -------- //
-    // ----------------------------- //
-
-    button.hide();
-    picture.hide();
-
-
     // -------------------------------------------------------- //
     // ----------- LISTENING FOR THE NEXT PICTURE ------------- //
     // -------------------------------------------------------- //
 
     node.on('nextPicture-HTML', function(msg) {
-
-        console.log('');
-        console.log('');
-        console.log('');
-        console.log('');
-        console.log('');
-        console.log('');
-        console.log('NEW PICTURE RECEIVED');
-
-        console.log('INDEX: ' + msg.index);
-        console.log('ANSWER: ' + msg.correctAnswer);
-        console.log('');
-        console.log('');
-        console.log('');
-        console.log('');
-        console.log('');
-        console.log('');
 
         var currentIndex = msg.index;
         var correctAnswer = msg.correctAnswer;
@@ -327,12 +481,48 @@ window.onload = function() {
         // initially set the answer to no answer
         button.answer = -2;
 
-        setTimeout(()=>{
-            picture.set(currentIndex);
-        }, 1000)
-
         // related to mouse tracking
         resetSwitches();
+
+        // ---- //
+
+        // // hide confidence screen
+        // confidence.hide();
+        //
+        // // show next button
+        // go.show();
+        //
+        // // show step-1 again
+        // $('.step-1').css({
+        //     'transition':'0s',
+        //     'opacity':'0',
+        //     'display':'block'
+        // });
+        // setTimeout(()=>{
+        //     $('.step-1').css({
+        //         'transition':'0.1s',
+        //         'opacity':'1'
+        //     });
+        // }, 250)
+
+        transitionTo.next(currentIndex);
+
+        // ---- //
+
+        // // set the new picture
+        // setTimeout(()=>{
+        //     picture.set(currentIndex);
+        // }, 500)
+
+
+        // debug
+        console.log('');
+        console.log('NEW PICTURE RECEIVED');
+
+        console.log('INDEX: ' + msg.index);
+        console.log('ANSWER: ' + msg.correctAnswer);
+        console.log('');
+
 
     })
 
@@ -372,9 +562,8 @@ window.onload = function() {
         // initially set the answer to no answer
         button.answer = -2;
 
-        setTimeout(()=>{
-            picture.set(currentIndex);
-        }, 1000)
+        // set the first picture
+        picture.set(currentIndex);
 
         // related to mouse tracking
         resetSwitches();
@@ -384,47 +573,19 @@ window.onload = function() {
     node.emit('HTML-requestFirstIndex');
 
 
-    // TIME UP SETUP CAN BE DIFFERENT THEN ANSWERING THE QUESTION WHERE
-    // WE DO NOT ASK THE CONFIDENCE QUESTION
-    node.on('timeUp', function() {
 
-        if(!button.isClicked) {
+    // ----------------------------- //
+    // ------- INTIAL SETUP -------- //
+    // ----------------------------- //
 
-            button.isClicked = true;
-
-            // CHANGE !!!
-            go.show();
-
-            button.hide();
-
-            // MAYBE CHANGE !!! ?
-            picture.hide();
-
-            var isAnswerCorrect = (button.answer === picture.correctAnswer)
-
-            var data = {
-                index: picture.index,
-                answer: button.answer,
-                correct: isAnswerCorrect
-            }
-
-            console.log('');
-            console.log('');
-            console.log('TIME UP - data to be sent to CLIENT');
-            console.log(data);
-            console.log('');
-            console.log('');
-
-            node.emit('HTML-timeUp', data);
-
-        }
-
-    })
-
-
+    button.hide();
+    picture.hide();
+    confidence.reset();
 
 
     // ------------ MOUSE TRACKING ----------- //
+
+    // TO DO: CREATE OBJECT AND ORGANIZE EVERYTHING WITHIN
 
     var x = [];
     var y = [];
@@ -472,8 +633,17 @@ window.onload = function() {
             t1 = e.timeStamp - t0;
             dt = t1 - prevT;
 
-            var newX = (e.pageX - 960)/235;
-            var newY = -(e.pageY - 605);
+
+            var area = $('.all');
+            area.offset();
+            area.height();
+            area.width();
+
+            // var newX = (e.pageX - 960)/235;
+            // var newY = -(e.pageY - 605);
+
+            var newX = e.pageX;
+            var newY = e.pageY;
 
             x.push(newX);
             y.push(newY);
@@ -494,22 +664,22 @@ window.onload = function() {
 
         }
 
-        if(go.isClicked && button.isClicked) {
-
-            if(!translated) {
-
-                console.log('go clicked and button is clicked!');
-
-                translated = true;
-                translate();
-
-            }
-
-        }
+        // if(go.isClicked && button.isClicked) {
+        //
+        //     if(!translated) {
+        //
+        //         console.log('go clicked and button is clicked!');
+        //
+        //         translated = true;
+        //         translate();
+        //
+        //     }
+        //
+        // }
 
     })
 
-
+    // TO DO: READ PAPS TO DETERMINE THE BEST WAY TO TRANSLATE
     var translate = function() {
 
         var x0 = getFirst(x);
@@ -523,17 +693,13 @@ window.onload = function() {
         console.log('xLast: ' + getLast(x));
 
         x = x.map(i => i - x0);
-        // if(x0 < 0) {
-        // } else {
-        //     x = x.map(i => i + x0);
-        // }
 
         console.log('after translation 1');
         console.log('x0: ' + getFirst(x));
         console.log('xLast: ' + getLast(x));
 
         // normalize the distance between the last and first to 1
-        x = x.map(i => (i / Math.abs(getLast(x))));
+        x = x.map(i => (i / Math.abs(lastX)));
 
 
 
@@ -550,16 +716,16 @@ window.onload = function() {
         console.log('Time list');
         console.log(t);
 
-
-        console.log('EMITTING MOUSE DATA');
-        let msg = {
+        let mtData = {
             dataType: 'mouse',
             xCoor: x,
             yCoor: y,
             tCoor: t
         }
 
-        node.emit('HTML-mouse', msg);
+        // node.emit('HTML-mouse', msg);
+
+        return mtData;
 
     }
 

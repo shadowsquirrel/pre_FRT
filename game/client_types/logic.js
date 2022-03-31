@@ -91,6 +91,15 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         }
 
+        node.game.showMemory = (key) => {
+            let test1 = memory.select('dataType', '=', key).fetch();
+            // this.talk(test1);
+            console.log(test1);
+        }
+
+        node.on.data('showMemory', (msg) => {
+            node.game.showMemory(msg.data);
+        })
 
         // ------------------------- //
         // ------- MAIN DATA ------- //
@@ -115,12 +124,12 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // --------------------- //
 
         node.game.pairIndexList = [
-            1,2,3,4,5,6
+            1,2,3,4,5,6,7,8,9,10,11,12,13,14,15
         ]
 
 
         node.game.correctAnswerList = [
-            0,1,0,1,0,1,0
+            0,1,0,1,0,1,0,1,0,1,0,1,0,1,0
         ]
 
 
@@ -320,85 +329,20 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // ----------------- TEST PHASE MAIN FUNCTIONS --------------- //
         // ----------------------------------------------------------- //
 
-        // answer listener: diff person
-        // 0 -> answer is DIFFERENT person
-        // -record answer to player's object
-        // -update the photo pair index
-        // -check if the test ended
-        // -if not send the next photo index and the next photo index's answer to CLIENT
-        node.on.data('diffPerson-LOGIC', function(msg) {
 
-            this.introFunction('node.on.data(diffPerson-LOGIC)')
-            this.talk('CLIENT DIFF PERSON RESPONSE RECEIVED BY LOGIC');
+        node.on.data('CLIENT-answer-LOGIC', (paket) => {
 
-            let player = node.game.pl.get(msg.from);
+            this.introFunction('node.on.data(CLIENT-answer-LOGIC)');
+
+            // get player
+            let player = node.game.pl.get(paket.from);
 
             // record player's answer for the current index
-            player.givenAnswerList[player.cpx] = 0;
+            player.givenAnswerList[player.cpx] = paket.data;
+
+            this.talk('Answer given is : ' + paket.data);
 
             // update the index (increment)
-            node.game.updateCurrentIndex(player);
-
-            // check it the test ended
-            if(node.game.checkEnd(player)) {
-
-                node.game.endTest(player);
-
-            } else {
-
-                node.game.nextPicture(player);
-
-            }
-
-        })
-
-
-        // answer listener: same person
-        // 1 -> answer is SAME person
-        // -record answer to player's object
-        // -update the photo pair index
-        // -check if the test ended
-        // -if not send the next photo index and the next photo index's answer to CLIENT
-        node.on.data('samePerson-LOGIC', function(msg) {
-
-            this.introFunction('node.on.data(samePerson-LOGIC)')
-            this.talk('CLIENT SAME PERSON RESPONSE RECEIVED BY LOGIC');
-
-            let player = node.game.pl.get(msg.from);
-
-            player.givenAnswerList[player.cpx] = 1;
-
-            node.game.updateCurrentIndex(player);
-
-            // check it the test ended
-            if(node.game.checkEnd(player)) {
-
-                node.game.endTest(player);
-
-            } else { // else go to the next picture
-
-                node.game.nextPicture(player);
-
-            }
-
-        })
-
-
-        // answer listener: same person
-        // -2 -> subject FAILED TO ANSWER in time
-        // -record answer to player's object
-        // -update the photo pair index
-        // -check if the test ended
-        // -if not send the next photo index and the next photo index's answer to CLIENT
-        node.on.data('noAnswer-LOGIC', function(msg) {
-
-            this.introFunction('node.on.data(noAnswer-LOGIC)');
-            this.talk('CLIENT NO ANSWER RESPONSE RECEIVED BY LOGIC');
-
-            let player = node.game.pl.get(msg.from);
-
-            player.givenAnswerList[player.cpx] = -2;
-
             node.game.updateCurrentIndex(player);
 
             // check it the test ended
@@ -562,15 +506,18 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         })
 
         // saving experiment data
-        memory.view('correct').save('decision.csv', {
+        memory.view('answer').save('decision.csv', {
 
             header: [
                 'player',
                 'index',
                 'answer',
+                'confidence',
                 'correct',
-                'dtd',
-                // add a response time variable too
+                'xCoor',
+                'yCoor',
+                'tCoor',
+                // 'dtd',
             ],
 
             keepUpdated: true
@@ -630,53 +577,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
 
-
-        node.on.data('mouseData', function() {
-
-            this.introFunction('node.on.data(mouseData, ...)')
-
-            memory
-            .select('dataType', '=', 'mouse')
-            .save('mouse.csv', {
-
-                header: [
-                    'player',
-                    'xCoor',
-                    'yCoor',
-                    'tCoor'
-                ],
-
-                flattenByGroup:'player',
-
-                flatten:true,
-
-                keepUpdated: true
-
-            })
-
-            let test1 = memory.select('dataType', '=', 'mouse').fetch();
-            // this.talk(test1);
-            console.log(test1);
-
-        })
-
-        // did not work
-        // memory.view('xCoor').save('mouse.csv', {
-        //
-        //     header: [
-        //         'player',
-        //         'xCoor',
-        //         'yCoor',
-        //         'tCoor'
-        //     ],
-        //
-        //     flattenByGroup:'player',
-        //
-        //     flatten:true,
-        //
-        //     keepUpdated: true
-        //
-        // })
 
 
         // Feedback.

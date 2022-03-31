@@ -153,7 +153,39 @@ $('#btn-B-4').click(function() {
 
 });
 
+$('#btn-B-501').click(function() {
 
+    box.updateProgressBar();
+
+    // as a reminder
+    button.active = false;
+
+
+
+    $('.confidence-slider-range-text-container').css({
+        'transition':'0.3s',
+        'opacity':'1'
+    })
+
+
+    box.transition('B-501', 'B-502', 0, 0, 1, 750);
+
+    setTimeout(()=>{
+        box.button.show('B-502');
+    }, 2750)
+
+});
+
+$('#btn-B-502').click(function() {
+
+    box.updateProgressBar();
+
+    box.transition('B-502', 'B-503', 0, 0, 1, 750);
+
+    // activate slider listener
+    listener.sliderChangeListens = true;
+
+});
 
 
 
@@ -195,6 +227,10 @@ $('#btn-C-201').click(function() {
 
 // activates listener.c2
 $('#btn-C-202').click(function() {
+
+    $('.frame-A').css({'margin-top':'-100px'});
+
+    listener.deactivateChoiceButtons = false;
 
     box.updateProgressBar();
 

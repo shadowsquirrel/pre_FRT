@@ -63,10 +63,80 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             node.say('debug', 'SERVER', msg);
         };
 
+        this.showMemo = (key) => {
+            node.say('showMemory', 'SERVER', key);
+        }
+
         // No need to show the wait for other players screen in single-player
         // games.
         W.init({ waitScreen: false });
 
+
+        // ------- TIME UP WARN ------ //
+        node.game.warn5 = function() {
+
+            var delay = 700;
+            var myNgHeader = document.getElementById('ng_header');
+            var myNgTimer = document.getElementsByClassName('no-panel-heading')[0]
+
+            // general setup for animation
+            myNgHeader.style.transition = '0.75s';
+            myNgHeader.style.transformOrigin = 'right top';
+            myNgTimer.style.transition = '0.75s';
+
+            // start the animation
+            myNgTimer.style.backgroundColor = 'red';
+            myNgHeader.style.backgroundColor = 'red';
+            myNgHeader.style.transform = 'scale(1.05)';
+            // myNgHeader.style.boxShadow = 'red 0px 0px 20px 20px';
+            // myNgHeader.style.border = '1px solid red';
+
+            setTimeout(()=>{
+                myNgTimer.style.backgroundColor = 'transparent';
+                myNgHeader.style.backgroundColor = 'transparent';
+                myNgHeader.style.transform = 'scale(1)';
+                // myNgHeader.style.boxShadow = 'transparent 0px 0px 20px 20px';
+                // myNgHeader.style.border = '1px solid transparent';
+            }, delay)
+
+            setTimeout(()=>{
+                myNgTimer.style.backgroundColor = 'red';
+                myNgHeader.style.backgroundColor = 'red';
+                myNgHeader.style.transform = 'scale(1.05)';
+                // myNgHeader.style.boxShadow = 'red 0px 0px 20px 20px';
+                // myNgHeader.style.border = '1px solid red';
+            }, 2 * delay)
+
+            setTimeout(()=>{
+                myNgTimer.style.backgroundColor = 'transparent';
+                myNgHeader.style.backgroundColor = 'transparent';
+                myNgHeader.style.transform = 'scale(1)';
+                // myNgHeader.style.boxShadow = 'transparent 0px 0px 20px 20px';
+                // myNgHeader.style.border = '1px solid transparent';
+            }, 3 * delay)
+
+            setTimeout(()=>{
+                myNgTimer.style.backgroundColor = 'red';
+                myNgHeader.style.backgroundColor = 'red';
+                myNgHeader.style.transform = 'scale(1.05)';
+                // myNgHeader.style.boxShadow = 'red 0px 0px 20px 20px';
+                // myNgHeader.style.border = '1px solid red';
+            }, 4 * delay)
+
+            setTimeout(()=>{
+                myNgTimer.style.backgroundColor = 'transparent';
+                myNgHeader.style.backgroundColor = 'transparent';
+                myNgHeader.style.transform = 'scale(1)';
+                // myNgHeader.style.boxShadow = 'transparent 0px 0px 20px 20px';
+                // myNgHeader.style.border = '1px solid transparent';
+            }, 5 * delay)
+
+
+        }
+
+        node.on('timeUp-warn', function() {
+            node.game.warn5();
+        })
 
         // ------------------------------------------------------------------ //
         // -   - -   - -   - -   - -   - -   - -   - -   - -   - -   - -   -  //
@@ -120,7 +190,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 timeup: function(msg) {
 
                     console.log('do nothing just show');
-
+                    node.game.warn5();
+                    
                 }
 
             })
@@ -155,9 +226,15 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
                 timeup: function() {
 
-                    node.game.visualTimer.hide();
+                    if(msg === 'c1') {
+                    }
 
+                    node.game.warn5();
                     node.emit('tutoTimeUp', myKey)
+
+
+                    // this will be added to other ones perhaps
+                    // node.game.visualTimer.hide();
 
                 }
 
@@ -467,96 +544,34 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // ------------------------------------------------------------------ //
         // ------------------------------------------------------------------ //
 
-        // ---- decision listener and recorder ---- //
+        node.on('HTML-answer-CLIENT', (data) => {
 
-        node.on('HTML-samePerson', function(msg) {
-
-            this.talk('HTML SAME PERSON RESPONSE RECEIVED BY CLIENT')
-
-            this.talk('MESSAGE RECEIVED')
-            this.talk(msg.index)
-            this.talk(msg.answer)
-            this.talk(msg.correct)
+            this.talk('DATA RECEIVED')
+            this.talk(data.index)
+            this.talk(data.answer)
+            this.talk(data.isCorrect)
+            // this.talk(data.xCoor)
+            // this.talk(data.yCoor)
+            // this.talk(data.tCoor)
             this.talk('------------')
 
             node.set({
                 dataType:'decision',
-                index:msg.index,
-                answer:msg.answer,
-                correct:msg.correct,
+                index:data.index,
+                answer:data.answer,
+                confidence:data.confidence,
+                correct:data.isCorrect,
+                xCoor: data.xCoor,
+                yCoor: data.yCoor,
+                tCoor: data.tCoor,
                 dtd:node.game.dtd,
                 // add a response time variable too
             })
 
-            node.say('samePerson-LOGIC', 'SERVER');
+            node.say('CLIENT-answer-LOGIC', 'SERVER', data.answer);
 
         })
 
-        node.on('HTML-diffPerson', function(msg) {
-
-            this.talk('HTML DIFF PERSON RESPONSE RECEIVED BY CLIENT')
-
-            this.talk('MESSAGE RECEIVED')
-            this.talk(msg.index)
-            this.talk(msg.answer)
-            this.talk(msg.correct)
-            this.talk('------------')
-
-            node.set({
-                dataType:'decision',
-                index:msg.index,
-                answer:msg.answer,
-                correct:msg.correct,
-                dtd:node.game.dtd,
-                // add a response time variable too
-            })
-
-            node.say('diffPerson-LOGIC', 'SERVER');
-
-        })
-
-        node.on('HTML-timeUp', function(msg) {
-
-            this.talk('TIME IS UP')
-
-            this.talk('MESSAGE RECEIVED')
-            this.talk(msg.index)
-            this.talk(msg.answer)
-            this.talk(msg.correct)
-            this.talk('------------')
-
-            node.set({
-                dataType:'decision',
-                index:msg.index,
-                answer:msg.answer,
-                correct:msg.correct,
-                dtd:node.game.dtd,
-                // add a response time variable too
-            })
-
-            node.say('noAnswer-LOGIC', 'SERVER');
-
-        })
-
-        node.on('HTML-mouse', function(msg) {
-
-            this.talk('MOUSE TRACKING DATA RECEIVED')
-
-            this.talk('-----------');
-            // this.talk(msg.dataType);
-            // this.talk(msg.xCoor);
-            this.talk('-----------');
-
-            node.set({
-                dataType: msg.dataType,
-                xCoor: msg.xCoor,
-                yCoor: msg.yCoor,
-                tCoor: msg.tCoor
-            })
-
-            node.say('mouseData', 'SERVER');
-
-        })
 
 
         // ---- first index listener and requester ---- //

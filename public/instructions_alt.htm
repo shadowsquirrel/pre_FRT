@@ -8,8 +8,10 @@
     <link rel="stylesheet" href="css/instructions_frame_initialSetup.css">
     <link rel="stylesheet" href="css/explanationBox.css">
     <link rel="stylesheet" href="css/explanationBox_extras.css">
+    <link rel="stylesheet" href="css/instructions_confidence.css">
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
     <title>Face Test</title>
 
@@ -36,35 +38,61 @@
 
         <div class = 'all'>
 
+            <!-- TITLE -->
             <div class=welcomeTitle>
                 <p class ='title1'>
                     <span id='mainmainTitle'></span>
                 </p>
             </div>
 
-            <!-- BUTTONS DIV -->
-            <div class='frame-B'>
+            <div class=frame-image>
 
-                <div class='frame-B-0'>
+                <!-- BUTTONS DIV -->
+                <div class='frame-B'>
 
-                    <div class='frame-B-0-0'>
+                    <div class='frame-B-0'>
 
-                        <div class='leftButton buttonWrap'>
-                            <img id='lB' class='iconButton' src='images/decisionIcons/false.png'/>
-                            <div class=leftButtonExplanation>
-                                <p>
-                                    different
-                                </p>
+                        <div class='frame-B-0-0'>
+
+                            <div class='leftButton buttonWrap'>
+                                <img id='lB' class='iconButton' src='images/decisionIcons/false.png'/>
+                                <div class=leftButtonExplanation>
+                                    <p>
+                                        different
+                                    </p>
+                                </div>
                             </div>
+
+                            <div class='rightButton buttonWrap'>
+                                <img id='rB' class='iconButton' src='images/decisionIcons/true.png'/>
+                                <div class=rightButtonExplanation>
+                                    <p>
+                                        same
+                                    </p>
+                                </div>
+                            </div>
+
                         </div>
 
-                        <div class='rightButton buttonWrap'>
-                            <img id='rB' class='iconButton' src='images/decisionIcons/true.png'/>
-                            <div class=rightButtonExplanation>
-                                <p>
-                                    same
-                                </p>
+                    </div>
+
+                </div>
+
+                <!-- FACIAL IMAGE PAIR DIV -->
+                <div class='frame-A'>
+
+                    <div class='frame-A-0' id='frame-0'>
+
+                        <div class='frame-A-0-0' id='frame-0-0'>
+
+                            <div class='leftFace innerWrap'>
+                                <img id='lF' class='facePicture' src='faces/tuto/1a.jpg'/>
                             </div>
+
+                            <div class='rightFace innerWrap'>
+                                <img id='rF' class='facePicture' src='faces/tuto/1b.jpg'/>
+                            </div>
+
                         </div>
 
                     </div>
@@ -73,25 +101,57 @@
 
             </div>
 
-            <!-- FACIAL IMAGE PAIR DIV -->
-            <div class='frame-A'>
+            <!-- SLIDER SCREEN -->
+            <div class=frame-slider>
+                <div class=main-column>
+                    <div class=main-row>
+                        <div class=main-main>
+                            <div class = confidence-text-slider-text-container>
 
-                <div class='frame-A-0' id='frame-0'>
+                                <div class=confidence-text-container-top>
+                                    <p>
+                                        How confident are you on the choice you just made?
+                                    </p>
+                                </div>
 
-                    <div class='frame-A-0-0' id='frame-0-0'>
+                                <div class='confidence-slider-bar-container'>
+                                    <input type='range' min = '0' max = '5' class = 'confidence-slider' value = '0' id = 'confidence-slider' />
+                                    <div id = 'confidence-bar' class = 'confidence-bar'></div>
+                                </div>
 
-                        <div class='leftFace innerWrap'>
-                            <img id='lF' class='facePicture' src='faces/tuto/1a.jpg'/>
+                                <div class='confidence-slider-range-text-container'>
+                                    <div class=confidence-min-text>
+                                        Not confident at all
+                                    </div>
+                                    <div class=confidence-max-text>
+                                        Totally confident
+                                    </div>
+                                </div>
+
+                                <div class=confidence-text-container-bottom>
+                                    <div class=confidence-dynamic-text>
+                                        <p>
+                                            <span id=confidence-text>
+                                                Select your confidence level on the above slider
+                                            </span>
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class=confidence-button-submit-container>
+                                    <div class=confidence-button-submit>
+                                        <p>
+                                            SUBMIT
+                                        </p>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
                         </div>
-
-                        <div class='rightFace innerWrap'>
-                            <img id='rF' class='facePicture' src='faces/tuto/1b.jpg'/>
-                        </div>
-
                     </div>
-
                 </div>
-
             </div>
 
 
@@ -99,6 +159,7 @@
             <div class='boxbox' id='boxbox-A' style='display:block;'>
 
             </div>
+
 
             <!-- TUTO BOX B CONTAINER -->
             <div class='boxbox' id='boxbox-B' style='display:none;'>
@@ -334,6 +395,91 @@
                         Please evaluate the above pair by clicking one of the buttons
                         (<img class='smallerInfoBoxIconButton' src='images/decisionIcons/false.png'/>
                         /<img class='smallerInfoBoxIconButton' src='images/decisionIcons/true.png'/>)
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class=boxwrap id='boxwrap-B-501'>
+
+            <div class='box' id='box-B-501'>
+
+                <div class=text>
+
+                    <p>
+                        After you make your decision, you are asked to declare
+                        your <strong>confidence level</strong> on the decision
+                        you just made on the <strong>above slider</strong>.
+                    </p>
+
+                </div>
+
+                <div class=buttonWrap>
+                    <div class=button id='btn-B-501'>
+                        <p>
+                            OK
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class=boxwrap id='boxwrap-B-502'>
+
+            <div class='box' id='box-B-502'>
+
+                <div class=text>
+
+                    <p>
+                        As denoted by the labels, 0 confidence means you are not at all
+                        confident on your decision and 5 confidence means you are certain
+                        your answer is correct.
+                    </p>
+
+                </div>
+
+                <div class=buttonWrap>
+                    <div class=button id='btn-B-502'>
+                        <p>
+                            OK
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class=boxwrap id='boxwrap-B-503'>
+
+            <div class='box' id='box-B-503' style='box-shadow:0px 0px white; background:transparent;transform-origin: center;'>
+
+                <div class=text style="width:1000px; text-align:center;">
+
+                    <p>
+                        Please pick your confidence level for the decision you just made.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class=boxwrap id='boxwrap-B-504'>
+
+            <div class='box' id='box-B-504' style='box-shadow:0px 0px white; background:transparent;transform-origin: center;'>
+
+                <div class=text style="width:1000px; text-align:center;">
+
+                    <p>
+                        Please click <strong>SUBMIT</strong> to proceed
                     </p>
 
                 </div>
@@ -690,10 +836,13 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="js/explanationBox.js"></script>
-    <script src="js/instructionHelpers_alt.js"></script>
     <script src="js/title.js"></script>
-    <script src="js/buttons_alt.js"></script>
 
+    <script src="js/instructions_confidence.js"></script>
+    <script src="js/instructionAdditionalHelpers.js"></script>
+
+    <script src="js/instructionHelpers_alt.js"></script>
+    <script src="js/buttons_alt.js"></script>
 
 </body>
 </html>

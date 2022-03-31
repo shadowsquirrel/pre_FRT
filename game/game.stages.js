@@ -27,10 +27,10 @@ module.exports = function(stager, settings) {
 
     // Modify the stager to skip one stage.
     stager.skip('instructions');
-    // stager.skip('identifyFaces');
-    stager.skip('survey2');
+    stager.skip('identifyFaces');
+    // stager.skip('survey2');
     stager.skip('results');
-    stager.skip('survey1');
+    // stager.skip('survey1');
     stager.skip('end');
 
     // To skip a step within a stage use:
