@@ -1,0 +1,5 @@
+"player","ibt_Icon","ibt_PhotoIndex","ibt_IconIndex","ibt_AdjIndex","ibt_Adjective","ibt_Answer","ibt_isAnswerRelevant","ibt_isAnswerCorrect","ibt_IntroTimeDuration","ibt_PrimerDisplayDuration","ibt_ReactionTime"
+"546650277812919","house",0,0,3,"furnished","NO ANSWER",0,0,2003,2001,2001
+"546650277812919","house",2,0,0,"leaky","NO ANSWER",0,0,2004,2002,2001
+"546650277812919","house",3,0,1,"roomy","NO ANSWER",0,0,2004,2002,2003
+"546650277812919","house",2,0,4,"drafty","NO ANSWER",0,0,2002,2001,2001
