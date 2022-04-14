@@ -191,7 +191,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
                     console.log('do nothing just show');
                     node.game.warn5();
-                    
+
                 }
 
             })
@@ -201,7 +201,19 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         node.on('hideTutoTimer', function() {
 
             node.game.visualTimer.hide();
+            var myNgHeader = document.getElementById('ng_header');
+            myNgHeader.style.display = 'none';
 
+        })
+
+        node.on('displayTutoTimer', function() {
+            var myNgHeader = document.getElementById('ng_header');
+            myNgHeader.style.display = 'flex';
+        })
+
+        node.on('killTutoTimer', function() {
+            var myNgHeader = document.getElementById('ng_header');
+            myNgHeader.style.display = 'none';
         })
 
         node.on('stopTutoTimer', function() {
@@ -226,8 +238,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
                 timeup: function() {
 
-                    if(msg === 'c1') {
-                    }
 
                     node.game.warn5();
                     node.emit('tutoTimeUp', myKey)
@@ -550,22 +560,20 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             this.talk(data.index)
             this.talk(data.answer)
             this.talk(data.isCorrect)
-            // this.talk(data.xCoor)
-            // this.talk(data.yCoor)
-            // this.talk(data.tCoor)
+            this.talk(data.xCoor)
+            this.talk(data.yCoor)
+            this.talk(data.tCoor)
             this.talk('------------')
 
             node.set({
-                dataType:'decision',
-                index:data.index,
+                pairIndex:data.index,
                 answer:data.answer,
                 confidence:data.confidence,
                 correct:data.isCorrect,
                 xCoor: data.xCoor,
                 yCoor: data.yCoor,
                 tCoor: data.tCoor,
-                dtd:node.game.dtd,
-                // add a response time variable too
+                responseTime: data.responseTime,
             })
 
             node.say('CLIENT-answer-LOGIC', 'SERVER', data.answer);

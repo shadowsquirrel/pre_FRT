@@ -130,7 +130,8 @@ confidence.bar.set = (val, id, opt) => {
         // RELEVANT AXIS - X
         xaxis: {
             side: 'top',
-            layer: 'below traces',
+            // layer: 'below traces',
+            layer: 'above traces',
 
             // RANGE
             fixedrange: true,
@@ -155,6 +156,8 @@ confidence.bar.set = (val, id, opt) => {
             // GRID
             showgrid: true,
             gridcolor: "rgb(207, 202, 202)",
+            gridwidth: 3,
+            // gridcolor: "red",
         },
         // IRRELVANT AXIS - Y
         yaxis: {

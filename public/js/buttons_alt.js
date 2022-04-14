@@ -161,7 +161,6 @@ $('#btn-B-501').click(function() {
     button.active = false;
 
 
-
     $('.confidence-slider-range-text-container').css({
         'transition':'0.3s',
         'opacity':'1'
@@ -203,7 +202,6 @@ $('#btn-C-2').click(function() {
     box.transition('C-2', 'C-201', 0, 0, 1, 750);
 
     setTimeout(()=>{
-        // box.active.sparkle = false;
         box.button.show('C-201');
     }, 2750)
 
@@ -212,10 +210,6 @@ $('#btn-C-2').click(function() {
 $('#btn-C-201').click(function() {
 
     box.updateProgressBar();
-
-    // listener.c2 = true;
-    //
-    // $('.transitionButtonBlocker').css({'display':'none'});
 
     box.transition('C-201', 'C-202', 0, 0, 1, 750);
 
@@ -228,7 +222,7 @@ $('#btn-C-201').click(function() {
 // activates listener.c2
 $('#btn-C-202').click(function() {
 
-    $('.frame-A').css({'margin-top':'-100px'});
+    $('.frame-A').css({'transition':'1s', 'margin-top':'-100px'});
 
     listener.deactivateChoiceButtons = false;
 
@@ -238,11 +232,13 @@ $('#btn-C-202').click(function() {
 
     $('.transitionButtonBlocker').css({'display':'none'});
 
-    box.transition('C-202', 'C-3', 0, 0, 1, 750);
+    box.transition('C-202', 'C-3', 0, 0, 1, 250);
 
 });
 
 $('#btn-C-4').click(function() {
+
+    box.updateProgressBar();
 
     box.transition('C-4', 'C-5', 1, 1, 1, 750);
 

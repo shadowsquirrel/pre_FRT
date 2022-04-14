@@ -4,6 +4,7 @@
 var picture = {};
 var button = {
     action: {},
+    isDecisionMade: false,
 };
 var go = {};
 var tuto = {};
@@ -25,7 +26,7 @@ window.onload = function() {
 
     var node = parent.node;
 
-    box.global.NoB = 23;
+    box.global.NoB = 30;
     // box.updateProgressBar();
 
     // --------------- //
@@ -163,22 +164,13 @@ window.onload = function() {
     // --  DECISION BUTTON  -- //
     // ----------------------- //
 
-    button.hide = function() {
-
-        $('#lB, #rB').css({'transition':'0.35s', 'opacity':'0'})
-        setTimeout(()=>{
-            $('#lB, #rB').css({'transform':'scale(0)'})
-        }, 400)
-
-        console.log('');
-        console.log('HIDE BUTTON');
-        console.log('');
-
-    }
-
     button.hide = function(side) {
 
+        node.emit('killTutoTimer');
+
         if(side === -2 || side === undefined) {
+
+            button.isDecisionMade = true;
 
             console.log('no button is picked, both buttons are killed');
 
@@ -194,6 +186,8 @@ window.onload = function() {
         }
 
         if(side === 0) {
+
+            button.isDecisionMade = true;
 
             console.log('left button picked, right button is killed');
 
@@ -228,9 +222,13 @@ window.onload = function() {
         console.log('HIDE BUTTON');
         console.log('');
 
+
+
     }
 
     button.show = function(delay) {
+
+        button.isDecisionMade = false;
 
         myDelay = delay === undefined ? 0.19 : delay;
 
@@ -288,36 +286,44 @@ window.onload = function() {
 
         box.updateProgressBar();
 
-        listener.b5 = false;
-
-        box.transition('B-504', 'B-6', 0, 0, 1, 750);
-
-        button.hide();
-        picture.hide();
-        confidence.button.submit.hide();
-        frame.slider.hide();
-
         setTimeout(()=>{
-            frame.image.max();
-        }, 350)
 
+            listener.b5 = false;
+
+            box.transition('B-504', 'B-6', 0, 0, 1, 750);
+
+            button.hide();
+            picture.hide();
+            confidence.button.submit.hide();
+            frame.slider.hide();
+
+            setTimeout(()=>{
+                frame.image.max();
+            }, 350)
+
+            setTimeout(()=>{
+                confidence.reset();
+            }, 2000)
+
+
+            $('.frame-A').css({'transform':'scale(1)'})
+
+            $('.facePicture').css({'filter': 'brightness(1) opacity(0.5) blur(10px) saturate(10) grayscale(1)'})
+
+            setTimeout(()=>{
+                picture.fastForward(1);
+            }, 750)
+
+            setTimeout(()=>{
+                box.button.show('B-6');
+            }, 4750)
+
+        }, 200)
+
+        frame.allHide();
         setTimeout(()=>{
-            confidence.reset();
-        }, 2000)
-
-
-        $('.frame-A').css({'transform':'scale(1)'})
-
-        $('.facePicture').css({'filter': 'brightness(1) opacity(0.5) blur(10px) saturate(10) grayscale(1)'})
-
-        setTimeout(()=>{
-            picture.fastForward(1);
-        }, 750)
-
-
-        setTimeout(()=>{
-            box.button.show('B-6');
-        }, 4750)
+            frame.allShow();
+        }, 1000)
 
     }
 
@@ -353,46 +359,311 @@ window.onload = function() {
 
         box.updateProgressBar();
 
-        listener.c1 = false;
+        frame.allHide();
+        setTimeout(()=>{
+            frame.allShow();
+        }, 1000)
 
-        box.transition('', 'C-2', 0, 0, 1, 750);
+        setTimeout(()=>{
+            listener.c1 = false;
 
+            box.transition('', 'C-2', 0, 0, 1, 0);
+
+            button.hide();
+            picture.hide();
+            confidence.button.submit.hide();
+            frame.slider.hide();
+
+            setTimeout(()=>{
+                frame.image.max();
+            }, 150)
+
+            setTimeout(()=>{
+                confidence.reset();
+            }, 2000)
+
+
+            $('.frame-A').css({'transition':'1s', 'opacity':'0'})
+
+            setTimeout(()=>{
+                $('.frame-A').css({'transition':'0.7s', 'margin-top':'-250px'});
+            }, 500)
+
+            setTimeout(()=>{
+                $('.frame-A').css({'transition':'1s', 'opacity':'1'})
+            }, 500)
+
+
+            go.setText('NEXT');
+
+            // setTimeout(()=>{
+            //     box.button.show('C-2');
+            // }, 2750)
+
+            go.active = false;
+            $('.transitionButtonBlocker').css({'display':'block'});
+
+            setTimeout(()=>{
+                go.show(1);
+            }, 500)
+
+            setTimeout(()=>{
+                box.button.show('C-2');
+            }, 2750)
+
+        }, 200)
+
+
+    }
+
+    button.action.c2 = (side) => {
+
+        box.updateProgressBar();
+
+        // update button choice hide the not chosen
+        button.hide(side);
+
+        // deactivate choice buttons
+        listener.deactivateChoiceButtons = true;
+
+        // stop timer
+        node.emit('stopTutoTimer');
+        setTimeout(()=>{
+            node.emit('killTutoTimer');
+        }, 250)
+
+        // minimize tha picture button setup
+        frame.image.min();
+
+        // initialize the confidence slider
+        confidence.reset();
+
+        // display none explanatory text and the subtmit button
+        confidence.killBottom();
+        frame.slider.pullBottom();
+
+        // display flex and opacity 1 the slider section
+        frame.slider.show();
+
+        // activate slider listener
+        listener.sliderChangeListens = true;
+
+        // add here move the slider indicator animation
+
+    }
+
+    button.action.c2Final = () => {
+
+        box.updateProgressBar();
+
+        listener.c2 = false;
+
+        setTimeout(()=>{
+
+            // hide slider stuff
+            button.hide();
+            picture.hide();
+            confidence.button.submit.hide();
+            frame.slider.hide();
+
+
+            setTimeout(()=>{
+                frame.image.max();
+            }, 500)
+
+            setTimeout(()=>{
+                $('.frame-A').css({'transition':'0.7s', 'margin-top':'-100px'});
+            }, 500)
+
+            setTimeout(()=>{
+                confidence.reset();
+            }, 2000)
+
+
+            // show next button and the text below next button
+            setTimeout(()=>{
+                go.show(0.1);
+                box.transition('', 'C-31', 0, 0, 1, 0);
+                $('#box-C-31').css({'transition':'1s', 'opacity':'1'});
+                listener.c3 = true;
+            }, 1000)
+
+        }, 200)
+
+        frame.allHide();
+        setTimeout(()=>{
+            frame.allShow();
+        }, 1000)
+
+    }
+
+    button.action.c3 = (side) => {
+
+        box.updateProgressBar();
+
+        // update button choice hide the not chosen
+        button.hide(side);
+
+        // deactivate choice buttons
+        listener.deactivateChoiceButtons = true;
+
+        // stop timer
+        node.emit('stopTutoTimer');
+        setTimeout(()=>{
+            node.emit('killTutoTimer');
+        }, 250)
+
+        // minimize tha picture button setup
+        frame.image.min();
+
+        // initialize the confidence slider
+        confidence.reset();
+
+        // display none explanatory text and the subtmit button
+        confidence.killBottom();
+        frame.slider.pullBottom();
+
+        // display flex and opacity 1 the slider section
+        frame.slider.show();
+
+        // activate slider listener
+        listener.sliderChangeListens = true;
+
+        // add here move the slider indicator animation
+
+    }
+
+    button.action.c3Final = () => {
+
+        box.updateProgressBar();
+
+        listener.c3 = false;
+
+        setTimeout(()=>{
+
+
+            // hide slider stuff
+            button.hide();
+            picture.hide();
+            confidence.button.submit.hide();
+            frame.slider.hide();
+
+
+            setTimeout(()=>{
+                frame.image.max();
+            }, 500)
+
+            setTimeout(()=>{
+                $('.frame-A').css({'transition':'0.7s', 'margin-top':'-100px'});
+            }, 500)
+
+            setTimeout(()=>{
+                confidence.reset();
+            }, 2000)
+
+
+
+
+            // show next button and the text below next button
+            setTimeout(()=>{
+                go.show(0.1);
+                box.transition('', 'C-31', 0, 0, 1, 0);
+                $('#box-C-31').css({'opacity':'1'});
+                listener.c4 = true;
+            }, 1000)
+
+        }, 200)
+
+        frame.allHide();
+        setTimeout(()=>{
+            frame.allShow();
+        }, 1000)
+
+    }
+
+    button.action.c4 = (side) => {
+
+        box.updateProgressBar();
+
+        // update button choice hide the not chosen
+        button.hide(side);
+
+        // deactivate choice buttons
+        listener.deactivateChoiceButtons = true;
+
+        // stop timer
+        node.emit('stopTutoTimer');
+        setTimeout(()=>{
+            node.emit('killTutoTimer');
+        }, 250)
+
+        // minimize tha picture button setup
+        frame.image.min();
+
+        // initialize the confidence slider
+        confidence.reset();
+
+        // display none explanatory text and the subtmit button
+        confidence.killBottom();
+        frame.slider.pullBottom();
+
+        // display flex and opacity 1 the slider section
+        frame.slider.show();
+
+        // activate slider listener
+        listener.sliderChangeListens = true;
+
+        // add here move the slider indicator animation
+
+    }
+
+    button.action.c4Final = () => {
+
+        box.updateProgressBar();
+
+        listener.c4 = false;
+
+        // hide slider stuff
         button.hide();
         picture.hide();
         confidence.button.submit.hide();
         frame.slider.hide();
 
-        setTimeout(()=>{
-            frame.image.max();
-        }, 350)
 
-        setTimeout(()=>{
-            confidence.reset();
-        }, 2000)
-
-
-        // $('.frame-A').css({'transform':'scale(1)'})
-
-        $('.frame-A').css({'margin-top':'-250px'});
-
-        go.setText('NEXT');
-
-        setTimeout(()=>{
-            box.button.show('C-2');
-        }, 2750)
-
-        go.active = false;
-        $('.transitionButtonBlocker').css({'display':'block'});
-
-        setTimeout(()=>{
-            go.show(1);
-        }, 2000)
-
+        // setTimeout(()=>{
+        //     frame.image.max();
+        // }, 500)
+        //
+        // setTimeout(()=>{
+        //     $('.frame-A').css({'margin-top':'-250px'});
+        // }, 500)
+        //
+        // setTimeout(()=>{
+        //     confidence.reset();
+        // }, 2000)
 
 
         setTimeout(()=>{
-            box.button.show('C-2');
-        }, 4750)
+
+            $('#boxbox-C').css({
+                'margin-top':'150px'
+            })
+            $('.frame-A, .frame-B').css({'transition':'0.2s', 'opacity':'0'})
+            setTimeout(()=>{
+                $('.frame-A').css({'transform':'scale(0)', 'margin-bottom':'-345px'})
+            }, 1000)
+
+            setTimeout(()=>{
+
+                box.transition('', 'C-4', 0, 0, 1, 0);
+                // $('.frame-A').css({'margin-top':'-100px'});
+                setTimeout(()=>{
+                    box.button.show('C-4');
+                }, 1750)
+
+            }, 1500)
+
+        }, 150)
 
     }
 
@@ -403,6 +674,9 @@ window.onload = function() {
     go.simpleHide = true;
 
     $('#go').click(function() {
+
+        node.emit('displayTutoTimer');
+        button.isDecisionMade = false;
 
         if(go.active) {
 
@@ -476,18 +750,19 @@ window.onload = function() {
 
         if(listener.c2) {
 
+            listener.deactivateChoiceButtons = false;
+
             // listener.c2 = false;
             box.updateProgressBar();
 
             box.transition('C-3', '', 0, 0, 1, 0);
 
-            $('.frame-A').css({'margin-top':'0px'});
+            $('.frame-A').css({'transition':'0.7s', 'margin-top':'0px'});
 
             go.hide(0.1);
 
             // set to picture based on picture.index
             picture.set(4);
-
 
             // show the pictures & buttons
             setTimeout(()=>{
@@ -496,17 +771,22 @@ window.onload = function() {
                 button.show(0.1);
 
                 console.log('NODE.EMIT(STARTTUTOTIMER WITH ACTIVE TIMEOUT for c2)');
+                node.emit('displayTutoTimer')
                 node.emit('startTutoTimer', 'c2');
 
-            }, 150)
+            }, 250)
 
         }
 
         if(listener.c3) {
 
+            listener.deactivateChoiceButtons = false;
+
             box.updateProgressBar();
             go.hide(0.1);
             $('#box-C-31').css({'opacity':'0'});
+
+            $('.frame-A').css({'transition':'0.7s', 'margin-top':'0px'});
 
             // set to picture based on picture.index
             picture.set(5);
@@ -520,11 +800,15 @@ window.onload = function() {
                 console.log('NODE.EMIT(STARTTUTOTIMER WITH ACTIVE TIMEOUT for c3)');
                 node.emit('startTutoTimer', 'c3');
 
-            }, 150)
+            }, 250)
 
         }
 
         if(listener.c4) {
+
+            listener.deactivateChoiceButtons = false;
+
+            $('.frame-A').css({'transition':'0.7s', 'margin-top':'0px'});
 
             box.updateProgressBar();
             go.hide(0.1);
@@ -545,7 +829,7 @@ window.onload = function() {
                 console.log('NODE.EMIT(STARTTUTOTIMER WITH ACTIVE TIMEOUT for c4)');
                 node.emit('startTutoTimer', 'c4');
 
-            }, 150)
+            }, 250)
 
         }
 
@@ -558,7 +842,6 @@ window.onload = function() {
     listener.deactivateChoiceButtons = false;
 
     $('#lB').click(function() {
-
 
         if(!listener.deactivateChoiceButtons) {
 
@@ -591,67 +874,11 @@ window.onload = function() {
             //
             if(listener.b5) {
 
-                // ------------------------------------------- //
-                // PREVIOUS TRANSITION TO BE USED
-                //
-                //
-                // box.updateProgressBar();
-                //
-                // listener.b5 = false;
-                //
-                // // console.log('node.emit(stopTutoTimer) b5');
-                // // node.emit('stopTutoTimer');
-                //
-                //
-                // button.hide();
-                // picture.hide();
-                //
-                // $('.frame-A').css({'transform':'scale(1)'})
-                //
-                // $('.facePicture').css({'filter': 'brightness(1) opacity(0.5) blur(10px) saturate(10) grayscale(1)'})
-                //
-                // setTimeout(()=>{
-                //     picture.fastForward(1);
-                // }, 750)
-                //
-                // box.transition('B-5', 'B-6', 0, 0, 1, 750);
-                //
-                // setTimeout(()=>{
-                //     box.button.show('B-6');
-                // }, 4750)
-                // -------------------------------------------- //
-
                 button.action.b5(0);
 
             }
 
             if(listener.c1) {
-
-                // listener.c1 = false;
-                //
-                // box.updateProgressBar();
-                //
-                // console.log('node.emit(stopTutoTimer) c1');
-                // node.emit('stopTutoTimer');
-                //
-                // button.hide(0.1);
-                // picture.hide(0.1);
-                //
-                // box.transition('', 'C-2', 0, 0, 1, 0);
-                // $('.frame-A').css({'margin-top':'-100px'});
-                //
-                // go.setText('NEXT');
-                //
-                // setTimeout(()=>{
-                //     box.button.show('C-2');
-                // }, 2750)
-                //
-                // go.active = false;
-                // $('.transitionButtonBlocker').css({'display':'block'});
-                //
-                // setTimeout(()=>{
-                //     go.show(1);
-                // }, 2000)
 
                 button.action.c1(0);
 
@@ -659,92 +886,19 @@ window.onload = function() {
 
             if(listener.c2) {
 
-                listener.c2 = false;
-                box.updateProgressBar();
-
-                console.log('node.emit(stopTutoTimer) c2');
-                node.emit('stopTutoTimer');
-
-                // button.hide(1);
-                // picture.hide(1);
-                //
-                // $('.frame-A').css({'opacity':'0'})
-                // setTimeout(()=>{
-                //     $('.frame-A').css({'transform':'scale(0)', 'margin-bottom':'-345px'})
-                // }, 1000)
-                //
-                // setTimeout(()=>{
-                //
-                //     box.transition('', 'C-4', 0, 0, 1, 0);
-                //     $('.frame-A').css({'margin-top':'-100px'});
-                //     setTimeout(()=>{
-                //         box.button.show('C-4');
-                //     }, 1750)
-                //
-                // }, 1500)
-
-                button.hide(0.1);
-                picture.hide(0.1);
-
-                setTimeout(()=>{
-                    go.show(0.1);
-                    box.transition('', 'C-31', 0, 0, 1, 0);
-                    listener.c3 = true;
-                }, 150)
+                button.action.c2(0);
 
             }
 
             if(listener.c3) {
 
-                listener.c3 = false;
-                box.updateProgressBar();
-
-                console.log('node.emit(stopTutoTimer) c3');
-                node.emit('stopTutoTimer');
-
-                button.hide(0.1);
-                picture.hide(0.1);
-
-                setTimeout(()=>{
-                    go.show(0.1);
-                    $('#box-C-31').css({'opacity':'1'});
-                    listener.c4 = true;
-                }, 150)
+                button.action.c3(0);
 
             }
 
             if(listener.c4) {
 
-                listener.c4 = false;
-                box.updateProgressBar();
-
-                console.log('node.emit(stopTutoTimer) c4');
-                node.emit('stopTutoTimer');
-
-                button.hide(0.1);
-                picture.hide(0.1);
-
-                setTimeout(()=>{
-
-                    $('#boxbox-C').css({
-                        'margin-top':'-100px'
-                    })
-                    $('.frame-A, .frame-B').css({'transition':'0.2s', 'opacity':'0'})
-                    setTimeout(()=>{
-                        $('.frame-A').css({'transform':'scale(0)', 'margin-bottom':'-345px'})
-                    }, 1000)
-
-                    setTimeout(()=>{
-
-                        box.transition('', 'C-4', 0, 0, 1, 0);
-                        // $('.frame-A').css({'margin-top':'-100px'});
-                        setTimeout(()=>{
-                            box.button.show('C-4');
-                        }, 1750)
-
-                    }, 1500)
-
-                }, 150)
+                button.action.c4(0);
 
             }
 
@@ -788,63 +942,11 @@ window.onload = function() {
 
             if(listener.b5) {
 
-                // box.updateProgressBar();
-                //
-                // listener.b5 = false;
-                //
-                // // console.log('node.emit(stopTutoTimer) b5');
-                // // node.emit('stopTutoTimer');
-                // // timer.stop = true;
-                //
-                // button.hide();
-                //
-                // picture.hide();
-                //
-                // $('.frame-A').css({'transform':'scale(1)'})
-                //
-                // $('.facePicture').css({'filter': 'brightness(1) opacity(0.5) blur(10px) saturate(10) grayscale(1)'})
-                //
-                // setTimeout(()=>{
-                //     picture.fastForward(1);
-                // }, 750)
-                //
-                // box.transition('B-5', 'B-6', 0, 0, 1, 750);
-                //
-                // setTimeout(()=>{
-                //     box.button.show('B-6');
-                // }, 4750)
-
                 button.action.b5(1);
 
             }
 
             if(listener.c1) {
-
-                // listener.c1 = false;
-                //
-                // box.updateProgressBar();
-                //
-                // console.log('node.emit(stopTutoTimer) c1');
-                // node.emit('stopTutoTimer');
-                // // timer.stop = true;
-                //
-                // button.hide(0.1);
-                // picture.hide(0.1);
-                //
-                // box.transition('', 'C-2', 0, 0, 1, 0);
-                // $('.frame-A').css({'margin-top':'-100px'});
-                //
-                // go.setText('NEXT');
-                //
-                // setTimeout(()=>{
-                //     box.button.show('C-2');
-                // }, 2750)
-                //
-                // go.active = false;
-                // $('.transitionButtonBlocker').css({'display':'block'});
-                // setTimeout(()=>{
-                //     go.show(1);
-                // }, 2000)
 
                 button.action.c1(1);
 
@@ -852,92 +954,19 @@ window.onload = function() {
 
             if(listener.c2) {
 
-                listener.c2 = false;
-                box.updateProgressBar();
-
-                console.log('node.emit(stopTutoTimer) c2');
-                node.emit('stopTutoTimer');
-
-                // button.hide(1);
-                // picture.hide(1);
-                //
-                // $('.frame-A').css({'opacity':'0'})
-                // setTimeout(()=>{
-                //     $('.frame-A').css({'transform':'scale(0)', 'margin-bottom':'-345px'})
-                // }, 1000)
-                //
-                // setTimeout(()=>{
-                //
-                //     box.transition('', 'C-4', 0, 0, 1, 0);
-                //     $('.frame-A').css({'margin-top':'-100px'});
-                //     setTimeout(()=>{
-                //         box.button.show('C-4');
-                //     }, 1750)
-                //
-                // }, 1500)
-
-                button.hide(0.1);
-                picture.hide(0.1);
-
-                setTimeout(()=>{
-                    go.show(0.1);
-                    box.transition('', 'C-31', 0, 0, 1, 0);
-                    listener.c3 = true;
-                }, 150)
+                button.action.c2(1);
 
             }
 
             if(listener.c3) {
 
-                listener.c3 = false;
-                box.updateProgressBar();
-
-                console.log('node.emit(stopTutoTimer) c3');
-                node.emit('stopTutoTimer');
-
-                button.hide(0.3);
-                picture.hide(0.3);
-
-                setTimeout(()=>{
-                    go.show(0.2);
-                    $('#box-C-31').css({'opacity':'1'});
-                    listener.c4 = true;
-                }, 350)
+                button.action.c3(1);
 
             }
 
             if(listener.c4) {
 
-                listener.c4 = false;
-                box.updateProgressBar();
-
-                console.log('node.emit(stopTutoTimer) c4');
-                node.emit('stopTutoTimer');
-
-                button.hide(0.1);
-                picture.hide(0.1);
-
-                setTimeout(()=>{
-
-                    $('#boxbox-C').css({
-                        'margin-top':'-100px'
-                    })
-                    $('.frame-A, .frame-B').css({'transition':'0.2s', 'opacity':'0'})
-                    setTimeout(()=>{
-                        $('.frame-A').css({'transform':'scale(0)', 'margin-bottom':'-345px'})
-                    }, 1000)
-
-                    setTimeout(()=>{
-
-                        box.transition('', 'C-4', 0, 0, 1, 0);
-                        // $('.frame-A').css({'margin-top':'-100px'});
-                        setTimeout(()=>{
-                            box.button.show('C-4');
-                        }, 1750)
-
-                    }, 1500)
-
-                }, 150)
+                button.action.c4(1);
 
             }
 
@@ -987,124 +1016,33 @@ window.onload = function() {
 
         if(key === 'c1') {
 
-            // NONE OF THESE HAPPENS WE FORCE SUBJECT TO MAKE A DECISION
-            //
-            // box.updateProgressBar();
-            //
-            // listener.c1 = false;
-            //
-            // button.hide();
-            //
-            // picture.hide(0.1);
-            //
-            // box.transition('', 'C-2', 0, 0, 0, 0);
-            // // $('.frame-A').css({'margin-top':'-100px'});
-            // $('.frame-A').css({'margin-top':'-225px'});
-            //
-            // go.setText('NEXT');
-            //
-            // setTimeout(()=>{
-            //     box.button.show('C-2');
-            // }, 2750)
-            //
-            // go.active = false;
-            // $('.transitionButtonBlocker').css({'display':'block'});
-            // setTimeout(()=>{
-            //     go.show(1);
-            // }, 2000)
-
-            node.emit('timeUp-warn')
+            if(!button.isDecisionMade) {
+                node.emit('timeUp-warn');
+            }
 
         }
 
         if(key === 'c2') {
 
-            listener.c2 = false;
-            box.updateProgressBar();
-
-            // button.hide(1);
-            // picture.hide(1);
-            //
-            // $('.frame-A').css({'opacity':'0'})
-            // setTimeout(()=>{
-            //     $('.frame-A').css({'transform':'scale(0)', 'margin-bottom':'-345px'})
-            // }, 1000)
-            //
-            // setTimeout(()=>{
-            //
-            //     box.transition('', 'C-4', 0, 0, 0, 0);
-            //     $('.frame-A').css({'margin-top':'-100px'});
-            //
-            //     setTimeout(()=>{
-            //         box.button.show('C-4');
-            //     }, 2750)
-            //
-            // }, 2000)
-
-            console.log('node.emit(stopTutoTimer) c2');
-            node.emit('stopTutoTimer');
-
-            button.hide(0.1);
-            picture.hide(0.1);
-
-            setTimeout(()=>{
-                go.show(0.1);
-                box.transition('', 'C-31', 0, 0, 1, 0);
-                listener.c3 = true;
-            }, 150)
+            if(!button.isDecisionMade) {
+                node.emit('timeUp-warn');
+            }
 
         }
 
         if(key === 'c3') {
 
-            listener.c3 = false;
-            box.updateProgressBar();
-
-            console.log('node.emit(stopTutoTimer) c3');
-            node.emit('stopTutoTimer');
-
-            button.hide(0.1);
-            picture.hide(0.1);
-
-            setTimeout(()=>{
-                go.show(0.1);
-                $('#box-C-31').css({'opacity':'1'});
-                listener.c4 = true;
-            }, 150)
+            if(!button.isDecisionMade) {
+                node.emit('timeUp-warn');
+            }
 
         }
 
         if(key === 'c4') {
 
-            // listener.c4 = false;
-            // box.updateProgressBar();
-            //
-            // console.log('node.emit(stopTutoTimer) c4');
-            // node.emit('stopTutoTimer');
-            //
-            // button.hide(0.1);
-            // picture.hide(0.1);
-            //
-            // setTimeout(()=>{
-            //
-            //     $('.frame-A').css({'opacity':'0'})
-            //     setTimeout(()=>{
-            //         $('.frame-A').css({'transform':'scale(0)', 'margin-bottom':'-345px'})
-            //     }, 1000)
-            //
-            //     setTimeout(()=>{
-            //
-            //         box.transition('', 'C-4', 0, 0, 1, 0);
-            //         $('.frame-A').css({'margin-top':'-100px'});
-            //         setTimeout(()=>{
-            //             box.button.show('C-4');
-            //         }, 1750)
-            //
-            //     }, 1500)
-            //
-            // }, 150)
-
-            node.emit('timeUp-warn')
+            if(!button.isDecisionMade) {
+                node.emit('timeUp-warn');
+            }
 
         }
 
@@ -1121,13 +1059,27 @@ window.onload = function() {
 
             if(listener.b5) {
 
+
                 setTimeout(()=>{
-                    $('.confidence-button-submit-container').css({
-                        'display':'flex'
-                    })
-                    box.transition('B-503', 'B-504', 0, 0, 1, 750);
-                    confidence.button.submit.show();
-                }, 1500)
+
+                    box.transition('B-503', '', 0, 0, 0, 0);
+
+                    // already in flex not sure if this is relevant
+                    setTimeout(()=>{
+                        $('.confidence-button-submit-container').css({
+                            'display':'flex'
+                        })
+                        setTimeout(()=>{
+                            confidence.button.submit.show();
+                        }, 100)
+                    }, 750)
+
+
+                    setTimeout(()=> {
+                        box.transition('', 'B-504', 0, 0, 1, 750);
+                    }, 150)
+
+                }, 1000)
 
                 listener.sliderChangeListens = false;
 
@@ -1139,16 +1091,61 @@ window.onload = function() {
                     $('.confidence-button-submit-container').css({
                         'display':'flex'
                     })
-                    confidence.button.submit.show();
-                }, 1500)
+                    setTimeout(()=>{
+                        confidence.button.submit.show();
+                    }, 100)
+                }, 750)
+
+                listener.sliderChangeListens = false;
+
+            }
+
+            if(listener.c2) {
+
+                setTimeout(()=>{
+                    $('.confidence-button-submit-container').css({
+                        'display':'flex'
+                    })
+                    setTimeout(()=>{
+                        confidence.button.submit.show();
+                    }, 100)
+                }, 750)
+
+                listener.sliderChangeListens = false;
+
+            }
+
+            if(listener.c3) {
+
+                setTimeout(()=>{
+                    $('.confidence-button-submit-container').css({
+                        'display':'flex'
+                    })
+                    setTimeout(()=>{
+                        confidence.button.submit.show();
+                    }, 100)
+                }, 750)
+
+                listener.sliderChangeListens = false;
+
+            }
+
+            if(listener.c4) {
+
+                setTimeout(()=>{
+                    $('.confidence-button-submit-container').css({
+                        'display':'flex'
+                    })
+                    setTimeout(()=>{
+                        confidence.button.submit.show();
+                    }, 100)
+                }, 750)
 
                 listener.sliderChangeListens = false;
 
             }
 
         }
-
-
 
     });
 
@@ -1174,6 +1171,24 @@ window.onload = function() {
         if(listener.c1) {
 
             button.action.c1Final();
+
+        }
+
+        if(listener.c2) {
+
+            button.action.c2Final();
+
+        }
+
+        if(listener.c3) {
+
+            button.action.c3Final();
+
+        }
+
+        if(listener.c4) {
+
+            button.action.c4Final();
 
         }
 
@@ -1222,6 +1237,7 @@ window.onload = function() {
         button.active = false;
 
         box.transition('B-6', 'B-7', 0, 0, 1, 750);
+        node.emit('displayTutoTimer')
 
         $('.facePicture').css({'filter':'brightness(1) opacity(1) blur(0px) saturate(1) grayscale(0)'})
 
@@ -1308,6 +1324,8 @@ window.onload = function() {
 
     $('#btn-C-5').click(function() {
 
+        box.updateProgressBar();
+
         $('#box-C-5').css({'transition':'0.5s', 'margin-top':'-85px'});
 
         box.transition('C-5', 'C-6', 1, 1, 1, 750);
@@ -1328,6 +1346,8 @@ window.onload = function() {
     });
 
     $('#btn-C-7').click(function() {
+
+        box.updateProgressBar();
 
         box.transition('C-6', '', 0, 0, 1, 750);
         box.transition('C-7', '', 0, 0, 1, 750);

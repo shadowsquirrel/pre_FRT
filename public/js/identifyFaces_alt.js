@@ -151,10 +151,11 @@ window.onload = function() {
     picture.min = () => {
 
         $('.step-1').css({
-            'transition':'0.5s',
+            'transition':'0s',
             'transform-origin':'top',
             'transform':'scale(0.4)',
-            'margin-bottom':'-50%'
+            'margin-bottom':'-50%',
+            'margin-top':'10%',
         })
 
     }
@@ -175,9 +176,26 @@ window.onload = function() {
 
     transitionTo.step2 = () => {
 
-        picture.min();
+        $('.step-1, .step-2').css({
+            'transition':'0.2s',
+            'opacity':'0'
+        })
 
-        confidence.show();
+        setTimeout(()=>{
+
+            picture.min();
+            $('.step-2').css({
+                'display':'flex'
+            });
+
+            setTimeout(()=>{
+                $('.step-1, .step-2').css({
+                    'transition':'0.5s',
+                    'opacity':'1'
+                })
+            }, 100)
+
+        }, 350)
 
     }
 
@@ -210,6 +228,10 @@ window.onload = function() {
                 'display':'none'
             })
             picture.max();
+            $('.step-1').css({
+                'transition':'0.1s',
+                'margin-top':'0px',
+            });
         }, 350)
 
         // set the new picture
@@ -337,6 +359,7 @@ window.onload = function() {
             data.xCoor = mouseData.xCoor;
             data.yCoor = mouseData.yCoor;
             data.tCoor = mouseData.tCoor;
+            data.responseTime = mouseData.responseTime;
 
             // send decision data to client.js
             if(isTimeUp) {
@@ -635,27 +658,21 @@ window.onload = function() {
 
 
             var area = $('.all');
-            area.offset();
+            var offset = area.offset();
             area.height();
             area.width();
 
-            // var newX = (e.pageX - 960)/235;
-            // var newY = -(e.pageY - 605);
+            var rawX = e.pageX;
+            var rawY = e.pageY;
+            var newX = rawX - (offset.left + ((area.width() + 11)/2));
+            var newY = (offset.top + area.height() - 1) - rawY;
 
-            var newX = e.pageX;
-            var newY = e.pageY;
+            // var newX = e.pageX;
+            // var newY = e.pageY;
 
             x.push(newX);
             y.push(newY);
             t.push(t1)
-
-
-            // console.log('------');
-            // console.log(x);
-            // console.log(y);
-            // console.log(t);
-            // console.log('------');
-
 
             $('#xCoor').html(getLast(x));
             $('#yCoor').html(getLast(y));
@@ -682,46 +699,61 @@ window.onload = function() {
     // TO DO: READ PAPS TO DETERMINE THE BEST WAY TO TRANSLATE
     var translate = function() {
 
-        var x0 = getFirst(x);
-        var y0 = getFirst(y);
-        var lastX = getLast(x);
-        var sign = (lastX < x0) ? -1 : 1;
-        var xTemp = undefined;
+        // var x0 = getFirst(x);
+        // var y0 = getFirst(y);
+        // var lastX = getLast(x);
+        // var sign = (lastX < x0) ? -1 : 1;
+        // var xTemp = undefined;
+        //
+        // console.log('before translation 1');
+        // console.log('x0: ' + getFirst(x));
+        // console.log('xLast: ' + getLast(x));
+        //
+        // x = x.map(i => i - x0);
+        //
+        // console.log('after translation 1');
+        // console.log('x0: ' + getFirst(x));
+        // console.log('xLast: ' + getLast(x));
+        //
+        // // normalize the distance between the last and first to 1
+        // x = x.map(i => (i / Math.abs(lastX)));
+        //
+        //
+        //
+        // console.log('after translation 2');
+        // console.log('x0: ' + getFirst(x));
+        // console.log('xLast: ' + getLast(x));
+        //
+        // console.log('X after translations');
+        // console.log(x);
+        //
+        // console.log('Y list');
+        // console.log(y);
+        //
+        // console.log('Time list');
+        // console.log(t);
+        //
 
-        console.log('before translation 1');
-        console.log('x0: ' + getFirst(x));
-        console.log('xLast: ' + getLast(x));
-
-        x = x.map(i => i - x0);
-
-        console.log('after translation 1');
-        console.log('x0: ' + getFirst(x));
-        console.log('xLast: ' + getLast(x));
-
-        // normalize the distance between the last and first to 1
-        x = x.map(i => (i / Math.abs(lastX)));
+        var responseTime = getLast(t) - getFirst(t);
 
 
 
-        console.log('after translation 2');
-        console.log('x0: ' + getFirst(x));
-        console.log('xLast: ' + getLast(x));
-
-        console.log('X after translations');
-        console.log(x);
-
-        console.log('Y list');
-        console.log(y);
-
-        console.log('Time list');
-        console.log(t);
+        // let mtData = {
+        //     xCoor: JSON.stringify(x),
+        //     yCoor: JSON.stringify(y),
+        //     tCoor: JSON.stringify(t),
+        //     responseTime: responseTime,
+        // }
 
         let mtData = {
-            dataType: 'mouse',
             xCoor: x,
             yCoor: y,
-            tCoor: t
+            tCoor: t,
+            responseTime: responseTime,
         }
+
+
+
 
         // node.emit('HTML-mouse', msg);
 

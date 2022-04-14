@@ -57,3 +57,16 @@ frame.slider.pullBottom = () => {
     })
 
 }
+
+frame.allHide = () => {
+    $('.all').css({
+        'transition':'0.1s',
+        'opacity':'0'
+    })
+}
+frame.allShow = () => {
+    $('.all').css({
+        'transition':'0.2s',
+        'opacity':'1'
+    })
+}

@@ -29,7 +29,7 @@ module.exports = function(stager, settings) {
     stager.skip('instructions');
     // stager.skip('identifyFaces');
     // stager.skip('survey2');
-    stager.skip('results');
+    // stager.skip('results');
     // stager.skip('survey1');
     stager.skip('end');
 
