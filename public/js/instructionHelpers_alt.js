@@ -10,6 +10,8 @@ var go = {};
 var tuto = {};
 var listener = {};
 var timer = {};
+var myTimer = {};
+var bbox = {};
 
 
 timer.stop = false;
@@ -26,13 +28,181 @@ window.onload = function() {
 
     var node = parent.node;
 
-    box.global.NoB = 30;
-    // box.updateProgressBar();
+    box.global.NoB = 31;
 
     // --------------- //
 
     node.emit('HTML-startSecretTutoTimer');
 
+    // ------------------------------------------------------- //
+    // --------  GETTING SOME PARAMETERS FROM LOGIC  --------- //
+    // ------------------------------------------------------- //
+
+    var totalNumberOfPairs;
+
+    node.on('totalNumberOfPairs', (msg) => {
+
+        console.log('');
+        console.log('');
+        console.log('total number of pair info received:', msg);
+        console.log('');
+        console.log('');
+
+        $('#totalNumber-b6').html(msg);
+        $('#totalNumber-c4').html(msg);
+
+    })
+
+    node.emit('askTotalNumberOfPairs');
+
+
+
+    bbox.up = () => {
+        var div = document.getElementById('boxbox-B');
+        var style = div.style;
+        style.marginTop = '-20px'
+    }
+
+    bbox.down = () => {
+        var div = document.getElementById('boxbox-B');
+        var style = div.style;
+        style.marginTop = '20px'
+    }
+
+    // ---------------------------------------------------- //
+    // ------------------  TIMER HEIST -------------------- //
+    // ---------------------------------------------------- //
+
+    myTimer.steal = () => {
+
+        var header = parent.document.getElementById('ng_header');
+        var timerDiv = header.children[0];
+
+        return timerDiv;
+
+    }
+
+    myTimer.inject = () => {
+
+        var timerDiv = myTimer.steal();
+
+        if(timerDiv != undefined) {
+
+            var newTimerDiv = document.getElementById('myTimer');
+
+            newTimerDiv.appendChild(timerDiv);
+
+            myTimer.reformat();
+
+        } else {
+
+            console.log('timer has already been stolen OR there is no timer to steal');
+
+        }
+
+        myTimer.show();
+
+    }
+
+    myTimer.isTimerTextRemoved = false;
+    myTimer.reformat = () => {
+
+        var div = document.getElementById('myTimer')
+        var timerText = div.children[0].children[0];
+        timerText.style.display = 'none';
+
+    }
+
+    myTimer.hide = () => {
+
+        myTimer.isActive = false;
+
+        $('.timer-container').css({
+            'opacity':'0'
+        })
+
+    }
+
+    myTimer.show = () => {
+
+        setTimeout(()=>{
+            myTimer.isActive = true;
+        }, 3000)
+
+
+        $('.timer-container').css({
+            'opacity':'1'
+        })
+
+    }
+
+    myTimer.isActive = false;
+
+    myTimer.red = () => {
+
+        var myTimerDiv = document.getElementById('stolen-timer-container');
+        var style = myTimerDiv.style;
+
+        if(!button.isClicked && myTimer.isActive) {
+            style.transition = '0.75s';
+            style.color = 'red';
+            style.trasnform = 'scale(1.15)';
+        } else {
+            style.transition = '0.75s';
+            style.color = 'black';
+            style.transform = 'scale(1)';
+        }
+
+    }
+
+    myTimer.black = () => {
+
+        var myTimerDiv = document.getElementById('stolen-timer-container');
+        var style = myTimerDiv.style;
+
+        if(!button.isClicked && myTimer.isActive) {
+            style.transition = '0.75s';
+            style.color = 'black';
+            style.scale = 'scale(1)';
+        } else {
+            style.transition = '0.75s';
+            style.color = 'black';
+            style.scale = 'scale(1)';
+        }
+
+    }
+
+    myTimer.warn = () => {
+
+        var delay = 700;
+
+        myTimer.red();
+
+        setTimeout(()=>{
+            myTimer.black();
+        }, delay)
+
+        setTimeout(()=>{
+            myTimer.red();
+        }, 2 * delay)
+
+        setTimeout(()=>{
+            myTimer.black();
+        }, 3 * delay)
+
+        setTimeout(()=>{
+            myTimer.red();
+        }, 4 * delay)
+
+        setTimeout(()=>{
+            myTimer.black();
+        }, 5 * delay)
+
+    }
+
+    node.on('stolenTimerWarn', function() {
+        myTimer.warn();
+    })
 
     // ----------------------- //
     // --------  GO  --------- //
@@ -135,6 +305,9 @@ window.onload = function() {
 
             if(index < 28) {
                 index++
+                if(index === 24) {
+                    index++
+                }
             } else {
                 index = 1;
             }
@@ -629,20 +802,6 @@ window.onload = function() {
         confidence.button.submit.hide();
         frame.slider.hide();
 
-
-        // setTimeout(()=>{
-        //     frame.image.max();
-        // }, 500)
-        //
-        // setTimeout(()=>{
-        //     $('.frame-A').css({'margin-top':'-250px'});
-        // }, 500)
-        //
-        // setTimeout(()=>{
-        //     confidence.reset();
-        // }, 2000)
-
-
         setTimeout(()=>{
 
             $('#boxbox-C').css({
@@ -656,7 +815,6 @@ window.onload = function() {
             setTimeout(()=>{
 
                 box.transition('', 'C-4', 0, 0, 1, 0);
-                // $('.frame-A').css({'margin-top':'-100px'});
                 setTimeout(()=>{
                     box.button.show('C-4');
                 }, 1750)
@@ -752,7 +910,6 @@ window.onload = function() {
 
             listener.deactivateChoiceButtons = false;
 
-            // listener.c2 = false;
             box.updateProgressBar();
 
             box.transition('C-3', '', 0, 0, 1, 0);
@@ -863,6 +1020,8 @@ window.onload = function() {
 
                         picture.index++;
 
+                        bbox.up();
+
                     }
 
                 }
@@ -876,11 +1035,15 @@ window.onload = function() {
 
                 button.action.b5(0);
 
+                bbox.up();
+
             }
 
             if(listener.c1) {
 
                 button.action.c1(0);
+
+                bbox.up();
 
             }
 
@@ -888,17 +1051,23 @@ window.onload = function() {
 
                 button.action.c2(0);
 
+                bbox.up();
+
             }
 
             if(listener.c3) {
 
                 button.action.c3(0);
 
+                bbox.up();
+
             }
 
             if(listener.c4) {
 
                 button.action.c4(0);
+
+                bbox.up();
 
             }
 
@@ -934,6 +1103,8 @@ window.onload = function() {
 
                         picture.index++;
 
+                        bbox.up();
+
                     }
 
                 }
@@ -943,30 +1114,35 @@ window.onload = function() {
             if(listener.b5) {
 
                 button.action.b5(1);
+                bbox.up();
 
             }
 
             if(listener.c1) {
 
                 button.action.c1(1);
+                bbox.up();
 
             }
 
             if(listener.c2) {
 
                 button.action.c2(1);
+                bbox.up();
 
             }
 
             if(listener.c3) {
 
                 button.action.c3(1);
+                bbox.up();
 
             }
 
             if(listener.c4) {
 
                 button.action.c4(1);
+                bbox.up();
 
             }
 
@@ -1017,7 +1193,7 @@ window.onload = function() {
         if(key === 'c1') {
 
             if(!button.isDecisionMade) {
-                node.emit('timeUp-warn');
+                myTimer.warn();
             }
 
         }
@@ -1025,7 +1201,7 @@ window.onload = function() {
         if(key === 'c2') {
 
             if(!button.isDecisionMade) {
-                node.emit('timeUp-warn');
+                myTimer.warn();
             }
 
         }
@@ -1033,7 +1209,7 @@ window.onload = function() {
         if(key === 'c3') {
 
             if(!button.isDecisionMade) {
-                node.emit('timeUp-warn');
+                myTimer.warn();
             }
 
         }
@@ -1041,7 +1217,7 @@ window.onload = function() {
         if(key === 'c4') {
 
             if(!button.isDecisionMade) {
-                node.emit('timeUp-warn');
+                myTimer.warn();
             }
 
         }
@@ -1165,35 +1341,37 @@ window.onload = function() {
         if(listener.b5) {
 
             button.action.b5Final();
+            bbox.down();
 
         }
 
         if(listener.c1) {
 
             button.action.c1Final();
+            bbox.down();
 
         }
 
         if(listener.c2) {
 
             button.action.c2Final();
+            bbox.down();
 
         }
 
         if(listener.c3) {
 
             button.action.c3Final();
+            bbox.down();
 
         }
 
         if(listener.c4) {
 
             button.action.c4Final();
+            bbox.down();
 
         }
-
-        // defult behavior for reference
-        // button.submit();
 
     })
 
@@ -1230,6 +1408,8 @@ window.onload = function() {
     // --- B --- //
 
     $('#btn-B-6').click(function() {
+
+        myTimer.inject();
 
         box.updateProgressBar();
 
@@ -1322,28 +1502,29 @@ window.onload = function() {
 
     // --- C --- //
 
-    $('#btn-C-5').click(function() {
+    $('#btn-C-599').click(function() {
 
         box.updateProgressBar();
 
-        $('#box-C-5').css({'transition':'0.5s', 'margin-top':'-85px'});
+        $('#boxwrap-C-6').css({'transition':'1s', 'margin-bottom':'-45px'})
+        $('#box-C-5').css({'transition':'1s', 'margin-top':'-40px'});
 
-        box.transition('C-5', 'C-6', 1, 1, 1, 750);
+        box.transition('C-599', 'C-6', 1, 1, 1, 750);
         setTimeout(()=>{
             box.transition('', 'C-7', 1, 1, 1, 750);
             box.transition('', 'C-8', 1, 1, 1, 750);
         }, 100)
 
-        $('.frame-A').css({'margin-top':'-175px'});
+        $('.frame-A').css({'transition':'1s', 'margin-top':'-230px'});
 
         setTimeout(()=>{
             box.button.show('C-7');
             box.button.show('C-8');
         }, 2750)
 
-        // node.emit('setHeight', 700);
-
     });
+
+
 
     $('#btn-C-7').click(function() {
 

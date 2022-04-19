@@ -137,6 +137,43 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // ----- SESSION SPECIFIC MAIN DATA ----- //
         // -------------------------------------- //
 
+        node.game.injectPair = (arr, i, elt) => {
+
+            arr.splice(i, 0, elt);
+
+        }
+
+        node.game.injectAll = (arrFacePair, arrCorrectAnswer) => {
+
+            console.log(arrFacePair);
+            console.log(arrCorrectAnswer);
+
+            var injectIndex, injectElt, injectCorrectElt;
+
+            var injectionIndexList = [0,8,18,29];
+            var injectedEltIndexList = J.shuffle([101, 102, 104, 105]);
+            // var injectedEltIndexList = [101, 102, 104, 105];
+            var injectedEltIndexAnswer = [1,1,1,1];
+            var someIndex = injectedEltIndexAnswer.indexOf(105);
+            injectedEltIndexAnswer[someIndex] = 0;
+
+
+            injectionIndexList.forEach((elt, index) => {
+
+                injectIndex = elt;
+                injectElt = injectedEltIndexList[index];
+                injectCorrectElt = injectedEltIndexAnswer[index];
+
+                node.game.injectPair(arrFacePair, injectIndex, injectElt);
+                node.game.injectPair(arrCorrectAnswer, injectIndex, injectCorrectElt);
+
+            })
+
+            console.log(arrFacePair);
+            console.log(arrCorrectAnswer);
+
+        }
+
         // debug
         node.game.dataSession = 1;
 
@@ -145,42 +182,58 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // total 32
         //
         if(node.game.dataSession === 1) {
+
             node.game.pairIndexList = [
                 1,4,7,10,11,17,20,26,28,31,35,39,40,43,46,49,52,55,58,61,64,67,70,98,73,76,79,82,85,88,91,94
              // 1,1,1,1,  0,0,0,     1,1,1,    0,0,    1,1,1,1,1,1,1,        0,0,0,0,0,       1,1,1,1,     0,0,0,0
             ]
+
             node.game.correctAnswerList = [
                 1,1,1,1,0,0,0,1,1,1,0,0,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,0,0,0,0
             ]
+
         }
 
         // ---- SESSION 2 ---- //
         //
         // total 32
         //
-        // if(node.game.dataSession === 2) {
-        //     node.game.pairIndexList = [
-        //         2,5,8, 13,14,16,21,  23,25,30, 36,38,  41,44,47,50,53,56,59, 62,65,68,96,  71,74,77,80,83, 86,89,92,95
-        //     //  1,1,1, 0,0,0,0       1,1,1,    0,0,    1,1,1,1,1,1,1,        0,0,0,0,      1,1,1,1,1,      0,0,0,0
-        //     ]
-        //     node.game.correctAnswerList = [
-        //         1,1,1, 0,0,0,0       1,1,1,    0,0,    1,1,1,1,1,1,1,        0,0,0,0,      1,1,1,1,1,      0,0,0,0
-        //     ]
-        // }
+        if(node.game.dataSession === 2) {
+            node.game.pairIndexList = [
+                2,5,8,13,14,16,21,23,25,30, 36,38,  41,44,47,50,53,56,59, 62,65,68,96,  71,74,77,80,83, 86,89,92,95
+            //  1,1,1, 0,0,0,0,       1,1,1,    0,0,    1,1,1,1,1,1,1,        0,0,0,0,      1,1,1,1,1,      0,0,0,0
+            ]
+            node.game.correctAnswerList = [
+                1,1,1,0,0,0,0,1,1,1,0,0,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,0,0,0,0
+            ]
+        }
+
+        // ---- SESSION 3 ---- //
         //
-        // // ---- SESSION 3 ---- //
-        // //
-        // // total 31
-        // //
-        // if(node.game.dataSession === 3) {
-        //     node.game.pairIndexList = [
-        //         3,6,9, 12,16,18,  22,27,29, 33,34,37,  42,45,48,51,54,57, 60,63,66,69,97,  72,75,78,81, 84,87,90,93
-        //     //  1,1,1, 0,0,0,     1,1,1,    0,0,0,     1,1,1,1,1,1,       0,0,0,0,0,       1,1,1,1,     0,0,0,0
-        //     ]
-        //     node.game.correctAnswerList = [
-        //         1,1,1, 0,0,0,     1,1,1,    0,0,0,     1,1,1,1,1,1,       0,0,0,0,0,       1,1,1,1,     0,0,0,0
-        //     ]
-        // }
+        // total 31
+        //
+        if(node.game.dataSession === 3) {
+            node.game.pairIndexList = [
+                3,6,9,12,16,18,22,27,29,33,34,37,42,45,48,51,54,57,60,63,66,69,97,72,75,78,81,84,87,90,93
+            //  1,1,1, 0,0,0,     1,1,1,    0,0,0,     1,1,1,1,1,1,       0,0,0,0,0,       1,1,1,1,     0,0,0,0
+            ]
+            node.game.correctAnswerList = [
+                1,1,1,0,0,0,1,1,1,0,0,0,1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,0,0,0,0
+            ]
+        }
+
+        node.game.totalNumberOfPairs = node.game.pairIndexList.length;
+
+        node.on.data('requestTotalNumberOfPairs', (msg) => {
+
+            let player = node.game.pl.get(msg.from);
+
+            var total = node.game.totalNumberOfPairs + 4;
+
+            node.say('totalNumberOfPairs', player.id, total);
+
+        })
+
 
         // ----------------------------- //
         // -------- INITIATION -------- //
@@ -233,6 +286,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
                 // assign the generated shuffled answer list to the player's object
                 player.shuffled.correctAnswerList = shuffledAnswers;
+
+
+                // add the famous pairs evenly into the trials
+                node.game.injectAll(player.shuffled.pairIndexList, player.shuffled.correctAnswerList);
 
 
                 var size = node.game.pairIndexList.length;
@@ -320,6 +377,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             var currentCorrectAnswer = player.shuffled.correctAnswerList[player.cpx];
 
             var data = {
+                total: player.shuffled.pairIndexList.length,
+                listIndex: player.cpx,
                 index: currentIndex,
                 correctAnswer: currentCorrectAnswer
             }
@@ -457,6 +516,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
             let player = node.game.pl.get(msg.from);
 
+            // TO DO: add here also the total number of questions and send it with score info
             let score = player.score;
 
             node.say('LOGIC-results', player.id, score);
@@ -485,6 +545,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             var currentCorrectAnswer = player.shuffled.correctAnswerList[player.cpx];
 
             var data = {
+                total: player.shuffled.pairIndexList.length,
                 listIndex: player.cpx,
                 index: currentIndex,
                 correctAnswer: currentCorrectAnswer
@@ -585,19 +646,14 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
 
         // saving subject survey data
-        memory.view('age').save('survey.csv', {
+        memory.view('gender').save('survey.csv', {
 
             header: [
                 'player',
                 'gender',
                 'age',
-                'education',
-                'employment',
-                'location',
                 'race',
-                'knowledgeAI',
-                'supportAI',
-                'ladder',
+                'location',
             ],
 
             keepUpdated: true

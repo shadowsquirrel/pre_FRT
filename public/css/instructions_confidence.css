@@ -142,7 +142,6 @@
     padding-right: 45px;
     font-size:22px;
     transition:0.3s;
-    /* opacity:0.4; */
     opacity:0;
 }
 .confidence-min-text
@@ -161,7 +160,6 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    /* margin-top:6%; */
     transition:0.1s;
     opacity:0;
     transform:scale(0);

@@ -27,7 +27,6 @@
 .innerWrap {
     opacity: 1;
     display:flex;
-    /* display: initial;/* SAMIRA */ */
     flex-direction: column;
     justify-content: center;
     box-shadow:0px 1px 2px 1px black;
@@ -45,7 +44,6 @@
     width:267px;
     height:400px;
     opacity:0;
-    /* border:2px solid; */
 }
 
 /*--------------------------------*/
@@ -65,7 +63,6 @@
     opacity: 0;
     height: 150px;
     border-radius: 100px;
-    /* box-shadow: 0px 8px 4px 0px black; *//* SAMIRA */
     box-shadow:0px 4px 4px 2px black;
     cursor: pointer;
     transition: 0.1s;
@@ -111,25 +108,18 @@
 .transitionButton {
     transition: 0.2s;
     cursor: pointer;
-    /* CAN */
     box-shadow: 0px 6px 8px 2px black;
-    /* SAMIRA */
-    /* box-shadow: 0px 1px 2px 2px black; */
     border-radius: 100px;
     width: 139px;
     padding-top: 15px;
-    /* width:233px; *//* SAMIRA */
-    width: 200px;/* SAMIRA */
+    width: 200px;
     padding-top: 0px;
     padding-bottom: 5px;
-    /* font-size:60px; *//* SAMIRA */
-    /* font-weight: 700; *//* SAMIRA */
-    font-size: 48px;/* SAMIRA */
-    font-weight: 600;/* SAMIRA */
+    font-size: 48px;
+    font-weight: 600;
 }
 .transitionButton:hover
 {
-    /* background-color:gray; *//* SAMIRA */
     background-color:darkgoldenrod;
     color:white;
 }
@@ -141,10 +131,8 @@
 .transitionButtonBlocker
 {
     display: none;
-    /* z-index: 10; */
     width: 200px;
     height: -webkit-fill-available;
-    /* height: auto; */
     position: absolute;
     background: gray;
     opacity: 0;
@@ -153,4 +141,16 @@
 .b {
     font-weight:500;
 }
-/*----------*/
+
+/*--------------------------------*/
+
+.timer-container
+{
+    position: absolute;
+    top: 10px;
+    width: 900px;
+    z-index:-10;
+    transition: 0.1s;
+    font-size: 40px;
+    font-weight: 100;
+}

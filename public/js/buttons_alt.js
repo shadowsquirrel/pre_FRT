@@ -247,3 +247,15 @@ $('#btn-C-4').click(function() {
     }, 2750)
 
 });
+
+$('#btn-C-5').click(function() {
+
+    box.updateProgressBar();
+
+    box.transition('C-5', 'C-599', 1, 1, 1, 750);
+
+    setTimeout(()=>{
+        box.button.show('C-599');
+    }, 2750)
+
+});

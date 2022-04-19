@@ -72,71 +72,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         W.init({ waitScreen: false });
 
 
-        // ------- TIME UP WARN ------ //
-        node.game.warn5 = function() {
-
-            var delay = 700;
-            var myNgHeader = document.getElementById('ng_header');
-            var myNgTimer = document.getElementsByClassName('no-panel-heading')[0]
-
-            // general setup for animation
-            myNgHeader.style.transition = '0.75s';
-            myNgHeader.style.transformOrigin = 'right top';
-            myNgTimer.style.transition = '0.75s';
-
-            // start the animation
-            myNgTimer.style.backgroundColor = 'red';
-            myNgHeader.style.backgroundColor = 'red';
-            myNgHeader.style.transform = 'scale(1.05)';
-            // myNgHeader.style.boxShadow = 'red 0px 0px 20px 20px';
-            // myNgHeader.style.border = '1px solid red';
-
-            setTimeout(()=>{
-                myNgTimer.style.backgroundColor = 'transparent';
-                myNgHeader.style.backgroundColor = 'transparent';
-                myNgHeader.style.transform = 'scale(1)';
-                // myNgHeader.style.boxShadow = 'transparent 0px 0px 20px 20px';
-                // myNgHeader.style.border = '1px solid transparent';
-            }, delay)
-
-            setTimeout(()=>{
-                myNgTimer.style.backgroundColor = 'red';
-                myNgHeader.style.backgroundColor = 'red';
-                myNgHeader.style.transform = 'scale(1.05)';
-                // myNgHeader.style.boxShadow = 'red 0px 0px 20px 20px';
-                // myNgHeader.style.border = '1px solid red';
-            }, 2 * delay)
-
-            setTimeout(()=>{
-                myNgTimer.style.backgroundColor = 'transparent';
-                myNgHeader.style.backgroundColor = 'transparent';
-                myNgHeader.style.transform = 'scale(1)';
-                // myNgHeader.style.boxShadow = 'transparent 0px 0px 20px 20px';
-                // myNgHeader.style.border = '1px solid transparent';
-            }, 3 * delay)
-
-            setTimeout(()=>{
-                myNgTimer.style.backgroundColor = 'red';
-                myNgHeader.style.backgroundColor = 'red';
-                myNgHeader.style.transform = 'scale(1.05)';
-                // myNgHeader.style.boxShadow = 'red 0px 0px 20px 20px';
-                // myNgHeader.style.border = '1px solid red';
-            }, 4 * delay)
-
-            setTimeout(()=>{
-                myNgTimer.style.backgroundColor = 'transparent';
-                myNgHeader.style.backgroundColor = 'transparent';
-                myNgHeader.style.transform = 'scale(1)';
-                // myNgHeader.style.boxShadow = 'transparent 0px 0px 20px 20px';
-                // myNgHeader.style.border = '1px solid transparent';
-            }, 5 * delay)
-
-
-        }
-
-        node.on('timeUp-warn', function() {
-            node.game.warn5();
-        })
 
         // ------------------------------------------------------------------ //
         // -   - -   - -   - -   - -   - -   - -   - -   - -   - -   - -   -  //
@@ -158,20 +93,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         node.on('justShowTutoTimer', function() {
 
-            // node.game.visualTimer.gameTimer = 11;
             node.game.visualTimer.show();
-
-            // node.game.visualTimer.restart({
-            //
-            //     milliseconds: node.game.dtd,
-            //
-            //     timeup: function(msg) {
-            //
-            //         console.log('do nothing just show');
-            //
-            //     }
-            //
-            // })
 
             node.game.visualTimer.startWaiting({
                 milliseconds:node.game.dtd,
@@ -190,7 +112,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 timeup: function(msg) {
 
                     console.log('do nothing just show');
-                    node.game.warn5();
+                    node.emit('stolenTimerWarn');
 
                 }
 
@@ -238,13 +160,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
                 timeup: function() {
 
-
-                    node.game.warn5();
                     node.emit('tutoTimeUp', myKey)
-
-
-                    // this will be added to other ones perhaps
-                    // node.game.visualTimer.hide();
 
                 }
 
@@ -501,7 +417,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
             node.game.talk('inside LOGIC-nextPicture')
 
-            node.game.talk('INDEX RECEIVED: ' + msg.data)
+            node.game.talk('Data RECEIVED: ')
+            node.game.talk(msg.data)
 
             var myData = msg.data;
 
@@ -543,7 +460,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
 
 
-
+        node.on.data('totalNumberOfPairs', (msg) => {
+            let total = msg.data;
+            node.emit('totalNumberOfPairs', total);
+        })
 
 
         // ------------------------------------------------------------------ //
@@ -553,6 +473,12 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // -------------------                          --------------------- //
         // ------------------------------------------------------------------ //
         // ------------------------------------------------------------------ //
+
+        node.on('askTotalNumberOfPairs', () => {
+
+            node.say('requestTotalNumberOfPairs', 'SERVER');
+
+        })
 
         node.on('HTML-answer-CLIENT', (data) => {
 
@@ -617,27 +543,16 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
             this.talk('SURVEY RESULTS RECEIVED')
             this.talk(msg.age);
-            this.talk(msg.education);
-            this.talk(msg.employment);
             this.talk(msg.gender);
-            this.talk(msg.location);
             this.talk(msg.race);
-            this.talk(msg.knowledgeAI);
-            this.talk(msg.supportAI);
-            this.talk(msg.ladder)
+            this.talk(msg.location);
             this.talk('----------------')
 
             node.done({
-                dataType:'survey',
-                age:msg.age,
-                education:msg.education,
-                employment:msg.employment,
                 gender:msg.gender,
-                location:msg.location,
+                age:msg.age,
                 race:msg.race,
-                knowledgeAI:msg.knowledgeAI,
-                supportAI:msg.supportAI,
-                ladder:msg.ladder
+                location:msg.location,
             })
 
         })

@@ -235,9 +235,13 @@ $('.confidence-slider-bar-container').hover(
 
             confidence.hoverActivated = true;
             $('.confidence-slider-range-text-container').css({
-                'transition':'0.4s', 'opacity':'1'});
+                'transition':'0.4s',
+                'opacity':'1'
+            });
             $('.confidence-text-container-bottom').css({
-                'transition':'0.4s', 'opacity':'0'});
+                'transition':'0.4s',
+                'opacity':'0'
+            });
             setTimeout(()=>{
                 $('.confidence-text-container-bottom').css({'display':'none'});
             }, 550)
@@ -288,20 +292,22 @@ confidence.hide = (transitionTime) => {
 
 // RESET
 ////////.
-
-// RESET
-////////.
 confidence.reset = () => {
+
     confidence.listener.button.submitHidden = true;
     $('#confidence-slider').val(0);
     confidence.bar.set(0, 'confidence-bar');
 
-
-
     // bring back slider hover mechanics and helper text
     confidence.hoverActivated = false;
     $('.confidence-slider-range-text-container').css({
-        'transition':'0.4s', 'opacity':'0.4'});
+        'transition':'0.4s',
+        'opacity':'0'
+    });
     $('.confidence-text-container-bottom').css({
-        'transition':'0.4s', 'opacity':'1', 'display':''});
+        'transition':'0.4s',
+        'opacity':'1',
+        'display':''
+    });
+
 }

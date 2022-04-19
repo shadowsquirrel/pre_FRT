@@ -2,15 +2,16 @@
 <html>
 <head>
 
-    <link rel="stylesheet" href="css/frame.css">
+    <!-- <link rel="stylesheet" href="css/frame.css"> -->
     <link rel="stylesheet" href="css/if_frame.css">
     <link rel="stylesheet" href="css/if_frame_altAdjustments.css">
-    <link rel="stylesheet" href="css/confidence.css">
-    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
+    <link rel="stylesheet" href="css/confidence.css">
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
 
-    <title>Face Test</title>
+    <title>Evaluation</title>
 
 </head>
 <body>
@@ -33,6 +34,18 @@
 
 
         <div class = 'all' id='all'>
+
+            <div class=timer-container>
+                <div class=myTimer id=myTimer>
+
+                </div>
+            </div>
+
+            <div class=progress-main-container>
+                <div class=progress-text-container>
+                    <span id=progress-number></span>
+                </div>
+            </div>
 
             <div class=step-1>
 
@@ -95,7 +108,7 @@
                             <div class='transitionButton' id='go'>
 
                                 <p>
-                                    <span id=go></span>
+                                    <span id='goText'class='goButtonHoverText'></span>
                                 </p>
 
                             </div>

@@ -94,13 +94,10 @@ confidence.bar.set = (val, id, opt) => {
         },
         text: [val],
         textfont: {
-            // size: '50',
-            // for now hide the text, we will show it for display
             size: '0',
             color:'transparent',
         },
         orientation: 'h',
-        // textanchor: 'right',
         insidetextanchor: 'middle',
         textposition: 'inside',// auto?, outside, inside
 
@@ -233,25 +230,12 @@ confidence.button.submit.hide = () => {
 
 }
 
-// redefined in main instruction js
-// $('#confidence-slider').change(confidence.button.submit.show);
-
 // HOVER OVER SLIDER ANIMATION
 //////////////////////////////.
 confidence.hoverActivated = false;
 $('.confidence-slider-bar-container').hover(
     function() {
 
-        // if(!confidence.hoverActivated) {
-        //
-        //     confidence.hoverActivated = true;
-        //     $('.confidence-slider-range-text-container').css({'transition':'0.6s', 'opacity':'1'});
-        //     $('.confidence-text-container-bottom').css({'transition':'0.6s', 'opacity':'0'});
-        //     setTimeout(()=>{
-        //         $('.confidence-text-container-bottom').css({'display':'none'});
-        //     }, 750)
-        //
-        // }
     }
 
 );

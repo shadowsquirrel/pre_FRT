@@ -13,9 +13,9 @@ var data = {
 var picture = {};
 var button = {};
 var go = {};
+var progress = {};
 var transitionTo = {};
-
-var dtd = undefined;
+var timer = {};
 
 picture.index = undefined;
 picture.correctAnswer = undefined;
@@ -30,28 +30,29 @@ window.onload = function() {
 
     node.emit('HTML-startSecretExpTimer');
 
-    // -------- NO REAL USE ONLY CHECKING DTD VALUE ------- //
-
-    node.on('requestDtd-HTML', function(msg) {
-
-        console.log('');
-        console.log('DTD RECEIVED FROM THE CLIENT: ' + msg);
-        console.log('');
-
-        dtd = msg;
-
-    })
-
-    node.emit('HTML-requestDtd');
-
     // --------------- //
 
 
     // --------------------------------------------- //
-    // ---------------  NEXT BUTTON ---------------- //
+    // -------------  GO / NEXT BUTTON ------------- //
     // --------------------------------------------- //
 
-    $('#go').html('START');
+    $('#goText').html('START');
+
+    // $('#go').hover(
+    //     function() {
+    //         $('#goText').css({
+    //             'transition':'0.1s',
+    //             'opacity':'1'
+    //         })
+    //     },
+    //     function() {
+    //         $('#goText').css({
+    //             'transition':'0.1s',
+    //             'opacity':'0'
+    //         })
+    //     }
+    // );
 
     go.isClicked = false;
 
@@ -71,12 +72,14 @@ window.onload = function() {
 
     go.hide = function() {
 
+        progress.hide();
+
         if(!go.switchedToNext) {
 
             go.switchedToNext = true;
 
             setTimeout(()=>{
-                $('#go').html('NEXT')
+                $('#goText').html('NEXT')
             }, 750)
 
         }
@@ -101,6 +104,102 @@ window.onload = function() {
         }, 100)
 
 
+
+    }
+
+    // ---------------------------------------------------- //
+    // ----------------  PROGRESS CIRCLE ------------------ //
+    // ---------------------------------------------------- //
+
+    progress.show = () => {
+
+        $('.progress-main-container').css({
+            'transition':'1s',
+            'opacity':'1'
+        });
+
+    }
+
+    progress.hide = () => {
+
+        $('.progress-main-container').css({
+            'transition':'0.1s',
+            'opacity':'0'
+        });
+
+    }
+
+    progress.update = (listIndex, total) => {
+
+        var index = listIndex;
+
+        console.log('progress.update index received:', index);
+
+        index++;
+
+        console.log(index);
+
+        $('#progress-number').html(index + '/' + total);
+
+    }
+
+    // ---------------------------------------------------- //
+    // ------------------  TIMER HEIST -------------------- //
+    // ---------------------------------------------------- //
+
+    timer.steal = () => {
+
+        var header = parent.document.getElementById('ng_header');
+        var timerDiv = header.children[0];
+
+        return timerDiv;
+
+    }
+
+    timer.inject = () => {
+
+        var timerDiv = timer.steal();
+
+        if(timerDiv != undefined) {
+
+            var newTimerDiv = document.getElementById('myTimer');
+
+            newTimerDiv.appendChild(timerDiv);
+
+            timer.reformat();
+
+        } else {
+
+            console.log('timer has already been stolen OR there is no timer to steal');
+
+        }
+
+        timer.show();
+
+    }
+
+    timer.isTimerTextRemoved = false;
+    timer.reformat = () => {
+
+        var div = document.getElementById('myTimer')
+        var timerText = div.children[0].children[0];
+        timerText.style.display = 'none';
+
+    }
+
+    timer.hide = () => {
+
+        $('.timer-container').css({
+            'opacity':'0'
+        })
+
+    }
+
+    timer.show = () => {
+
+        $('.timer-container').css({
+            'opacity':'1'
+        })
 
     }
 
@@ -199,7 +298,7 @@ window.onload = function() {
 
     }
 
-    transitionTo.next = (currentIndex) => {
+    transitionTo.next = (currentIndex, questionCounter, total) => {
 
         // hide step 2
         confidence.hide(0.1);
@@ -237,20 +336,19 @@ window.onload = function() {
         // set the new picture
         setTimeout(()=>{
             picture.set(currentIndex);
+            progress.update(questionCounter, total);
         }, 500)
 
 
         setTimeout(()=>{
+
+            progress.show();
+
             $('.step-1').css({
                 'transition':'0.3s',
                 'opacity':'1'
             });
         }, 1000)
-
-
-
-
-
 
     }
 
@@ -344,9 +442,6 @@ window.onload = function() {
             // hide unpicked button or buttons
             button.hide(button.answer);
 
-            // hide pictures
-            // picture.hide();
-
             // transform recorded mouse data
             var mouseData = translate();
 
@@ -367,17 +462,6 @@ window.onload = function() {
                 data.confidence = -1; // -1 when no answer is given no conf is asked
             } else {
 
-                // hide decision screen and show confidence screen
-                // $('.step-1').css({
-                //     'transition':'0.1s',
-                //     'opacity':'0'
-                // });
-                // setTimeout(()=>{
-                //     $('.step-1').css({
-                //         'display':'none'
-                //     });
-                //     confidence.show();
-                // }, 150)
                 transitionTo.step2();
 
             }
@@ -428,6 +512,8 @@ window.onload = function() {
 
         go.hide();
 
+        timer.inject();
+
     })
 
     $('#lB').click(function() {
@@ -452,12 +538,24 @@ window.onload = function() {
     // WE DO NOT ASK THE CONFIDENCE QUESTION
     node.on('timeUp', function() {
 
-        // for labeling/understanding the binary code
-        var noAnswer = -2;
-        var timeIsUp = true;
+        timer.hide();
 
-        button.answer = noAnswer;
-        button.click(timeIsUp);
+        setTimeout(()=>{
+
+            if(!button.isClicked) {
+
+                console.log('no answer is given');
+
+                // for labeling/understanding the binary code
+                var noAnswer = -2;
+                var timeIsUp = true;
+
+                button.answer = noAnswer;
+                button.click(timeIsUp);
+
+            }
+
+        }, 2000)
 
     })
 
@@ -496,6 +594,9 @@ window.onload = function() {
 
         var currentIndex = msg.index;
         var correctAnswer = msg.correctAnswer;
+        var currentNumber = msg.listIndex;
+
+
 
         // set the current picture pair index
         picture.index = currentIndex;
@@ -507,43 +608,16 @@ window.onload = function() {
         // related to mouse tracking
         resetSwitches();
 
-        // ---- //
-
-        // // hide confidence screen
-        // confidence.hide();
-        //
-        // // show next button
-        // go.show();
-        //
-        // // show step-1 again
-        // $('.step-1').css({
-        //     'transition':'0s',
-        //     'opacity':'0',
-        //     'display':'block'
-        // });
-        // setTimeout(()=>{
-        //     $('.step-1').css({
-        //         'transition':'0.1s',
-        //         'opacity':'1'
-        //     });
-        // }, 250)
-
-        transitionTo.next(currentIndex);
-
-        // ---- //
-
-        // // set the new picture
-        // setTimeout(()=>{
-        //     picture.set(currentIndex);
-        // }, 500)
-
+        transitionTo.next(currentIndex, currentNumber, msg.total);
 
         // debug
         console.log('');
         console.log('NEW PICTURE RECEIVED');
-
+        console.log(msg);
         console.log('INDEX: ' + msg.index);
         console.log('ANSWER: ' + msg.correctAnswer);
+        console.log('LIST INDEX: ' + msg.listIndex);
+        console.log('TOTAL: ' + msg.total);
         console.log('');
 
 
@@ -568,6 +642,8 @@ window.onload = function() {
 
         console.log('INDEX: ' + msg.index);
         console.log('ANSWER: ' + msg.correctAnswer);
+        console.log('NUMBER: ' + msg.listIndex);
+        console.log('TOTAL: ' + msg.total);
         console.log('');
         console.log('');
         console.log('');
@@ -590,6 +666,11 @@ window.onload = function() {
 
         // related to mouse tracking
         resetSwitches();
+
+        progress.update(msg.listIndex, msg.total);
+        setTimeout(()=>{
+            progress.show();
+        }, 200)
 
     })
 
@@ -667,9 +748,6 @@ window.onload = function() {
             var newX = rawX - (offset.left + ((area.width() + 11)/2));
             var newY = (offset.top + area.height() - 1) - rawY;
 
-            // var newX = e.pageX;
-            // var newY = e.pageY;
-
             x.push(newX);
             y.push(newY);
             t.push(t1)
@@ -681,69 +759,11 @@ window.onload = function() {
 
         }
 
-        // if(go.isClicked && button.isClicked) {
-        //
-        //     if(!translated) {
-        //
-        //         console.log('go clicked and button is clicked!');
-        //
-        //         translated = true;
-        //         translate();
-        //
-        //     }
-        //
-        // }
-
     })
 
-    // TO DO: READ PAPS TO DETERMINE THE BEST WAY TO TRANSLATE
     var translate = function() {
 
-        // var x0 = getFirst(x);
-        // var y0 = getFirst(y);
-        // var lastX = getLast(x);
-        // var sign = (lastX < x0) ? -1 : 1;
-        // var xTemp = undefined;
-        //
-        // console.log('before translation 1');
-        // console.log('x0: ' + getFirst(x));
-        // console.log('xLast: ' + getLast(x));
-        //
-        // x = x.map(i => i - x0);
-        //
-        // console.log('after translation 1');
-        // console.log('x0: ' + getFirst(x));
-        // console.log('xLast: ' + getLast(x));
-        //
-        // // normalize the distance between the last and first to 1
-        // x = x.map(i => (i / Math.abs(lastX)));
-        //
-        //
-        //
-        // console.log('after translation 2');
-        // console.log('x0: ' + getFirst(x));
-        // console.log('xLast: ' + getLast(x));
-        //
-        // console.log('X after translations');
-        // console.log(x);
-        //
-        // console.log('Y list');
-        // console.log(y);
-        //
-        // console.log('Time list');
-        // console.log(t);
-        //
-
         var responseTime = getLast(t) - getFirst(t);
-
-
-
-        // let mtData = {
-        //     xCoor: JSON.stringify(x),
-        //     yCoor: JSON.stringify(y),
-        //     tCoor: JSON.stringify(t),
-        //     responseTime: responseTime,
-        // }
 
         let mtData = {
             xCoor: x,
@@ -751,11 +771,6 @@ window.onload = function() {
             tCoor: t,
             responseTime: responseTime,
         }
-
-
-
-
-        // node.emit('HTML-mouse', msg);
 
         return mtData;
 

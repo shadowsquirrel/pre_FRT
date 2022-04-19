@@ -37,9 +37,6 @@ question.first = function() {
 
     question.active = order.active[order.index];
 
-    console.log('');
-    console.log('active question is: ' + question.active);
-
     // here age is arbitrary it can also be empty string
     question.switch('age', question.active);
 
@@ -57,22 +54,10 @@ question.next = function() {
         question.previous = question.active;
         question.active = order.active[order.index];
 
-        console.log('');
-        console.log('active question is: ' + question.active);
-        console.log('order.index: ' + order.index);
-
         question.switch(question.previous, question.active);
 
 
     } else {
-
-        console.log('');
-        console.log('');
-        console.log('No more question to ask -> order.index: ' + order.index);
-        console.log('');
-        console.log('decisions made:')
-        console.log(decision);;
-        console.log('');
 
         decision.save();
 
@@ -112,7 +97,6 @@ question.numberUpdate = function() {
             $('#questionIndex').css({'transition':'0.25s', 'opacity':'1'})
         }, 10)
     }, 260)
-
 
 }
 
@@ -159,12 +143,7 @@ experiment.generate = function() {
         'gender',
         'age',
         'race',
-        // 'education',
-        // 'employment',
-        // 'location',
-        // 'knowledgeAI',
-        // 'supportAI',
-        // 'ladder'
+        'location',
     ];
 
     $('#numOfQuestion').html(order.active.length);

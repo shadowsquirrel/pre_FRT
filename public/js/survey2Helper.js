@@ -169,14 +169,9 @@ experiment.generate = function() {
     order.index = 0;
 
     order.active = [
-        // 'tutorial',
         'enoughTime',
-        // 'needMoreTime',
-        // 'decisionScreen',
         'imageSize',
         'buttonPlacement',
-        // 'numOfImages_tired',
-        // 'numOfImages_bored'
     ];
 
     $('#numOfQuestion').html(order.active.length);

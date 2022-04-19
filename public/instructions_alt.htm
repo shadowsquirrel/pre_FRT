@@ -47,6 +47,13 @@
 
             <div class=frame-image>
 
+                <!-- STOLEN TIMER DISPLAY -->
+                <div class=timer-container id='stolen-timer-container'>
+                    <div class=myTimer id=myTimer>
+
+                    </div>
+                </div>
+
                 <!-- BUTTONS DIV -->
                 <div class='frame-B'>
 
@@ -110,7 +117,7 @@
 
                                 <div class=confidence-text-container-top>
                                     <p>
-                                        How confident are you on the choice you just made?
+                                        How confident are you on the choice you've just made?
                                     </p>
                                 </div>
 
@@ -250,8 +257,6 @@
                         <br />
                         You are expected to carefully read its content,
                         <br />
-                        <!-- and click the <strong>OK</strong> button to proceed
-                        when you are ready. -->
                         and click the <strong>OK</strong> button
                         when you are ready.
                     </p>
@@ -337,9 +342,7 @@
                         Click <img class='infoBoxIconButton' src='images/decisionIcons/true.png'/>
                         <br />
                         when you think
-                        <!-- <br /> -->
                         the images are from the <strong>same</strong> person.
-                        <!-- to state that the pair belongs the <span class=b>same</span> person. -->
                     </p>
 
                 </div>
@@ -366,10 +369,7 @@
                         Click <img class='infoBoxIconButton' src='images/decisionIcons/false.png'/>
                         <br />
                         when you think
-                        <!-- <br /> -->
                         the images are from two <strong>different</strong> people.
-                        <!-- does <span class=b>NOT</span> belong to the <i>same</i> -->
-                        <!-- person. -->
                     </p>
 
                 </div>
@@ -413,7 +413,7 @@
                     <p>
                         After you make your decision, you are asked to declare
                         your <strong>confidence level</strong> on the decision
-                        you just made on the <strong>above slider</strong>.
+                        you've just made on the <strong>above slider</strong>.
                     </p>
 
                 </div>
@@ -500,8 +500,7 @@
                     <p>
                         In this experiment,
                         <br />
-                        you are tasked with evaluating <span class=b>100</span>
-                        <!-- you will be asked to evaluate <span class=b>30</span> -->
+                        you are tasked with evaluating <span id='totalNumber-b6' class=b>100</span>
                         pairs of facial images in this fashion.
                     </p>
 
@@ -551,7 +550,7 @@
                 <div class=text>
 
                     <p>
-                        The timer is displayed on the <span class=b>top right corner</span>.
+                        The timer is displayed in between the decision buttons.
                     </p>
 
                 </div>
@@ -596,12 +595,6 @@
                 <div class=text>
 
                     <p>
-                        <!-- After you make a decision or after your time is up,
-
-                        the photos and the decision buttons disappear,
-
-                        and the
-                        <span class=b>NEXT</span> button appears. -->
                         After you submit your decision or your time is up,
                         the decision screen disappears
                         and the <span class=b>NEXT</span> button appears.
@@ -631,7 +624,6 @@
                     <p>
                         You are expected to click the <span class=b>NEXT</span> button,
                         when you are ready to evaluate the <strong>next</strong> pair of facial images.
-                        <!-- to begin evaluating <br /> the <i>next pair</i> of facial images. -->
                     </p>
 
                 </div>
@@ -715,7 +707,7 @@
 
                     <p>
                         Your total number of correct evaluations will be reported
-                        <strong>after</strong> you answer <strong>all 100</strong> pairs.
+                        <strong>after</strong> you answer <strong>all <span id='totalNumber-c4'></span></strong> pairs.
                     </p>
 
                 </div>
@@ -739,26 +731,39 @@
                 <div class=text>
 
                     <p>
-                        <!-- <u>A final yet crucial information</u>
-                        <br />
-                        <br />
-                        During the experiment,
-                        <br />
-                        For <i>every correct evaluation</i> you make, you will
-                        receive <span class=b>10 cents</span>.
-                        <span style='display:block;margin-top:30px;font-size:20px;font-style:italic;'>
-                            This is the beta testing of our experiment for friends and family.
-                            <br />
-                            Instead, we own you a beer for the next time we meet!
-                        </span> -->
-                        You will be paid <strong>1 cent</strong> for
-                        <strong>every correct evaluation</strong> you make.
+                        After the facial pair evaluations, you will answer a couple of
+                        survey questions and receive <strong>1 USD</strong> for finishing the entire experiment.
                     </p>
 
                 </div>
 
                 <div class=buttonWrap>
                     <div class=button id='btn-C-5'>
+                        <p>
+                            OK
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class=boxwrap id='boxwrap-C-599'>
+
+            <div class='box' id='box-C-599'>
+
+                <div class=text>
+
+                    <p>
+                        In addition, you will receive<strong>10 cent</strong> bonus payment for
+                        <strong>every correct evaluation</strong> you make.
+                    </p>
+
+                </div>
+
+                <div class=buttonWrap>
+                    <div class=button id='btn-C-599'>
                         <p>
                             OK
                         </p>
