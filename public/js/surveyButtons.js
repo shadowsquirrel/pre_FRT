@@ -78,7 +78,7 @@ locationDecisionList.forEach(i => {
 // let raceDecisionList = [
 //     'alaska', 'asian', 'black', 'pacific', 'white'
 // ];
-let raceDecisionList: [
+let raceDecisionList = [
     'white', //'White / Caucasian',
     'black', //'Black or of African descent',
     'hispanic', //'Hispanic or Latino',
