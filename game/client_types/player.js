@@ -417,11 +417,13 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
             node.game.talk('inside LOGIC-nextPicture')
 
-            node.game.talk('Data RECEIVED: ')
-            node.game.talk(msg.data)
+            node.game.talk('Data RECEIVED')
+            node.game.talk(msg.data.listIndex);
+            node.game.talk(msg.data.index);
 
             var myData = msg.data;
 
+            node.game.talk('Data SENT to browser')
             node.emit('nextPicture-HTML', myData);
 
         })
@@ -480,29 +482,56 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
 
+        node.game.clone = (arr) => {
+
+            var x = JSON.stringify(arr);
+            var y = JSON.parse(x);
+
+            return y;
+
+        }
+
+        node.game.someList = [];
+
         node.on('HTML-answer-CLIENT', (data) => {
+
 
             this.talk('DATA RECEIVED')
             this.talk(data.index)
             this.talk(data.answer)
             this.talk(data.isCorrect)
-            this.talk(data.xCoor)
-            this.talk(data.yCoor)
-            this.talk(data.tCoor)
+            // this.talk(data.xCoor)
+            // this.talk(data.yCoor)
+            // this.talk(data.tCoor)
+            this.talk(data.responseTime)
             this.talk('------------')
 
+            var xList = node.game.clone(data.xCoor);
+            var yList = node.game.clone(data.yCoor);
+            var tList = node.game.clone(data.tCoor);
+
+            node.game.someList.push(xList[10])
+            node.game.someList.push(xList[11])
+            node.game.someList.push(xList[23])
+
+            this.talk('HTML-answer-CLIENT')
+            this.talk(node.game.someList);
+
             node.set({
+                dataType: 'evaluation',
                 pairIndex:data.index,
                 answer:data.answer,
                 confidence:data.confidence,
                 correct:data.isCorrect,
-                xCoor: data.xCoor,
-                yCoor: data.yCoor,
-                tCoor: data.tCoor,
+                xCoor: xList,
+                yCoor: yList,
+                tCoor: tList,
                 responseTime: data.responseTime,
             })
 
             node.say('CLIENT-answer-LOGIC', 'SERVER', data.answer);
+
+            node.game.showMemo('evaluation')
 
         })
 

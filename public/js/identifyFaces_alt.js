@@ -16,6 +16,7 @@ var go = {};
 var progress = {};
 var transitionTo = {};
 var timer = {};
+var help = {};
 
 picture.index = undefined;
 picture.correctAnswer = undefined;
@@ -32,6 +33,14 @@ window.onload = function() {
 
     // --------------- //
 
+    help.clone = (arr) => {
+
+        var x = JSON.stringify(arr);
+        var y = JSON.parse(x);
+
+        return y;
+
+    }
 
     // --------------------------------------------- //
     // -------------  GO / NEXT BUTTON ------------- //
@@ -458,8 +467,10 @@ window.onload = function() {
 
             // send decision data to client.js
             if(isTimeUp) {
-                node.emit('HTML-answer-CLIENT', data);
                 data.confidence = -1; // -1 when no answer is given no conf is asked
+                var cloneData = help.clone(data);
+                console.log(data);
+                node.emit('HTML-answer-CLIENT', cloneData);
             } else {
 
                 transitionTo.step2();
@@ -493,7 +504,8 @@ window.onload = function() {
             confidence.button.submit.hide();
         }, 1000)
 
-        node.emit('HTML-answer-CLIENT', data);
+        var cloneData = help.clone(data);
+        node.emit('HTML-answer-CLIENT', cloneData);
 
     }
 
@@ -707,6 +719,9 @@ window.onload = function() {
         translated = false;
         go.isClicked = false;
         button.isClicked = false;
+        x = [];
+        y = [];
+        t = [];
 
     }
 
