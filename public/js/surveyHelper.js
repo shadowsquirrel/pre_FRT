@@ -126,6 +126,8 @@ progressBar.update = function() {
 
     $('.progress-bar').css({'width':pp});
 
+    $('#numOfQuestion').html(order.active.length);
+
 }
 
 // -------------------- //
@@ -140,11 +142,12 @@ experiment.generate = function() {
     order.index = 0;
 
     order.active = [
-        'education',
-        'interactedRace',
+        'student',
+        // 'education',
         'gender',
-        'race',
         'age',
+        'race',
+        'interactedRace',
         'location',
     ];
 

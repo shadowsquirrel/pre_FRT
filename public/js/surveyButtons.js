@@ -229,6 +229,53 @@ $('#interactRace-submit-button').click(()=>{
 
 
 
+let studentDecisionList = [
+    'yesStudent',
+    'noStudent',
+]
+
+studentDecisionList.forEach(i => {
+
+    var string = '#' + i;
+
+    $(string).click(function() {
+
+        var index = studentDecisionList.indexOf(i);
+
+        console.log('student index: ' + index);
+
+        decision.student = index;
+
+        console.log('Student decision: ' + decision.student);
+
+        if(index === 0) {
+            console.log('we have a student');
+            console.log(order.active);
+            var studentIndex = order.active.indexOf('student');
+            console.log('education question index', studentIndex);
+            var nextIndex = studentIndex + 1;
+            console.log('the index after that', nextIndex);
+            order.active.splice(nextIndex, 0, 'currentEducation')
+            console.log(order.active);
+        } else {
+            console.log('Not a student');
+            console.log(order.active);
+            var studentIndex = order.active.indexOf('student');
+            console.log('education question index', studentIndex);
+            var nextIndex = studentIndex + 1;
+            console.log('the index after that', nextIndex);
+            order.active.splice(nextIndex, 0, 'education')
+            console.log(order.active);
+            decision.currentEducation = -1;
+        }
+
+        question.next();
+
+    });
+
+});
+
+
 let educationDecisionList = [
     'elementary',
     'highSchool',
@@ -256,6 +303,46 @@ educationDecisionList.forEach(i => {
             console.log(order.active);
             var eduIndex = order.active.indexOf('education');
             console.log('education question index', eduIndex);
+            var nextIndex = eduIndex + 1;
+            console.log('the index after that', nextIndex);
+            order.active.splice(nextIndex, 0, 'eduFocus')
+            console.log(order.active);
+        } else {
+            decision.eduFocus = -1;
+        }
+
+        question.next();
+
+    });
+
+});
+
+let currentEducationDecisionList = [
+    'highSchool2',
+    'vocational2',
+    'undergrad2',
+    'master2',
+    'phd2'
+]
+
+currentEducationDecisionList.forEach(i => {
+
+    var string = '#' + i;
+
+    $(string).click(function() {
+
+        var index = currentEducationDecisionList.indexOf(i);
+
+        console.log('current education index: ' + index);
+
+        decision.currentEducation = index;
+
+        console.log('education decision: ' + decision.education);
+
+        if(index > 1) {
+            console.log(order.active);
+            var eduIndex = order.active.indexOf('currentEducation');
+            console.log('current education question index', eduIndex);
             var nextIndex = eduIndex + 1;
             console.log('the index after that', nextIndex);
             order.active.splice(nextIndex, 0, 'eduFocus')
