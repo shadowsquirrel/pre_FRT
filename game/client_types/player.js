@@ -573,7 +573,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             this.talk('SURVEY RESULTS RECEIVED')
             this.talk(msg.age);
             this.talk(msg.gender);
+            this.talk(msg.education);
+            this.talk(msg.eduFocus);
             this.talk(msg.race);
+            this.talk(msg.interactedRace);
             this.talk(msg.location);
             this.talk('----------------')
 
@@ -581,6 +584,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 gender:msg.gender,
                 age:msg.age,
                 race:msg.race,
+                interactedRace:msg.interactedRace,
+                education: msg.education,
+                eduFocus: msg.eduFocus,
                 location:msg.location,
             })
 
@@ -592,27 +598,17 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         node.on('HTML-survey2Results', function(msg) {
 
             this.talk('SURVEY 2 RESULTS RECEIVED')
-            this.talk('tutorial ' + msg.tutorial);
+
             this.talk('enought time ' + msg.enoughTime);
-            this.talk('need more time ' + msg.needMoreTime);
-            this.talk('decision screen ' + msg.decisionScreen);
             this.talk('image size ' + msg.imageSize);
             this.talk('button placement ' + msg.buttonPlacement);
-            this.talk('num of images tired ' + msg.numOfImages_tired);
-            this.talk('num of images bored ' + msg.numOfImages_bored);
-            this.talk('display time duration ' + msg.dtd)
+
             this.talk('----------------')
 
             node.done({
-                tutorial:msg.tutorial,
                 enoughTime:msg.enoughTime,
-                needMoreTime:msg.needMoreTime,
-                decisionScreen:msg.decisionScreen,
                 imageSize:msg.imageSize,
                 buttonPlacement:msg.buttonPlacement,
-                numOfImages_tired:msg.numOfImages_tired,
-                numOfImages_bored:msg.numOfImages_bored,
-                dtd:msg.dtd
             })
 
         })

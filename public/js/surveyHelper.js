@@ -140,9 +140,11 @@ experiment.generate = function() {
     order.index = 0;
 
     order.active = [
+        'education',
+        'interactedRace',
         'gender',
-        'age',
         'race',
+        'age',
         'location',
     ];
 

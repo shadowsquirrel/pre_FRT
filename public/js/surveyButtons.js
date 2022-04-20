@@ -88,7 +88,7 @@ let raceDecisionList = [
     'southeastAsia', //'Southeast Asian',
     'native', //'Native American, Pacific Islander, or Indigenous Australian',
     'multi', //'Multiracial',
-    ]
+]
 
 raceDecisionList.forEach(i => {
 
@@ -103,6 +103,191 @@ raceDecisionList.forEach(i => {
         decision.race = index;
 
         console.log('race decision: ' + decision.race);
+
+        question.next();
+
+    });
+
+});
+
+let interactedRaceDecisionList = [
+    'white2', //'White / Caucasian',
+    'black2', //'Black or of African descent',
+    'hispanic2', //'Hispanic or Latino',
+    'middleEast2', //'Middle Eastern',
+    'southAsia2', //'South Asian',
+    'eastAsia2', //'East Asian',
+    'southeastAsia2', //'Southeast Asian',
+    'native2', //'Native American, Pacific Islander, or Indigenous Australian',
+    'multi2', //'Multiracial',
+]
+decision.interactedRace = [];
+interactedRaceIsClickedList = Array(9).fill(false);
+interactedRaceDecisionList.forEach(i => {
+
+    var string = '#' + i;
+
+    $(string).hover(
+        function() {
+            if(!interactedRaceIsClickedList[i]) {
+
+                $(string).css({
+                    'background':'black',
+                    'color':'white',
+                })
+
+            }
+        },
+        function() {
+            if(!interactedRaceIsClickedList[i]) {
+
+                $(string).css({
+                    'background':'white',
+                    'color':'black',
+                })
+
+            }
+        }
+    )
+
+    $(string).click(function() {
+
+        var index = interactedRaceDecisionList.indexOf(i);
+
+        console.log('interactedRace index: ' + index);
+
+        if(!decision.interactedRace.includes(index)){
+
+            interactedRaceIsClickedList[i] = true;
+
+            console.log('adding the choice to the decision list');
+            console.log(decision.interactedRace);
+
+            decision.interactedRace.push(index);
+
+            console.log(decision.interactedRace);
+
+            $(string).css({
+                'background':'darkgreen',
+                'color':'white',
+            })
+
+        } else {
+
+            interactedRaceIsClickedList[i] = false;
+
+            console.log('taking the choice out of the decision list');
+            console.log(decision.interactedRace);
+
+            var myAnswerIndex = decision.interactedRace.indexOf(index);
+            decision.interactedRace.splice(myAnswerIndex, 1);
+
+            console.log('the new reduced list');
+            console.log(decision.interactedRace);
+
+            $(string).css({
+                'background':'white',
+                'color':'black',
+            })
+
+
+        }
+
+        if(decision.interactedRace.length > 0) {
+            $('.container-button-submit').css({
+                'display':'flex',
+            })
+            setTimeout(()=>{
+                $('.container-button-submit').css({
+                    'transition':'0.5s',
+                    'opacity':'1'
+                })
+            }, 150)
+        } else {
+            $('.container-button-submit').css({
+                'transition':'0.1s',
+                'opacity':'0'
+            })
+            setTimeout(()=>{
+                $('.container-button-submit').css({
+                    'display':'none',
+                })
+            }, 150)
+        }
+
+        //
+
+    });
+
+});
+
+$('#interactRace-submit-button').click(()=>{
+
+    question.next();
+
+})
+
+
+
+let educationDecisionList = [
+    'elementary',
+    'highSchool',
+    'vocational',
+    'undergrad',
+    'master',
+    'phd'
+]
+
+educationDecisionList.forEach(i => {
+
+    var string = '#' + i;
+
+    $(string).click(function() {
+
+        var index = educationDecisionList.indexOf(i);
+
+        console.log('education index: ' + index);
+
+        decision.education = index;
+
+        console.log('education decision: ' + decision.education);
+
+        if(index > 2) {
+            console.log(order.active);
+            var eduIndex = order.active.indexOf('education');
+            console.log('education question index', eduIndex);
+            var nextIndex = eduIndex + 1;
+            console.log('the index after that', nextIndex);
+            order.active.splice(nextIndex, 0, 'eduFocus')
+            console.log(order.active);
+        } else {
+            decision.eduFocus = -1;
+        }
+
+        question.next();
+
+    });
+
+});
+
+let eduFocusDecisionList = [
+    'natural',
+    'humanities',
+]
+
+eduFocusDecisionList.forEach(i => {
+
+    var string = '#' + i;
+
+    $(string).click(function() {
+
+        var index = eduFocusDecisionList.indexOf(i);
+
+        console.log('eduFocus index: ' + index);
+
+        decision.eduFocus = index;
+
+        console.log('eduFOcus decision: ' + decision.eduFocus);
 
         question.next();
 

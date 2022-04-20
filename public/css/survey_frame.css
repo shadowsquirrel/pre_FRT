@@ -64,6 +64,7 @@
 }
 .button
 {
+    margin-bottom:10px;
     transition:0.2s;
     cursor:pointer;
     border-radius:100px;
@@ -79,6 +80,54 @@
 .button:active
 {
     background:darkgreen;
+}
+.buttonWrap2
+{
+    margin-top: 40px;
+    margin-bottom: 50px;
+    font-size:25px;
+    font-weight:100;
+    flex-wrap: wrap;
+    display: flex;
+    gap: 25px 50px;
+}
+.button2
+{
+    transition:0.2s;
+    cursor:pointer;
+    border-radius:100px;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-bottom:5px;
+}
+.container-button-submit
+{
+    display:none;
+    opacity:0;
+    margin-top:30px;
+    /* display: flex; */
+    margin-top: 30px;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+.button-submit
+{
+    width: 181px;
+    text-align: center;
+    box-shadow: 0px 1px 2px black;
+    border-radius: 200px;
+    background: #b9a3b9;
+    color: white;
+}
+.button-submit:hover
+{
+    cursor:pointer;
+    background-color:darkgoldenrod;
+}
+.button-submit:active
+{
+    transform:translateY(1px);
+    box-shadow: 0px 0px 1px black;
 }
 /*--------------------------------*/
 

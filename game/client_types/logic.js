@@ -653,6 +653,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 'gender',
                 'age',
                 'race',
+                'interactedRace',
+                'education',
+                'eduFocus',
                 'location',
             ],
 
@@ -661,19 +664,13 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         })
 
         // saving subject experiment experience survey data
-        memory.view('needMoreTime').save('survey2.csv', {
+        memory.view('buttonPlacement').save('survey2.csv', {
 
             header: [
                 'player',
-                'tutorial',
-                'enoughTime',
-                'needMoreTime',
-                'decisionScreen',
-                'imageSize',
                 'buttonPlacement',
-                'numOfImages_tired',
-                'numOfImages_bored',
-                'dtd',
+                'enoughTime',
+                'imageSize',
             ],
 
             keepUpdated: true
