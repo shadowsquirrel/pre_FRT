@@ -1,4 +1,16 @@
 
+var takeOut = (arr, elt) => {
+
+    var someIndex;
+
+    if(arr.includes(elt)) {
+        someIndex = arr.indexOf(elt);
+        arr.splice(someIndex,1);
+    }
+
+}
+
+
 // gender buttons
 let genderDecisionList = ['female', 'male', 'diverse'];
 
@@ -249,24 +261,48 @@ studentDecisionList.forEach(i => {
         console.log('Student decision: ' + decision.student);
 
         if(index === 0) {
+
             console.log('we have a student');
             console.log(order.active);
+
             var studentIndex = order.active.indexOf('student');
+
             console.log('education question index', studentIndex);
+
             var nextIndex = studentIndex + 1;
+
             console.log('the index after that', nextIndex);
+
+            takeOut(order.active, 'education');
+            takeOut(order.active, 'currentEducation');
+            takeOut(order.active, 'eduFocus');
+
             order.active.splice(nextIndex, 0, 'currentEducation')
+
             console.log(order.active);
+
         } else {
+
             console.log('Not a student');
             console.log(order.active);
+
             var studentIndex = order.active.indexOf('student');
+
             console.log('education question index', studentIndex);
+
             var nextIndex = studentIndex + 1;
+
             console.log('the index after that', nextIndex);
-            order.active.splice(nextIndex, 0, 'education')
+
+            takeOut(order.active, 'education');
+            takeOut(order.active, 'currentEducation');
+            takeOut(order.active, 'eduFocus');
+
+            order.active.splice(nextIndex, 0, 'education');
+
             console.log(order.active);
-            decision.currentEducation = -1;
+
+            // decision.currentEducation = -1;
         }
 
         question.next();
@@ -300,14 +336,23 @@ educationDecisionList.forEach(i => {
         console.log('education decision: ' + decision.education);
 
         if(index > 2) {
+
             console.log(order.active);
+
             var eduIndex = order.active.indexOf('education');
+
             console.log('education question index', eduIndex);
+
             var nextIndex = eduIndex + 1;
+
             console.log('the index after that', nextIndex);
+
+            takeOut(order.active, 'eduFocus');
             order.active.splice(nextIndex, 0, 'eduFocus')
+
             console.log(order.active);
         } else {
+            takeOut(order.active, 'eduFocus');
             decision.eduFocus = -1;
         }
 
@@ -331,23 +376,34 @@ currentEducationDecisionList.forEach(i => {
 
     $(string).click(function() {
 
-        var index = currentEducationDecisionList.indexOf(i);
+        var index = currentEducationDecisionList.indexOf(i) + 1;
 
         console.log('current education index: ' + index);
 
-        decision.currentEducation = index;
+        // decision.currentEducation = index;
+        decision.education = index;
 
         console.log('education decision: ' + decision.education);
 
         if(index > 1) {
+
             console.log(order.active);
+
             var eduIndex = order.active.indexOf('currentEducation');
+
             console.log('current education question index', eduIndex);
+
             var nextIndex = eduIndex + 1;
+
             console.log('the index after that', nextIndex);
-            order.active.splice(nextIndex, 0, 'eduFocus')
+
+            takeOut(order.active, 'eduFocus');
+            order.active.splice(nextIndex, 0, 'eduFocus');
+
             console.log(order.active);
+
         } else {
+            takeOut(order.active, 'eduFocus');
             decision.eduFocus = -1;
         }
 

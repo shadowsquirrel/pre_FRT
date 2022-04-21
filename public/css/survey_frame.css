@@ -11,7 +11,33 @@
 {
     display:flex;
     flex-direction: row;
-    justify-content: flex-end;
+    /* justify-content: flex-end; */
+    justify-content: space-between;
+}
+.backButton
+{
+    height: 45px;
+    width: 109px;
+    text-align: center;
+    box-shadow: 0px 1px 2px black;
+    border-radius: 200px;
+    background: #b9a3b9;
+    color: white;
+    font-size: 30px;
+    font-weight: 100;
+    transition:0.1s;
+    opacity:0;
+    transform:scale(0);
+}
+.backButton:hover
+{
+    cursor:pointer;
+    background-color:darkgoldenrod;
+}
+.backButton:active
+{
+    transform:translateY(1px);
+    box-shadow: 0px 0px 1px black;
 }
 .questionIndexText
 {
@@ -129,6 +155,7 @@
     transform:translateY(1px);
     box-shadow: 0px 0px 1px black;
 }
+
 /*--------------------------------*/
 
 .frame-C

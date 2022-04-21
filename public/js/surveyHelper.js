@@ -42,6 +42,8 @@ question.first = function() {
 
 }
 
+var backDiv = document.getElementById('backButton');
+
 question.next = function() {
 
     if(order.index < order.active.length - 1) {
@@ -56,6 +58,11 @@ question.next = function() {
 
         question.switch(question.previous, question.active);
 
+        if(order.index === 1) {
+            // show back button
+            backDiv.style.opacity = 1;
+            backDiv.style.transform = 'scale(1)';
+        }
 
     } else {
 
@@ -64,6 +71,34 @@ question.next = function() {
     }
 
 }
+
+question.back = () => {
+
+    if(order.index > 0) {
+
+        order.index--;
+
+        question.numberUpdate();
+        progressBar.update();
+
+        question.previous = question.active;
+        question.active = order.active[order.index];
+
+        question.switch(question.previous, question.active);
+
+        if(order.index === 0) {
+            // hide back button
+            backDiv.style.opacity = 0;
+            backDiv.style.transform = 'scale(0)';
+        }
+
+    } else {
+        console.log('We are at the first question no place to be back');
+    }
+
+}
+
+backDiv.onclick = question.back;
 
 question.switch = function(class1, class2) {
 
@@ -76,11 +111,7 @@ question.switch = function(class1, class2) {
     // while question div is hidden change the question
     setTimeout(()=>{
         $(class1).css({'display':'none'});
-        if(class2 === '.ladder') {
-            $(class2).css({'display':'flex', 'opacity':'0'});
-        } else {
-            $(class2).css({'display':'block', 'opacity':'0'});
-        }
+        $(class2).css({'display':'block', 'opacity':'0'});
         setTimeout(()=>{
             $(class2).css({'transition':'0.2s', 'opacity':'1'});
         }, 50)

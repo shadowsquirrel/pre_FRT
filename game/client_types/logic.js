@@ -654,6 +654,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 'age',
                 'race',
                 'interactedRace',
+                'student',
                 'education',
                 'eduFocus',
                 'location',

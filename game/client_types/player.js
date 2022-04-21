@@ -573,6 +573,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             this.talk('SURVEY RESULTS RECEIVED')
             this.talk(msg.age);
             this.talk(msg.gender);
+            this.talk(msg.student)
             this.talk(msg.education);
             this.talk(msg.eduFocus);
             this.talk(msg.race);
@@ -585,6 +586,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 age:msg.age,
                 race:msg.race,
                 interactedRace:msg.interactedRace,
+                student:msg.student,
                 education: msg.education,
                 eduFocus: msg.eduFocus,
                 location:msg.location,
