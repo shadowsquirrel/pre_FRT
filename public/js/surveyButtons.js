@@ -385,7 +385,7 @@ currentEducationDecisionList.forEach(i => {
 
         console.log('education decision: ' + decision.education);
 
-        if(index > 1) {
+        if(index > 2) {
 
             console.log(order.active);
 
