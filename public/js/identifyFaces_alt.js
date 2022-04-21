@@ -28,7 +28,7 @@ picture.correctAnswer = undefined;
 button.answer = undefined;
 
 
-window.onload = function() {
+// window.onload = function() {
 
     var node = parent.node;
 
@@ -52,21 +52,6 @@ window.onload = function() {
     // --------------------------------------------- //
 
     $('#goText').html('START');
-
-    // $('#go').hover(
-    //     function() {
-    //         $('#goText').css({
-    //             'transition':'0.1s',
-    //             'opacity':'1'
-    //         })
-    //     },
-    //     function() {
-    //         $('#goText').css({
-    //             'transition':'0.1s',
-    //             'opacity':'0'
-    //         })
-    //     }
-    // );
 
     go.isClicked = false;
 
@@ -117,9 +102,8 @@ window.onload = function() {
             node.emit('startTimer');
         }, 100)
 
-
-
     }
+
 
     // ---------------------------------------------------- //
     // ----------------  PROGRESS CIRCLE ------------------ //
@@ -157,44 +141,25 @@ window.onload = function() {
 
     }
 
+
     // ---------------------------------------------------- //
-    // ------------------  TIMER HEIST -------------------- //
+    // ------------------      TIMER      ----------------- //
     // ---------------------------------------------------- //
 
-    timer.steal = () => {
+    timer.activeTimeout = undefined;
 
-        var header = parent.document.getElementById('ng_header');
-        var timerDiv = header.children[0];
+    timer.initiate = () => {
 
-        return timerDiv;
+        timer.timerContainer = document.getElementById('myTimer');
+        node.game.visualTimer = node.widgets.append('VisualTimer', timer.timerContainer);
+
+        timer.reformat();
+        node.game.visualTimer.hide();
+
+        helper.timer.mutate.activate();
 
     }
 
-    timer.inject = () => {
-
-        var timerDiv = timer.steal();
-
-        if(timerDiv != undefined) {
-
-            var newTimerDiv = document.getElementById('myTimer');
-
-            newTimerDiv.appendChild(timerDiv);
-
-            timer.reformat();
-
-            helper.timer.mutate.activate();
-
-        } else {
-
-            console.log('timer has already been stolen OR there is no timer to steal');
-
-        }
-
-        timer.show();
-
-    }
-
-    timer.isTimerTextRemoved = false;
     timer.reformat = () => {
 
         var div = document.getElementById('myTimer')
@@ -219,63 +184,56 @@ window.onload = function() {
 
     }
 
-    timer.red = () => {
+    timer.start = () => {
 
-        var myTimerDiv = document.getElementById('myTimerContainer');
-        var style = myTimerDiv.style;
+        timer.show();
 
-        console.log('red');
+        node.game.visualTimer.show();
 
-        style.transition = '1s';
-        style.color = 'red';
-        style.transform = 'scale(3)';
+        node.game.visualTimer.restart({
 
+            milliseconds: 6000,
 
-    }
+            timeup: function() {
+                console.log('TIME UP TIME UP TIME UP TIME UP');
+            }
 
-    timer.black = () => {
+        })
 
-        var myTimerDiv = document.getElementById('myTimerContainer');
-        var style = myTimerDiv.style;
-
-        console.log('black');
-
-
-        style.transition = '1s';
-        // style.color = 'black';
-        style.transform = 'scale(1)';
+        timer.activeTimeout = setTimeout(()=>{
+            timer.timeUp();
+        }, 7500)
 
     }
 
-    timer.warn = () => {
+    timer.stop = () => {
 
-        console.log('inside timer warn');
-
-        var delay = 700;
-
-        timer.red();
-
-        setTimeout(()=>{
-            timer.black();
-        }, delay)
-
-        setTimeout(()=>{
-            timer.red();
-        }, 2 * delay)
-
-        setTimeout(()=>{
-            timer.black();
-        }, 3 * delay)
-
-        setTimeout(()=>{
-            timer.red();
-        }, 4 * delay)
-
-        setTimeout(()=>{
-            timer.black();
-        }, 5 * delay)
+        node.game.visualTimer.gameTimer.pause();
+        node.game.visualTimer.hide();
+        clearTimeout(timer.activeTimeout);
 
     }
+
+    timer.timeUp = () => {
+
+        node.game.visualTimer.hide();
+        timer.hide();
+
+        if(!button.isClicked) {
+
+            console.log('no answer is given');
+
+            // for labeling/understanding the binary code
+            var noAnswer = -2;
+            var timeIsUp = true;
+
+            button.answer = noAnswer;
+            button.click(timeIsUp);
+
+        }
+
+    }
+
 
     // ---------------------------------------------------- //
     // -----------------  TIMER MUTATION  ----------------- //
@@ -293,8 +251,8 @@ window.onload = function() {
 
     helper.timer.mutate.mutate = (mutationsList, observer) => {
 
-        console.log('observation process begun');
-        console.log(mutationsList);
+        // console.log('observation process begun');
+        // console.log(mutationsList);
 
         var mutation, addedDiv, addedText;
 
@@ -305,12 +263,12 @@ window.onload = function() {
 
             if (mutation.type === 'childList') {
 
-                console.log('mutation detected');
+                // console.log('mutation detected');
                 addedDiv = mutation.addedNodes;
                 addedText = addedDiv[0].data.charAt(4);
-                console.log(addedDiv);
-                console.log(addedText);
-                console.log(typeof(addedText));
+                // console.log(addedDiv);
+                // console.log(addedText);
+                // console.log(typeof(addedText));
                 addedDiv[0].data = addedText;
 
             }
@@ -323,7 +281,7 @@ window.onload = function() {
 
     helper.timer.mutate.activate = () => {
 
-        console.log('activation begun');
+        // console.log('activation begun');
         helper.timer.mutate.initiateParam();
         helper.timer.mutate.observer.observe(helper.timer.mutate.target, helper.timer.mutate.config);
 
@@ -395,6 +353,7 @@ window.onload = function() {
         })
 
     }
+
 
     // ---------------------------------------------------- //
     // -------------  TRANSITION BETWEEN STEPS ------------ //
@@ -545,7 +504,8 @@ window.onload = function() {
         setTimeout(()=>{
             $('#lB, #rB').css({
                 'transition':'0.1s',
-                'opacity':'1'})
+                'opacity':'1'
+            })
         }, 10)
 
         console.log('');
@@ -564,7 +524,8 @@ window.onload = function() {
             button.isClicked = true;
 
             // stop server timer
-            node.emit('stopTime');
+            // node.emit('stopTime');
+            timer.stop();
 
             // hide unpicked button or buttons
             button.hide(button.answer);
@@ -642,7 +603,7 @@ window.onload = function() {
 
         go.hide();
 
-        timer.inject();
+        timer.start();
 
     })
 
@@ -661,35 +622,6 @@ window.onload = function() {
         var samePerson = 1;
         button.answer = samePerson;
         button.click();
-
-    })
-
-    // TIME UP SETUP CAN BE DIFFERENT THEN ANSWERING THE QUESTION WHERE
-    // WE DO NOT ASK THE CONFIDENCE QUESTION
-    node.on('timeUp', function() {
-
-        // console.log('time is up!');
-
-        // timer.warn();
-
-        setTimeout(()=>{
-
-            timer.hide();
-
-            if(!button.isClicked) {
-
-                console.log('no answer is given');
-
-                // for labeling/understanding the binary code
-                var noAnswer = -2;
-                var timeIsUp = true;
-
-                button.answer = noAnswer;
-                button.click(timeIsUp);
-
-            }
-
-        }, 2000)
 
     })
 
@@ -768,10 +700,6 @@ window.onload = function() {
 
         console.log('');
         console.log('');
-        console.log('');
-        console.log('');
-        console.log('');
-        console.log('');
         console.log('FIRST PICTURE RECEIVED');
 
         console.log('INDEX: ' + msg.index);
@@ -780,10 +708,7 @@ window.onload = function() {
         console.log('TOTAL: ' + msg.total);
         console.log('');
         console.log('');
-        console.log('');
-        console.log('');
-        console.log('');
-        console.log('');
+
 
         var currentIndex = msg.index;
         var correctAnswer = msg.correctAnswer;
@@ -819,6 +744,12 @@ window.onload = function() {
     button.hide();
     picture.hide();
     confidence.reset();
+
+    // destroy the timer in the header that is used in the tutorial
+    node.game.visualTimer.destroy();
+
+    // construct and initiate the new timer
+    timer.initiate();
 
 
     // ------------ MOUSE TRACKING ----------- //
@@ -914,4 +845,4 @@ window.onload = function() {
     }
 
 
-}
+// }
