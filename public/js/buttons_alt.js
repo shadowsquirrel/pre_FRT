@@ -1,3 +1,10 @@
+var helper = {
+    slider: {},
+    timer: {
+        mutate: {},
+    },
+};
+
 // --------------------------------------- //
 // ------------ A INFO BUTTONS ----------- //
 // --------------------------------------- //
@@ -153,6 +160,62 @@ $('#btn-B-4').click(function() {
 
 });
 
+
+helper.slider.div =  document.getElementById('confidence-slider');
+helper.slider.animateSpeed = 0.5;
+helper.slider.counter = 0;
+helper.slider.cycle = 4;
+helper.slider.animate = (val, direction) => {
+
+    helper.slider.counter++;
+
+    if(helper.slider.counter < ( (10 * helper.slider.cycle) + 2) ) {
+
+        setTimeout(()=>{
+
+            helper.slider.div.value = val;
+            confidence.bar.set(val, 'confidence-bar');
+
+            if(direction === 'right') {
+
+                if(val < 5) {
+                    val++;
+                    helper.slider.animate(val, 'right');
+                    return;
+                }
+
+                if(val > 4) {
+                    val--;
+                    helper.slider.animate(val, 'left');
+                    return;
+                }
+
+            }
+
+            if(direction === 'left') {
+
+                if(val < 5 && val > 0) {
+                    val--;
+                    helper.slider.animate(val, 'left');
+                    return;
+                }
+
+                if(val === 0) {
+                    val++;
+                    helper.slider.animate(val, 'right');
+                    return;
+                }
+
+            }
+
+
+        }, (helper.slider.animateSpeed * 100) );
+
+    }
+
+}
+
+
 $('#btn-B-501').click(function() {
 
     box.updateProgressBar();
@@ -166,6 +229,10 @@ $('#btn-B-501').click(function() {
         'opacity':'1'
     })
 
+    helper.slider.animateSpeed = 1;
+    helper.slider.counter = 0;
+    helper.slider.cycle = 0.3;
+    helper.slider.animate(JSON.parse(helper.slider.div.value), 'right');
 
     box.transition('B-501', 'B-502', 0, 0, 1, 750);
 

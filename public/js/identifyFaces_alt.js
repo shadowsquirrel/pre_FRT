@@ -17,6 +17,11 @@ var progress = {};
 var transitionTo = {};
 var timer = {};
 var help = {};
+var helper = {
+    timer: {
+        mutate: {},
+    },
+};
 
 picture.index = undefined;
 picture.correctAnswer = undefined;
@@ -177,6 +182,8 @@ window.onload = function() {
 
             timer.reformat();
 
+            helper.timer.mutate.activate();
+
         } else {
 
             console.log('timer has already been stolen OR there is no timer to steal');
@@ -211,6 +218,117 @@ window.onload = function() {
         })
 
     }
+
+    timer.red = () => {
+
+        var myTimerDiv = document.getElementById('myTimerContainer');
+        var style = myTimerDiv.style;
+
+        console.log('red');
+
+        style.transition = '1s';
+        style.color = 'red';
+        style.transform = 'scale(3)';
+
+
+    }
+
+    timer.black = () => {
+
+        var myTimerDiv = document.getElementById('myTimerContainer');
+        var style = myTimerDiv.style;
+
+        console.log('black');
+
+
+        style.transition = '1s';
+        // style.color = 'black';
+        style.transform = 'scale(1)';
+
+    }
+
+    timer.warn = () => {
+
+        console.log('inside timer warn');
+
+        var delay = 700;
+
+        timer.red();
+
+        setTimeout(()=>{
+            timer.black();
+        }, delay)
+
+        setTimeout(()=>{
+            timer.red();
+        }, 2 * delay)
+
+        setTimeout(()=>{
+            timer.black();
+        }, 3 * delay)
+
+        setTimeout(()=>{
+            timer.red();
+        }, 4 * delay)
+
+        setTimeout(()=>{
+            timer.black();
+        }, 5 * delay)
+
+    }
+
+    // ---------------------------------------------------- //
+    // -----------------  TIMER MUTATION  ----------------- //
+    // ---------------------------------------------------- //
+
+    helper.timer.mutate.initiateParam = () => {
+
+        helper.timer.mutate.target = document.getElementById('myTimer').children[0].children[1].children[0];
+        helper.timer.mutate.config = { attributes: true, childList: true, subtree: true };
+
+        console.log('target found');
+        console.log(helper.timer.mutate.target);
+
+    }
+
+    helper.timer.mutate.mutate = (mutationsList, observer) => {
+
+        console.log('observation process begun');
+        console.log(mutationsList);
+
+        var mutation, addedDiv, addedText;
+
+        // Use traditional 'for loops' for IE 11
+        for(var i = 0; i < mutationsList.length; i++) {
+
+            mutation = mutationsList[i];
+
+            if (mutation.type === 'childList') {
+
+                console.log('mutation detected');
+                addedDiv = mutation.addedNodes;
+                addedText = addedDiv[0].data.charAt(4);
+                console.log(addedDiv);
+                console.log(addedText);
+                console.log(typeof(addedText));
+                addedDiv[0].data = addedText;
+
+            }
+
+        }
+
+    }
+
+    helper.timer.mutate.observer = new MutationObserver(helper.timer.mutate.mutate);
+
+    helper.timer.mutate.activate = () => {
+
+        console.log('activation begun');
+        helper.timer.mutate.initiateParam();
+        helper.timer.mutate.observer.observe(helper.timer.mutate.target, helper.timer.mutate.config);
+
+    }
+
 
     // ---------------------------------------------------- //
     // ----------------  PICTURE HELPERS ------------------ //
@@ -550,9 +668,13 @@ window.onload = function() {
     // WE DO NOT ASK THE CONFIDENCE QUESTION
     node.on('timeUp', function() {
 
-        timer.hide();
+        // console.log('time is up!');
+
+        // timer.warn();
 
         setTimeout(()=>{
+
+            timer.hide();
 
             if(!button.isClicked) {
 
@@ -790,5 +912,6 @@ window.onload = function() {
         return mtData;
 
     }
+
 
 }

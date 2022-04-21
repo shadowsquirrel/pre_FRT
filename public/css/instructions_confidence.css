@@ -3,6 +3,7 @@
     display:none;
     transform-origin: top;
     transform: scale(0.6);
+    justify-content: center;
 }
 .main-column
 {
@@ -19,10 +20,7 @@
 }
 .main-main
 {
-    /* width:500px;
-    height:700px;
-    text-align:center;
-    font-size:40px; */
+
 }
 
 /* PARENT CONTAINER */
@@ -31,7 +29,6 @@
     opacity:1;
     transition: 0.5s;
     text-align: center;
-
 }
 
 
@@ -41,6 +38,8 @@
     font-weight: 100;
     font-size: 40px;
     margin-bottom:5%;
+    margin-top:3%;
+    width:900px;
 }
 .confidence-text-container-bottom
 {

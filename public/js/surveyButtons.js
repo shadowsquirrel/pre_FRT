@@ -1,3 +1,4 @@
+// ------------------------------------------------------ //
 
 var takeOut = (arr, elt) => {
 
@@ -10,6 +11,7 @@ var takeOut = (arr, elt) => {
 
 }
 
+// ------------------------------------------------------ //
 
 // gender buttons
 let genderDecisionList = ['female', 'male', 'diverse'];
@@ -33,6 +35,8 @@ genderDecisionList.forEach(i => {
     });
 
 });
+
+// ------------------------------------------------------ //
 
 // age buttons
 let ageDecisionList = [
@@ -59,6 +63,7 @@ ageDecisionList.forEach(i => {
 
 });
 
+// ------------------------------------------------------ //
 
 // location buttons
 let locationDecisionList = [
@@ -85,6 +90,7 @@ locationDecisionList.forEach(i => {
 
 });
 
+// ------------------------------------------------------ //
 
 // race buttons
 // let raceDecisionList = [
@@ -121,6 +127,8 @@ raceDecisionList.forEach(i => {
     });
 
 });
+
+// ------------------------------------------------------ //
 
 let interactedRaceDecisionList = [
     'white2', //'White / Caucasian',
@@ -239,7 +247,7 @@ $('#interactRace-submit-button').click(()=>{
 
 })
 
-
+// ------------------------------------------------------ //
 
 let studentDecisionList = [
     'yesStudent',
@@ -302,7 +310,6 @@ studentDecisionList.forEach(i => {
 
             console.log(order.active);
 
-            // decision.currentEducation = -1;
         }
 
         question.next();
@@ -311,6 +318,7 @@ studentDecisionList.forEach(i => {
 
 });
 
+// ------------------------------------------------------ //
 
 let educationDecisionList = [
     'elementary',
@@ -362,6 +370,8 @@ educationDecisionList.forEach(i => {
 
 });
 
+// ------------------------------------------------------ //
+
 let currentEducationDecisionList = [
     'highSchool2',
     'vocational2',
@@ -412,6 +422,8 @@ currentEducationDecisionList.forEach(i => {
     });
 
 });
+
+// ------------------------------------------------------ //
 
 let eduFocusDecisionList = [
     'natural',

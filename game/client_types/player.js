@@ -349,9 +349,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
                 timeup: function() {
 
-                    node.game.visualTimer.hide();
-
                     node.emit('timeUp');
+                    setTimeout(()=>{
+                        node.game.visualTimer.hide();
+                    }, 2000)
 
                 }
 
@@ -582,11 +583,11 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             this.talk('----------------')
 
             node.done({
-                gender:msg.gender,
-                age:msg.age,
-                race:msg.race,
-                interactedRace:msg.interactedRace,
-                student:msg.student,
+                gender: msg.gender,
+                age: msg.age,
+                race: msg.race,
+                interactedRace: msg.interactedRace,
+                student: msg.student,
                 education: msg.education,
                 eduFocus: msg.eduFocus,
                 location:msg.location,

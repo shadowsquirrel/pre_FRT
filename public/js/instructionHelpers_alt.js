@@ -10,7 +10,9 @@ var go = {};
 var tuto = {};
 var listener = {};
 var timer = {};
-var myTimer = {};
+var myTimer = {
+    mutate: {},
+};
 var bbox = {};
 
 
@@ -28,7 +30,7 @@ window.onload = function() {
 
     var node = parent.node;
 
-    box.global.NoB = 31;
+    box.global.NoB = 30;
 
     // --------------- //
 
@@ -93,6 +95,8 @@ window.onload = function() {
             newTimerDiv.appendChild(timerDiv);
 
             myTimer.reformat();
+
+            helper.timer.mutate.activate();
 
         } else {
 
@@ -208,7 +212,7 @@ window.onload = function() {
     // --------  GO  --------- //
     // ----------------------- //
 
-    $('#go').html('START');
+    // $('#go').html('START');
 
     go.show = function(delay) {
 
@@ -228,7 +232,8 @@ window.onload = function() {
 
     go.setText = function(text) {
 
-        $('#go').html(text);
+        // $('#go').html(text);
+
 
     }
 
@@ -446,6 +451,12 @@ window.onload = function() {
 
         // show the next information box
         box.transition('B-5', 'B-501', 0, 0, 1, 0);
+        setTimeout(()=>{
+            helper.slider.animateSpeed = 1;
+            helper.slider.counter = 0;
+            helper.slider.cycle = 2.9;
+            helper.slider.animate(JSON.parse(helper.slider.div.value), 'right');
+        }, 1000)
 
         listener.deactivateChoiceButtons = true;
 
@@ -1442,26 +1453,61 @@ window.onload = function() {
 
     });
 
+    listener.c1 = false;
     $('#btn-B-7').click(function() {
+
+        // box.updateProgressBar();
+        //
+        // console.log('NODE.EMIT(SHOWTUTOTIMER)');
+        // node.emit('showTutoTimer');
+        //
+        // // as a reminder
+        // button.active = false;
+        //
+        // box.transition('B-7', 'B-8', 0, 0, 1, 750);
+        //
+        // setTimeout(()=>{
+        //     box.button.show('B-8');
+        // }, 2750)
 
         box.updateProgressBar();
 
-        console.log('NODE.EMIT(SHOWTUTOTIMER)');
-        node.emit('showTutoTimer');
+        console.log('NODE.EMIT(HIDETUTOTIMER)');
+        node.emit('hideTutoTimer');
+
+        box.transition('B-7', '', 0, 0, 1, 0);
+        $('.frame-A').css({'margin-top':'-50px'});
 
         // as a reminder
         button.active = false;
+        listener.deactivateChoiceButtons = false;
 
-        box.transition('B-7', 'B-8', 0, 0, 1, 750);
+        button.hide();
 
         setTimeout(()=>{
-            box.button.show('B-8');
-        }, 2750)
+            // close the introduction info box container
+            $('#boxbox-B').css({'transition':'0.3s','margin-bottom':'-20px'});
+            setTimeout(()=>{
+                $('#boxbox-B').css({'display':'none'});
+                $('#boxbox-C').css({'display':'block'});
+                $('.frame-C').css({'transition':'0s', 'display':'block', 'opacity':'0'});
+            }, 300);
+        }, 500)
+
+        // $('#go').html('START');
+        setTimeout(()=>{
+            go.show(1);
+        }, 1000)
+
+        setTimeout(()=>{
+            listener.c1 = true;
+            box.transition('', 'C-1', 0, 0, 1, 0);
+        }, 800)
 
     });
 
 
-    listener.c1 = false;
+    // SKIPPED
     $('#btn-B-8').click(function() {
 
         box.updateProgressBar();
@@ -1488,7 +1534,7 @@ window.onload = function() {
             }, 300);
         }, 500)
 
-        $('#go').html('START');
+        // $('#go').html('START');
         setTimeout(()=>{
             go.show(1);
         }, 1000)
@@ -1515,7 +1561,7 @@ window.onload = function() {
             box.transition('', 'C-8', 1, 1, 1, 750);
         }, 100)
 
-        $('.frame-A').css({'transition':'1s', 'margin-top':'-230px'});
+        $('.frame-A').css({'transition':'1s', 'margin-top':'-170px'});
 
         setTimeout(()=>{
             box.button.show('C-7');
@@ -1573,6 +1619,58 @@ window.onload = function() {
     setTimeout(()=>{
         box.button.show2('A-1');
     }, 2000)
+
+
+    // --------------- //
+
+
+    helper.timer.mutate.initiateParam = () => {
+
+        helper.timer.mutate.target = document.getElementById('myTimer').children[0].children[1].children[0];
+        helper.timer.mutate.config = { attributes: true, childList: true, subtree: true };
+
+        console.log('target found');
+        console.log(helper.timer.mutate.target);
+
+    }
+
+    helper.timer.mutate.mutate = (mutationsList, observer) => {
+
+        console.log('observation process begun');
+        console.log(mutationsList);
+
+        var mutation, addedDiv, addedText;
+
+        // Use traditional 'for loops' for IE 11
+        for(var i = 0; i < mutationsList.length; i++) {
+
+            mutation = mutationsList[i];
+
+            if (mutation.type === 'childList') {
+
+                console.log('mutation detected');
+                addedDiv = mutation.addedNodes;
+                addedText = addedDiv[0].data.charAt(4);
+                console.log(addedDiv);
+                console.log(addedText);
+                console.log(typeof(addedText));
+                addedDiv[0].data = addedText;
+
+            }
+
+        }
+
+    }
+
+    helper.timer.mutate.observer = new MutationObserver(helper.timer.mutate.mutate);
+
+    helper.timer.mutate.activate = () => {
+
+        console.log('activation begun');
+        helper.timer.mutate.initiateParam();
+        helper.timer.mutate.observer.observe(helper.timer.mutate.target, helper.timer.mutate.config);
+
+    }
 
 
 }

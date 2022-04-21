@@ -34,7 +34,9 @@
 {
     font-weight: 100;
     font-size: 40px;
-    margin-bottom:5%;
+    margin-top:5%;
+    margin-bottom:3%;
+    width:900px;
 }
 .confidence-text-container-bottom
 {
@@ -143,11 +145,12 @@
 }
 .confidence-min-text
 {
-    margin-left: 15px;
+    margin-left: 27px;
     width:135px;
 }
 .confidence-max-text
 {
+    margin-right:7px;
     width:100px;
 }
 

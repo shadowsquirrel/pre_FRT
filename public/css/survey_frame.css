@@ -21,7 +21,8 @@
     text-align: center;
     box-shadow: 0px 1px 2px black;
     border-radius: 200px;
-    background: #b9a3b9;
+    /* background: #b9a3b9; */
+    background-color: burlywood;
     color: white;
     font-size: 30px;
     font-weight: 100;
@@ -142,7 +143,8 @@
     text-align: center;
     box-shadow: 0px 1px 2px black;
     border-radius: 200px;
-    background: #b9a3b9;
+    /* background: #b9a3b9; */
+    background-color: burlywood;
     color: white;
 }
 .button-submit:hover
