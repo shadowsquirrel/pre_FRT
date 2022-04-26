@@ -370,7 +370,7 @@ module.exports = {
      *
      * Default: { title: 'Welcome!', addToBody: true }
      */
-    // PAGE_TITLE: { title: 'Welcome!', addToBody: true },
+    PAGE_TITLE: { title: 'Yo yo yo!', addToBody: true },
 
     /** ### TEXTS
      *
@@ -489,6 +489,6 @@ module.exports = {
      *
      * A button is added to the interface.
      */
-    ALLOW_SELECT_TREATMENT: false
+    ALLOW_SELECT_TREATMENT: true
 
 };

@@ -26,7 +26,7 @@ module.exports = function(stager, settings) {
     .gameover();
 
     // Modify the stager to skip one stage.
-    stager.skip('instructions');
+    // stager.skip('instructions');
     // stager.skip('identifyFaces');
     // stager.skip('survey2');
     // stager.skip('results');

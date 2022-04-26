@@ -83,7 +83,6 @@ button.answer = undefined;
 
         }
 
-
         // hide the go button
         $('.frame-C').css({'transition':'0.1s',
         'opacity':'0', 'z-index':'0'});
@@ -438,6 +437,7 @@ button.answer = undefined;
 
     }
 
+
     // ----------------------------------------------------- //
     // -------------- MATCH / NO MATCH HELPERS ------------- //
     // ----------------------------------------------------- //
@@ -625,6 +625,7 @@ button.answer = undefined;
 
     })
 
+
     // ---------------------------------------------- //
     // ------- MATCH/NO MATCH BUTTONS HOVERS -------- //
     // ---------------------------------------------- //
@@ -736,7 +737,6 @@ button.answer = undefined;
     node.emit('HTML-requestFirstIndex');
 
 
-
     // ----------------------------- //
     // ------- INTIAL SETUP -------- //
     // ----------------------------- //
@@ -752,9 +752,9 @@ button.answer = undefined;
     timer.initiate();
 
 
+    // --------------------------------------- //
     // ------------ MOUSE TRACKING ----------- //
-
-    // TO DO: CREATE OBJECT AND ORGANIZE EVERYTHING WITHIN
+    // --------------------------------------- //
 
     var x = [];
     var y = [];
