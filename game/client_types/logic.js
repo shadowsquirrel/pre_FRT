@@ -176,12 +176,21 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         // debug
         node.game.dataSession = 1;
+        node.game.space(2);
+        node.game.talk('NODE.GAME.TREATMENTNAME: ' + node.game.settings.treatmentName);
+        node.game.talk('node.game.settings.dataSession: ' + node.game.settings.dataSession);
+        node.game.space(2);
+
+        node.game.dataSession = node.game.settings.dataSession;
+
 
         // ---- SESSION 1 ---- //
         //
         // total 32
         //
         if(node.game.dataSession === 1) {
+
+            node.game.talk('DATA SESSION - 1');
 
             node.game.pairIndexList = [
                 1,4,7,10,11,17,20,26,28,31,35,39,40,43,46,49,52,55,58,61,64,67,70,98,73,76,79,82,85,88,91,94
@@ -199,6 +208,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // total 32
         //
         if(node.game.dataSession === 2) {
+
+            node.game.talk('DATA SESSION - 2');
+
             node.game.pairIndexList = [
                 2,5,8,13,14,16,21,23,25,30, 36,38,  41,44,47,50,53,56,59, 62,65,68,96,  71,74,77,80,83, 86,89,92,95
             //  1,1,1, 0,0,0,0,       1,1,1,    0,0,    1,1,1,1,1,1,1,        0,0,0,0,      1,1,1,1,1,      0,0,0,0
@@ -213,6 +225,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // total 31
         //
         if(node.game.dataSession === 3) {
+
+            node.game.talk('DATA SESSION - 3');
+
             node.game.pairIndexList = [
                 3,6,9,12,16,18,22,27,29,33,34,37,42,45,48,51,54,57,60,63,66,69,97,72,75,78,81,84,87,90,93
             //  1,1,1, 0,0,0,     1,1,1,    0,0,0,     1,1,1,1,1,1,       0,0,0,0,0,       1,1,1,1,     0,0,0,0
@@ -248,6 +263,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             if(player.listsGenerated === undefined) {
 
                 player.listsGenerated = true;
+
+                player.dataSession = node.game.settings.dataSession;
 
                 this.talk('INITIATING PLAYER\'S LISTS');
 
@@ -309,6 +326,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
 
             // debug
+            this.talk('player data session');
+            this.talk(player.dataSession);
             this.talk('node.game.pairIndexList');
             console.log(node.game.pairIndexList);
             this.talk('player shuffled Index list');
@@ -723,6 +742,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             node.game.talk(player.shuffled.correctAnswerList);
             node.game.talk(' -- Random Number -- ');
             node.game.talk(player.randomNumber);
+            node.game.talk('-- node.game.settings.dataSession --');
+            node.game.talk(node.game.settings.dataSession);
             node.game.space(2)
 
         }
@@ -752,6 +773,11 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             node.game.talk('e.g. recontsOpts.plot.frame = xx.htm given ' + player.disconnectedStage.stage
             + 'for the stage disconnected')
             console.log(reconOpts);
+
+            node.game.space(2);
+            node.game.talk('NODE.GAME.TREATMENTNAME: ' + node.game.settings.treatmentName);
+            node.game.talk('node.game.settings.dataSession: ' + node.game.settings.dataSession);
+            node.game.space(2);
 
             // test stage
             // if(player.disconnectedStage.stage === 2) {

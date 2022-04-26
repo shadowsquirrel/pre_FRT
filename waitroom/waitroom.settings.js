@@ -96,22 +96,26 @@ module.exports = {
      *           return treatments[dispatchCounter % treatments.length];
      *       }
      */
-    CHOSEN_TREATMENT: function(treatments, roomCounter,
-                               groupIdx, dispatchCounter) {
+    // CHOSEN_TREATMENT: function(treatments, roomCounter,
+    //                            groupIdx, dispatchCounter) {
+    //
+    //     // - treatments: array of available treatments.
+    //     // - roomCounter: total number of room created (it is initialized to
+    //     //                the last created room as loaded in the data folder).
+    //     // - groupIdx: zero-based group index within same dispatch
+    //     //             (when POOL_SIZE > GROUP_SIZE).
+    //     // - dispatchCounter: total number of dispatch calls (a dispatch can
+    //     //                    send players to an existing room, so it may
+    //     //                    differ from roomCounter).
+    //
+    //     console.log('GREETINGS FROM WAITROOM.SETTINGS.JS');
+    //     console.log(treatments, roomCounter, dispatchCounter, dispatchCounter);
+    //     console.log('You will receive treatment :' + treatments[roomCounter % treatments.length]);
+    //
+    //     return treatments[roomCounter % treatments.length];
+    // },
 
-        // - treatments: array of available treatments.
-        // - roomCounter: total number of room created (it is initialized to
-        //                the last created room as loaded in the data folder).
-        // - groupIdx: zero-based group index within same dispatch
-        //             (when POOL_SIZE > GROUP_SIZE).
-        // - dispatchCounter: total number of dispatch calls (a dispatch can
-        //                    send players to an existing room, so it may
-        //                    differ from roomCounter).
-
-        // console.log(roomCounter, batchCounter, dispatchCounter);
-
-        return treatments[roomCounter % treatments.length];
-    },
+    CHOSEN_TREATMENT: 'treatment_random',
 
     /**
     * ## ROTATION_OFFSET (integer > 0) Optional
@@ -370,7 +374,7 @@ module.exports = {
      *
      * Default: { title: 'Welcome!', addToBody: true }
      */
-    PAGE_TITLE: { title: 'Yo yo yo!', addToBody: true },
+    PAGE_TITLE: { title: 'Hi Face!', addToBody: true },
 
     /** ### TEXTS
      *
@@ -479,7 +483,7 @@ module.exports = {
      *
      * A button is added to the interface.
      */
-    ALLOW_PLAY_WITH_BOTS: false,
+    ALLOW_PLAY_WITH_BOTS: true,
 
     /** ### ALLOW_SELECT_TREATMENT
      *
@@ -489,6 +493,6 @@ module.exports = {
      *
      * A button is added to the interface.
      */
-    ALLOW_SELECT_TREATMENT: true
+    ALLOW_SELECT_TREATMENT: true,
 
 };

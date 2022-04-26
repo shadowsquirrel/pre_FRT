@@ -18,16 +18,32 @@ module.exports = {
 
     // Variables shared by all treatments.
 
-    // #nodeGame properties:
+    // # Treatments definition.
 
-    /**
-     * ### TIMER (object) [nodegame-property]
-     *
-     * Maps the names of the steps of the game to timer durations
-     *
-     * If a step name is found here, then the value of the property is
-     * used to initialize the game timer for the step.
-     */
+    // They can contain any number of properties, and also overwrite
+    // those defined above.
 
-     
+    // If the `treatments` object is missing a treatment named _standard_
+    // will be created automatically, and will contain all variables.
+
+    treatments: {
+
+        a: {
+            description: "Batch - 1",
+            dataSession:1
+        },
+
+        b: {
+            description: "Batch - 2",
+            dataSession:2
+        },
+
+        c: {
+            description: "Batch - 3",
+            dataSession:3
+        }
+
+    }
+
+
 };
