@@ -22,10 +22,10 @@ module.exports = function(stager, settings) {
 
     // Modify the stager to skip one stage.
     stager.skip([
-        // 'instructions',
-        // 'identifyFaces',
-        // 'survey2',
-        // 'survey1',
+        'instructions',
+        'identifyFaces',
+        'survey2',
+        'survey1',
         // 'results',
         // 'end'
     ]);

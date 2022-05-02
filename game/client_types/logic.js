@@ -1050,8 +1050,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         })
 
         // Feedback.
-        memory.view('feedback').save('feedback.csv', {
-            header: ['player', 'feedback' ],
+        memory.view('myFeedback').save('myFeedback.csv', {
+            header: ['player', 'myFeedback' ],
             keepUpdated: true
         });
 

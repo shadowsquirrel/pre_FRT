@@ -51,3 +51,60 @@
     position: absolute;
     margin-top: 14px;
 }
+.introFeedback
+{
+    font-weight: 100;
+    font-size: 21px;
+    text-align: left;
+    padding-left: 10%;
+}
+.bottomSection
+{
+    opacity:0;
+    transition:1s;
+}
+.blocker
+{
+    position:absolute;
+    z-index:-10;
+    height: 222px;
+    width: 900px;
+}
+.feedbackFormWrap
+{
+    margin-top:0px;
+}
+.feedbackForm
+{
+    font-size:20px;
+    background-color:aliceblue;
+}
+.buttonWrap
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+.feedbackButton
+{
+    width: 127px;
+    transition: 0.1s;
+    font-size: 26px;
+    color: black;
+    font-weight: 400;
+    cursor: pointer;
+    border-radius: 40px;
+    padding-right: 20px;
+    padding-left: 20px;
+    box-shadow: 0 2px 3px 2px black;
+}
+.feedbackButton:hover
+{
+    background-color:darkgoldenrod;
+    color:white;
+}
+.feedbackButton:active
+{
+    transform:translateY(1px);
+    box-shadow:0 1px 2px 1px black;
+}
