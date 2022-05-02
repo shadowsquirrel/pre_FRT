@@ -205,6 +205,13 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             node.game.talk('RECORD TUTO TIME triggered from the html side. ' +
             'TIME LEFT: ' + timeLeft + ' TIME SPENT: ' + timeSpent);
 
+            var playerData = {
+                section: 'tutorial',
+                duration: timeSpent,
+            }
+
+            node.say('updatePlayerTime', 'SERVER', playerData);
+
             node.set({
                 dataType:'time',
                 tutoTime:timeSpent,
@@ -244,6 +251,13 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
             node.game.talk('RECORD EXP TIME triggered from the html side. ' +
             'TIME LEFT: ' + timeLeft + ' TIME SPENT: ' + timeSpent);
+
+            var playerData = {
+                section: 'experiment',
+                duration: timeSpent,
+            }
+
+            node.say('updatePlayerTime', 'SERVER', playerData);
 
             node.set({
                 dataType:'time',
@@ -287,6 +301,13 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             node.game.talk('RECORD SURVEY TIME triggered from the html side. ' +
             'TIME LEFT: ' + timeLeft + ' TIME SPENT: ' + timeSpent);
 
+            var playerData = {
+                section: 'survey1',
+                duration: timeSpent,
+            }
+
+            node.say('updatePlayerTime', 'SERVER', playerData);
+
             node.set({
                 dataType:'time',
                 surveyTime:timeSpent,
@@ -328,6 +349,13 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
             node.game.talk('RECORD SURVEY 2 TIME triggered from the html side. ' +
             'TIME LEFT: ' + timeLeft + ' TIME SPENT: ' + timeSpent);
+
+            var playerData = {
+                section: 'survey2',
+                duration: timeSpent,
+            }
+
+            node.say('updatePlayerTime', 'SERVER', playerData);
 
             node.set({
                 dataType:'time',
@@ -394,6 +422,21 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // receives the first picture from LOGIC and sends it to HTML
         node.on.data('LOGIC-firstPicture', function(msg) {
 
+            node.game.talk('');
+            node.game.talk('inside LOGIC-firstPicture')
+            node.game.talk('');
+            node.game.talk('Data RECEIVED')
+            node.game.talk('index: ' + msg.data.listIndex);
+            node.game.talk('id: ' + msg.data.pairList[msg.data.listIndex].id);
+            node.game.talk('race: ' + msg.data.pairList[msg.data.listIndex].race);
+            node.game.talk('gender: ' + msg.data.pairList[msg.data.listIndex].gender);
+            node.game.talk('correct answer: ' + msg.data.pairList[msg.data.listIndex].correctAnswer);
+            node.game.talk('type: ' + msg.data.pairList[msg.data.listIndex].type);
+            node.game.talk('answerGiven: ' + msg.data.pairList[msg.data.listIndex].answerGiven);
+            node.game.talk('isGivenAnswerCorrect: ' + msg.data.pairList[msg.data.listIndex].isGivenAnswerCorrect);
+            node.game.talk('confidence: ' + msg.data.pairList[msg.data.listIndex].confidence);
+            node.game.talk('');
+
             if(msg.data.listIndex > 0) {
 
                 node.game.talk(' --- PLAYER DISCONNECTED AND RECONNECTED, REQUESTING THE LAST PICTURE ---')
@@ -404,13 +447,11 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
             }
 
-            node.game.talk('PLAYER PAIR INDEX LIST INDEX: ' + msg.data.listIndex)
-            node.game.talk('INDEX RECEIVED: ' + msg.data.index)
-
-
-
             var myData = msg.data;
 
+            node.game.talk('');
+            node.game.talk('SENDING data to browser')
+            node.game.talk('');
             node.emit('firstPicture-HTML', myData);
 
         })
@@ -418,15 +459,26 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // receives the next picture from LOGIC and sends it to HTML
         node.on.data('LOGIC-nextPicture', function(msg) {
 
+            node.game.talk('');
             node.game.talk('inside LOGIC-nextPicture')
-
+            node.game.talk('');
             node.game.talk('Data RECEIVED')
-            node.game.talk(msg.data.listIndex);
-            node.game.talk(msg.data.index);
+            node.game.talk('index: ' + msg.data.listIndex);
+            node.game.talk('id: ' + msg.data.pairList[msg.data.listIndex].id);
+            node.game.talk('race: ' + msg.data.pairList[msg.data.listIndex].race);
+            node.game.talk('gender: ' + msg.data.pairList[msg.data.listIndex].gender);
+            node.game.talk('correct answer: ' + msg.data.pairList[msg.data.listIndex].correctAnswer);
+            node.game.talk('type: ' + msg.data.pairList[msg.data.listIndex].type);
+            node.game.talk('answerGiven: ' + msg.data.pairList[msg.data.listIndex].answerGiven);
+            node.game.talk('isGivenAnswerCorrect: ' + msg.data.pairList[msg.data.listIndex].isGivenAnswerCorrect);
+            node.game.talk('confidence: ' + msg.data.pairList[msg.data.listIndex].confidence);
+            node.game.talk('');
 
             var myData = msg.data;
 
-            node.game.talk('Data SENT to browser')
+            node.game.talk('');
+            node.game.talk('SENDING data to browser')
+            node.game.talk('');
             node.emit('nextPicture-HTML', myData);
 
         })
@@ -453,16 +505,52 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // at any time by CLIENT upon reqiest to be saved to memory or for something else
         node.on.data('LOGIC-results', function(msg) {
 
-            let score = msg.data;
+            let score = msg.data.score;
 
-            node.emit('results-HTML', score);
+            node.game.talk('');
+            node.game.talk('Payment data received from LOGIC');
+            node.game.talk('base payment: ' + msg.data.pPay);
+            node.game.talk('bonus payment: ' + msg.data.bPay);
+            node.game.talk('total payment: ' + msg.data.tPay);
+            node.game.talk('tutorial time: ' + msg.data.tutoTime);
+            node.game.talk('experiment time: ' + msg.data.expTime);
+            node.game.talk('survey 1 time: ' + msg.data.s1Time);
+            node.game.talk('surve 2 time: ' + msg.data.s2Time);
+            node.game.talk('');
 
+            node.emit('results-HTML', msg.data);
+
+            node.game.talk('SCORE IS BEING RECORDED TO THE MEMORY')
             node.set({
                 score: score
             })
 
+            // node.set({
+            //     playerBonus: msg.data.bPay
+            // })
+
         })
 
+
+        node.on.data('LOGIC-calculateBonus', function(msg) {
+
+            node.game.talk('Payment data is received');
+            node.game.talk('base pay ' + msg.data.base);
+            node.game.talk('bonus pay ' + msg.data.bonus);
+            node.game.talk('total pay ' + msg.data.total);
+            node.game.talk('Is already stored in the memory ' + msg.data.isStoredInMemory)
+
+            if(!msg.data.isStoredInMemory) {
+                node.say('isBonusStored', 'SERVER');
+                node.set({
+                    playerBonus: msg.data.bonus
+                })
+            } else {
+                node.game.talk('WARNING! player bonus is already calculated and stored!')
+            }
+
+
+        })
 
 
         node.on.data('totalNumberOfPairs', (msg) => {
@@ -498,31 +586,42 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         node.on('HTML-answer-CLIENT', (data) => {
 
-
+            this.talk('');
+            this.talk('Receiving Data from Browser');
+            this.talk('');
+            this.talk('-------------')
             this.talk('DATA RECEIVED')
-            this.talk(data.index)
-            this.talk(data.answer)
-            this.talk(data.isCorrect)
+            this.talk('id: ' + data.index)
+            this.talk('race: ' + data.pairObject.race)
+            this.talk('gender: ' + data.pairObject.gender)
+            this.talk('type: ' + data.pairObject.type)
+            this.talk('answer: ' + data.answer)
+            this.talk('confidence: ' + data.confidence)
+            this.talk('is correct? ' + data.isCorrect)
             // this.talk(data.xCoor)
             // this.talk(data.yCoor)
             // this.talk(data.tCoor)
-            this.talk(data.responseTime)
+            this.talk('response time: ' + data.responseTime)
             this.talk('------------')
+            this.talk('')
 
             var xList = node.game.clone(data.xCoor);
             var yList = node.game.clone(data.yCoor);
             var tList = node.game.clone(data.tCoor);
 
-            node.game.someList.push(xList[10])
-            node.game.someList.push(xList[11])
-            node.game.someList.push(xList[23])
-
-            this.talk('HTML-answer-CLIENT')
-            this.talk(node.game.someList);
+            // node.game.someList.push(xList[10])
+            // node.game.someList.push(xList[11])
+            // node.game.someList.push(xList[23])
+            //
+            // this.talk('HTML-answer-CLIENT')
+            // this.talk(node.game.someList);
 
             node.set({
                 dataType: 'evaluation',
                 pairIndex:data.index,
+                pairRace: data.pairObject.race,
+                pairGender: data.pairObject.gender,
+                pairType: data.pairObject.type,
                 answer:data.answer,
                 confidence:data.confidence,
                 correct:data.isCorrect,
@@ -532,9 +631,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 responseTime: data.responseTime,
             })
 
-            node.say('CLIENT-answer-LOGIC', 'SERVER', data.answer);
+            node.say('CLIENT-answer-LOGIC', 'SERVER', data);
 
-            node.game.showMemo('evaluation')
+            // node.game.showMemo('evaluation')
 
         })
 
@@ -566,6 +665,13 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
             node.say('results-LOGIC', 'SERVER');
 
+        })
+
+        // activates logic listener that calculates the score and reports back
+        // to the player where the player listens for a different request for calculated bonus
+        // receiving the bonus it node.set the data into the memory
+        node.on('HTML-calculateBonus', function() {
+            node.say('calculateBonus-LOGIC', 'SERVER');
         })
 
 
@@ -697,12 +803,16 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     });
 
     stager.extendStep('end', {
-        frame:'simpleEnd.htm',
-        // widget: 'EndScreen',
-        // init: function() {
-        //     node.game.visualTimer.destroy();
-        //     node.game.doneButton.destroy();
+
+        // frame: 'newEnd.htm',
+        frame: 'simpleEnd.htm',
+
+        // widget: {
+        //     name: 'EndScreen',
+        //     showEmailForm: false,
+        //     showTotalWin: false,
         // }
+
     });
 
 };

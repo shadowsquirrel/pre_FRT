@@ -186,6 +186,12 @@ confidence.listener.slider.oninput = () => {
 //////////////.
 confidence.data.update = (newData) => {
 
+    console.log('inside confidence.data.update()');
+    console.log(newData);
+    console.log(typeof newData);
+    newData = parseInt(newData);
+    console.log(newData);
+    console.log(typeof newData);
     data.confidence = newData;
 
 }

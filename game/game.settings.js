@@ -26,6 +26,10 @@ module.exports = {
     // If the `treatments` object is missing a treatment named _standard_
     // will be created automatically, and will contain all variables.
 
+    participationPayment: 1.5,
+    bonusRate: 0.15,
+    exitCode: 'XYZ123',
+
     treatments: {
 
         a: {

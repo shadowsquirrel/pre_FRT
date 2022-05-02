@@ -8,17 +8,17 @@ window.onload = function() {
 
     // INTRO ANIMATION
     setTimeout(()=>{
-        $('.frame-C').css({'opacity':'1'});
-    }, 1000)
+        $('.frame-C').css({'transition':'0.5s', 'opacity':'1'});
+    }, 0)
     setTimeout(()=>{
-        $('.frame-C').css({'opacity':'0'});
+        $('.frame-C').css({'transition':'0.5s', 'opacity':'0'});
         setTimeout(()=>{
-            $('.frame-A, .frame-B').css({'opacity':'1'});
+            $('.frame-A, .frame-B').css({'transition':'0.5s', 'opacity':'1'});
             setTimeout(()=>{
                 $('.frame-C').css({'display':'none'});
-            }, 300)
-        }, 750)
-    }, 5000)
+            }, 550)
+        }, 500)
+    }, 2000)
 
     experiment.generate();
 

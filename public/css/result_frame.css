@@ -1,10 +1,14 @@
+.all
+{
+    width:80%;
+}
 .frame-A
 {
-    width:900px;
+    /* width:900px; */
 }
 .frame-A-0
 {
-    height:500px;
+    height:auto;
     justify-content: center;
     display:flex;
     flex-direction: column;
@@ -12,18 +16,58 @@
 }
 .frame-A-0-0
 {
-    display:flex;
+    display: flex;
     flex-direction: row;
-    justify-content: center;
-    margin-bottom:20px;
+    /* justify-content: space-between; */
+    justify-content: space-evenly;
+    margin-bottom: 5%;
+    text-align: left;
 }
 .text
 {
     transition:1s;
     opacity:0;
     font-weight:100;
-    margin-top:125px;
-    font-size:35px;
+    /* margin-top:125px; */
+    font-size:21px;
+}
+.topSection
+{
+    font-size:27px;
+    margin-top:5%;
+    margin-bottom:5%;
+}
+.titleText
+{
+    font-weight: 400;
+    font-size: 24px;
+    text-decoration: underline;
+}
+.generalSection
+{
+
+}
+.paymentSection
+{
+
+}
+.timeSection
+{
+
+}
+.bottomSection
+{
+    margin-top:-15px;
+}
+.beerInfo
+{
+    display: block;
+    margin-top: 0px;
+    font-style: italic;
+    font-size: 15px;
+    text-align: right;
+    padding-right: 55px;
+    opacity:0.7;
 }
 .button
 {
@@ -59,9 +103,9 @@
 }
 .buttonWrap
 {
-    transition:2s;
+    transition:0s;
     opacity:0;
-    margin-top:-25px;
+    margin-top:18px;
     display: flex;
     flex-direction: row;
     justify-content: center;

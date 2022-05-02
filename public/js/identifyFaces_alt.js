@@ -1,5 +1,6 @@
 
 var data = {
+    pairObject: undefined,
     index: undefined,
     answer: undefined,
     isCorrect: undefined,
@@ -659,11 +660,27 @@ button.answer = undefined;
 
     node.on('nextPicture-HTML', function(msg) {
 
-        var currentIndex = msg.index;
-        var correctAnswer = msg.correctAnswer;
+        console.log('');
+        console.log('');
+        console.log('NEXT PICTURE DATA RECEIVED!');
+        console.log('');
+        console.log('pair list index', msg.listIndex);
+        console.log('total number of pairs', msg.pairList.length);
+        console.log('');
+        console.log('ALL PAIRS')
+        console.table(msg.pairList);
+        console.log('');
+        console.log('ACTIVE PAIR');
+        console.table(msg.pairList[msg.listIndex]);
+        console.log('');
+        console.log('');
+
+        data.pairObject = msg.pairList[msg.listIndex];
+
+        var currentIndex = msg.pairList[msg.listIndex].id;
+        var correctAnswer = msg.pairList[msg.listIndex].correctAnswer;
         var currentNumber = msg.listIndex;
-
-
+        var totalNumber = msg.pairList.length;
 
         // set the current picture pair index
         picture.index = currentIndex;
@@ -672,21 +689,10 @@ button.answer = undefined;
         // initially set the answer to no answer
         button.answer = -2;
 
-        // related to mouse tracking
+        // reset parameters related to mouse tracking
         resetSwitches();
 
-        transitionTo.next(currentIndex, currentNumber, msg.total);
-
-        // debug
-        console.log('');
-        console.log('NEW PICTURE RECEIVED');
-        console.log(msg);
-        console.log('INDEX: ' + msg.index);
-        console.log('ANSWER: ' + msg.correctAnswer);
-        console.log('LIST INDEX: ' + msg.listIndex);
-        console.log('TOTAL: ' + msg.total);
-        console.log('');
-
+        transitionTo.next(currentIndex, currentNumber, totalNumber);
 
     })
 
@@ -701,18 +707,27 @@ button.answer = undefined;
 
         console.log('');
         console.log('');
-        console.log('FIRST PICTURE RECEIVED');
-
-        console.log('INDEX: ' + msg.index);
-        console.log('ANSWER: ' + msg.correctAnswer);
-        console.log('NUMBER: ' + msg.listIndex);
-        console.log('TOTAL: ' + msg.total);
+        console.log('FIRST PICTURE DATA RECEIVED!');
+        console.log('');
+        console.log('active pair list index', msg.listIndex);
+        console.log('total number of pairs', msg.pairList.length);
+        console.log('');
+        console.log('ALL PAIRS')
+        console.table(msg.pairList);
+        console.log('');
+        console.log('ACTIVE PAIR');
+        console.table(msg.pairList[msg.listIndex]);
         console.log('');
         console.log('');
 
 
-        var currentIndex = msg.index;
-        var correctAnswer = msg.correctAnswer;
+        data.pairObject = msg.pairList[msg.listIndex];
+
+        var currentIndex = msg.pairList[msg.listIndex].id;
+        var correctAnswer = msg.pairList[msg.listIndex].correctAnswer;
+
+        var currentNumber = msg.listIndex;
+        var totalNumber = msg.pairList.length;
 
         // set the current picture pair index
         picture.index = currentIndex;
@@ -724,10 +739,10 @@ button.answer = undefined;
         // set the first picture
         picture.set(currentIndex);
 
-        // related to mouse tracking
+        // reset parameters related to mouse tracking
         resetSwitches();
 
-        progress.update(msg.listIndex, msg.total);
+        progress.update(currentNumber, totalNumber);
         setTimeout(()=>{
             progress.show();
         }, 200)

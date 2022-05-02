@@ -24,7 +24,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     // Must implement the stages here.
     stager.setOnInit(function() {
 
-
         // ------------------------------------ //
         // -------- SOME DEBUG METHODS -------- //
         // ------------------------------------ //
@@ -101,78 +100,290 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             node.game.showMemory(msg.data);
         })
 
+        // some short cuts
+        var can = {
+            talk: node.game.talk,
+            space: node.game.space,
+            intro: node.game.introFunction,
+        }
+
         // ------------------------- //
         // ------- MAIN DATA ------- //
         // ------------------------- //
 
-        // photo pair index
-        node.game.pairIndexList = [
-            1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30
-            // 0,0,0,1,1,1,0,0,1,1 ,1 ,1 ,0 ,0, 0 ,1 ,1 ,1 ,0 ,0 ,0 ,1 ,1 ,1 ,0 ,1 ,1 ,1 ,0
+        node.game.pairs = {
+            list: undefined,
+            helper: {},
+        };
+
+        var pairs = node.game.pairs;
+        var helper = node.game.pairs.helper;
+
+        // race: 0 white, 1 black
+        // gender: 0 woman, 1 man
+        // correctAnswer: 0 Not a match, 1 match
+        // answerGiven: 0 Not a match, 1 match
+        // isGivenAnswerCorrect: 0 not correct, 1 correct
+        pairs.list = [
+            // black women - false negative (i.e. match)
+            {id:1, race:1, gender:0, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:2, race:1, gender:0, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:3, race:1, gender:0, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:4, race:1, gender:0, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:5, race:1, gender:0, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:6, race:1, gender:0, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:7, race:1, gender:0, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:8, race:1, gender:0, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:9, race:1, gender:0, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:10, race:1, gender:0, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            // black women - false positive (i.e. not a match)
+            {id:11, race:1, gender:0, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:12, race:1, gender:0, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:13, race:1, gender:0, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:14, race:1, gender:0, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:15, race:1, gender:0, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:16, race:1, gender:0, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:17, race:1, gender:0, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:18, race:1, gender:0, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:19, race:1, gender:0, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:20, race:1, gender:0, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:21, race:1, gender:0, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+
+            // black men - false negative (i.e. match)
+            {id:22, race:1, gender:1, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:23, race:1, gender:1, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:25, race:1, gender:1, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:26, race:1, gender:1, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:27, race:1, gender:1, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:28, race:1, gender:1, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:29, race:1, gender:1, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:30, race:1, gender:1, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:31, race:1, gender:1, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            // black men - false positive (i.e. not a match)
+            {id:33, race:1, gender:1, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:34, race:1, gender:1, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:35, race:1, gender:1, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:36, race:1, gender:1, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:37, race:1, gender:1, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:38, race:1, gender:1, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:39, race:1, gender:1, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+
+            // white women - false negative (i.e. match)
+            {id:40, race:0, gender:0, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:41, race:0, gender:0, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:42, race:0, gender:0, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:43, race:0, gender:0, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:44, race:0, gender:0, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:45, race:0, gender:0, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:46, race:0, gender:0, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:47, race:0, gender:0, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:48, race:0, gender:0, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:49, race:0, gender:0, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:50, race:0, gender:0, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:51, race:0, gender:0, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:52, race:0, gender:0, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:53, race:0, gender:0, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:54, race:0, gender:0, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:55, race:0, gender:0, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:56, race:0, gender:0, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:57, race:0, gender:0, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:58, race:0, gender:0, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:59, race:0, gender:0, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            // white women - false positive (i.e. not a match)
+            {id:60, race:0, gender:0, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:61, race:0, gender:0, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:62, race:0, gender:0, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:63, race:0, gender:0, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:64, race:0, gender:0, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:65, race:0, gender:0, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:66, race:0, gender:0, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:67, race:0, gender:0, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:68, race:0, gender:0, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:69, race:0, gender:0, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:70, race:0, gender:0, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:96, race:0, gender:0, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:97, race:0, gender:0, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:98, race:0, gender:0, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+
+            // white men - false negative (i.e. match)
+            {id:71, race:0, gender:1, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:72, race:0, gender:1, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:73, race:0, gender:1, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:74, race:0, gender:1, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:75, race:0, gender:1, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:76, race:0, gender:1, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:77, race:0, gender:1, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:78, race:0, gender:1, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:79, race:0, gender:1, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:80, race:0, gender:1, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:81, race:0, gender:1, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:82, race:0, gender:1, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:83, race:0, gender:1, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            // white men - false positive (i.e. not a match)
+            {id:84, race:0, gender:1, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:85, race:0, gender:1, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:86, race:0, gender:1, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:87, race:0, gender:1, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:88, race:0, gender:1, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:89, race:0, gender:1, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:90, race:0, gender:1, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:91, race:0, gender:1, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:92, race:0, gender:1, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:93, race:0, gender:1, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:94, race:0, gender:1, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:95, race:0, gender:1, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+
+            // famous pairs
+            {id:101, race:0, gender:1, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:102, race:0, gender:1, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:104, race:1, gender:1, correctAnswer:1, type:'False Negative', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+            {id:105, race:0, gender:1, correctAnswer:0, type:'False Positive', answerGiven: undefined, isGivenAnswerCorrect: undefined, confidence: undefined},
+
         ]
 
 
-        // photo answer list
-        node.game.correctAnswerList = [
-            0,0,0,1,1,1,0,0,1,1 ,1 ,1 ,0 ,0, 0 ,1 ,1 ,1 ,0 ,0 ,0 ,1 ,1 ,1 ,0 ,1 ,1 ,1 ,0, 1
-            // 0,1,0,1,0,1,0,1,0,1 ,0 ,1 ,0 ,1, 1, 0 ,1 ,0 ,0 ,1 ,0 ,1 ,0 ,0
-        ]
+        helper.getPairById = (id) => {
+
+            var list = pairs.list;
+
+            for(var i = 0; i < list.length; i++) {
+                if(list[i].id === id) {
+                    return list[i];
+                }
+            }
+
+        }
+
+        helper.getPairByIdGivenPlayer = (id, player) => {
+
+            var list = player.pairList;
+
+            for(var i = 0; i < list.length; i++) {
+                if(list[i].id === id) {
+                    return list[i];
+                }
+            }
+
+        }
+
+        // checks whether a given answer is correct
+        // and updates the respective isGivenAnswerCorrect attribute of the pair object
+        helper.isCorrect = (myPair) => {
+
+            var verdict;
+
+            // var myPair = helper.getPairByIdGivenPlayer(id);
+
+            if(myPair.answerGiven === undefined) {
+                node.game.talk('No answer is given for the pair coded as -1')
+                myPair.isGivenAnswerCorrect = -1;
+                // console.table(myPair);
+                return false
+            } else {
+                node.game.talk('Answer is given checking if correct')
+                verdict = (myPair.answerGiven === myPair.correctAnswer) ? 1 : 0;
+                myPair.isGivenAnswerCorrect = verdict;
+                // console.table(myPair)
+                return true;
+            }
+
+        }
+
+        helper.calculateScore = (player) => {
+
+            var myPairList = player.pairList;
+            var score = 0;
+
+            myPairList.forEach((myPair) => {
+                if(myPair.answerGiven === undefined) {
+                    can.talk('Warning answer is not given for pair ', myPair.id)
+                } else {
+                    if(myPair.isGivenAnswerCorrect === undefined) {
+                        can.talk('Warning answer is not checked!')
+                        helper.isCorrect(myPair)
+                    }
+                    if(myPair.isGivenAnswerCorrect === 1) {
+                        score++;
+                    }
+                }
+            })
+
+            return score;
+
+        }
+
+        // use the node.game.pairIndexList to fetch the pair object in that order
+        // from the node.game.pairs.list pair database
+        helper.generatePlayerPairList = (pairIndexList) => {
+
+            var myPairList = [];
+
+            var pairIdList = pairIndexList;
+
+            pairIdList.forEach((id) => {
+                myPairList.push(helper.getPairById(id));
+            })
+
+            return myPairList;
+
+        }
 
 
-        // --------------------- //
-        // -- main debug data -- //
-        // --------------------- //
+        helper.injectPair = (list, injectionIndex, elementToInject) => {
 
-        node.game.pairIndexList = [
-            1,2,3,4,5,6,7,8,9,10,11,12,13,14,15
-        ]
+            list.splice(injectionIndex, 0, elementToInject);
+
+        }
 
 
-        node.game.correctAnswerList = [
-            0,1,0,1,0,1,0,1,0,1,0,1,0,1,0
-        ]
+        helper.injectFamousPairs = (playerPairList) => {
+
+            var injectIndex, injectedId;
+
+            var injectionIndexList = [0,8,18,29];
+            // debug to be taken out
+            // var injectionIndexList = [0,1,2,3];
+            var injectedEltIdList = J.shuffle([101, 102, 104, 105]);
+
+            injectionIndexList.forEach((element, index) => {
+
+                injectIndex = element;
+                injectedId = injectedEltIdList[index];
+
+                helper.injectPair(playerPairList, injectIndex, injectedId);
+
+            })
+
+        }
+
+
+        helper.forceDebugData = (player, debugList) => {
+            player.pairIndexList = debugList;
+        }
+
+
+        helper.forceDebugDurationData = (player, durationObj) => {
+
+            player.time.tutorial = durationObj.tutorial;
+            player.time.experiment = durationObj.experiment;
+            player.time.survey1 = durationObj.survey1;
+            player.time.survey2 = durationObj.survey2;
+
+            can.talk('WARNING! player time object is forced to be as below');
+            console.table(player.time);
+
+        }
+
+
+        helper.setDataSession = (sessionNumber) => {
+            node.game.dataSession = sessionNumber;
+        }
 
 
         // -------------------------------------- //
         // ----- SESSION SPECIFIC MAIN DATA ----- //
         // -------------------------------------- //
 
-        node.game.injectPair = (arr, i, elt) => {
-
-            arr.splice(i, 0, elt);
-
-        }
-
-        node.game.injectAll = (arrFacePair, arrCorrectAnswer) => {
-
-            console.log(arrFacePair);
-            console.log(arrCorrectAnswer);
-
-            var injectIndex, injectElt, injectCorrectElt;
-
-            var injectionIndexList = [0,8,18,29];
-            var injectedEltIndexList = J.shuffle([101, 102, 104, 105]);
-            // var injectedEltIndexList = [101, 102, 104, 105];
-            var injectedEltIndexAnswer = [1,1,1,1];
-            var someIndex = injectedEltIndexAnswer.indexOf(105);
-            injectedEltIndexAnswer[someIndex] = 0;
-
-
-            injectionIndexList.forEach((elt, index) => {
-
-                injectIndex = elt;
-                injectElt = injectedEltIndexList[index];
-                injectCorrectElt = injectedEltIndexAnswer[index];
-
-                node.game.injectPair(arrFacePair, injectIndex, injectElt);
-                node.game.injectPair(arrCorrectAnswer, injectIndex, injectCorrectElt);
-
-            })
-
-            console.log(arrFacePair);
-            console.log(arrCorrectAnswer);
-
-        }
 
         // debug
         node.game.dataSession = 1;
@@ -181,7 +392,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         node.game.talk('node.game.settings.dataSession: ' + node.game.settings.dataSession);
         node.game.space(2);
 
-        node.game.dataSession = node.game.settings.dataSession;
+        helper.setDataSession(node.game.settings.dataSession);
 
 
         // ---- SESSION 1 ---- //
@@ -193,12 +404,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             node.game.talk('DATA SESSION - 1');
 
             node.game.pairIndexList = [
-                1,4,7,10,11,17,20,26,28,31,35,39,40,43,46,49,52,55,58,61,64,67,70,98,73,76,79,82,85,88,91,94
-             // 1,1,1,1,  0,0,0,     1,1,1,    0,0,    1,1,1,1,1,1,1,        0,0,0,0,0,       1,1,1,1,     0,0,0,0
-            ]
-
-            node.game.correctAnswerList = [
-                1,1,1,1,0,0,0,1,1,1,0,0,1,1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,0,0,0,0
+                1,4,7,10,11,16,20,26,28,31,35,39,40,43,46,49,52,55,58,61,64,67,70,98,73,76,79,82,85,88,91,94
             ]
 
         }
@@ -212,42 +418,31 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             node.game.talk('DATA SESSION - 2');
 
             node.game.pairIndexList = [
-                2,5,8,13,14,16,21,23,25,30, 36,38,  41,44,47,50,53,56,59, 62,65,68,96,  71,74,77,80,83, 86,89,92,95
-            //  1,1,1, 0,0,0,0,       1,1,1,    0,0,    1,1,1,1,1,1,1,        0,0,0,0,      1,1,1,1,1,      0,0,0,0
+                2,5,8,13,14,17,21,23,25,30, 36,38,  41,44,47,50,53,56,59, 62,65,68,96,  71,74,77,80,83, 86,89,92,95
             ]
-            node.game.correctAnswerList = [
-                1,1,1,0,0,0,0,1,1,1,0,0,1,1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,0,0,0,0
-            ]
+
         }
 
         // ---- SESSION 3 ---- //
         //
-        // total 31
+        // total 32
         //
         if(node.game.dataSession === 3) {
 
             node.game.talk('DATA SESSION - 3');
 
             node.game.pairIndexList = [
-                3,6,9,12,16,18,22,27,29,33,34,37,42,45,48,51,54,57,60,63,66,69,97,72,75,78,81,84,87,90,93
-            //  1,1,1, 0,0,0,     1,1,1,    0,0,0,     1,1,1,1,1,1,       0,0,0,0,0,       1,1,1,1,     0,0,0,0
+                3,6,9,12,16,18,19,22,27,29,33,34,37,42,45,48,51,54,57,60,63,66,69,97,72,75,78,81,84,87,90,93
             ]
-            node.game.correctAnswerList = [
-                1,1,1,0,0,0,1,1,1,0,0,0,1,1,1,1,1,1,0,0,0,0,0,1,1,1,1,0,0,0,0
-            ]
+
         }
 
-        node.game.totalNumberOfPairs = node.game.pairIndexList.length;
 
-        node.on.data('requestTotalNumberOfPairs', (msg) => {
-
-            let player = node.game.pl.get(msg.from);
-
-            var total = node.game.totalNumberOfPairs + 4;
-
-            node.say('totalNumberOfPairs', player.id, total);
-
-        })
+        node.game.space(2)
+        node.game.talk('-- node.game.pairIndexList --');
+        console.log(node.game.pairIndexList);
+        node.game.talk('Total number of pairs: ' + node.game.totalNumberOfPairs);
+        node.game.space(2)
 
 
         // ----------------------------- //
@@ -264,58 +459,55 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
                 player.listsGenerated = true;
 
-                player.dataSession = node.game.settings.dataSession;
+                player.pairIndexList = J.shuffle(node.game.pairIndexList);
+                can.talk('player pair Index List');
+                can.talk(player.pairIndexList);
+                helper.injectFamousPairs(player.pairIndexList)
+                can.talk('player pair Index List after famous injection');
+                can.talk(player.pairIndexList);
 
-                this.talk('INITIATING PLAYER\'S LISTS');
+                // debug forcing pairs list
+                //
+                // can.space(2);
+                // can.talk(' -------------------------------------------- ');
+                // can.space(1);
+                // can.talk('WARNING! overriding generated data with debug data')
+                helper.forceDebugData(player, [1,20]);
+                // can.talk('debug  player.pairIndexList:');
+                // can.talk(player.pairIndexList);
+                // can.space(1);
+                // can.talk(' -------------------------------------------- ');
+                // can.space(2);
 
-                player.shuffled = {
-                    correctAnswerList: undefined,
-                    pairIndexList: undefined,
-                    correctDecisionList: [],
-                };
+                // Important !!!
+                // node.game.pairIndexList needs to be fully constructed before
+                // generating player's pairList object
+                player.pairList = helper.generatePlayerPairList(player.pairIndexList);
 
-                player.unshuffled = {
-                    pairIndexList: [],
-                    givenAnswerList: [],
-                    correctDecisionList: []
-                }
-
-                var shuffledAnswers = [];
-
-                // Notice that for each subject another random list is generated but only once
-                // generate shuffled pair index for each player
-                player.shuffled.pairIndexList = J.shuffle(node.game.pairIndexList);
+                can.talk('player pairList object is generated!');
+                // console.log(player.pairList);
+                console.table(player.pairList);
 
                 // Current Pair/Photo IndeX: CPX
                 player.cpx = 0;
 
-                // for notational ease
-                var shuffledList = player.shuffled.pairIndexList;
-
-                // generate the correct answer list for the shuffled list
-                for(var i = 0; i < shuffledList.length; i++) {
-
-                    var shuffledIndex = node.game.pairIndexList.indexOf(shuffledList[i]);
-
-                    shuffledAnswers[i] = node.game.correctAnswerList[shuffledIndex];
-
-                }
-
-                // assign the generated shuffled answer list to the player's object
-                player.shuffled.correctAnswerList = shuffledAnswers;
-
-
-                // add the famous pairs evenly into the trials
-                node.game.injectAll(player.shuffled.pairIndexList, player.shuffled.correctAnswerList);
-
-
-                var size = node.game.pairIndexList.length;
-
-                // initiate player's given answer list initially set all to -1
-                player.givenAnswerList = Array(size).fill(-1);
-
+                // initiate score
                 player.score = undefined;
 
+                // initiate time object
+                player.time = {
+                    tutorial: undefined,
+                    experiment: undefined,
+                    survey1: undefined,
+                    survey2: undefined,
+                }
+
+                player.payment = {
+                    isStoredInMemory: false,
+                    base: undefined,
+                    bonus: undefined,
+                    total: undefined,
+                }
 
             } else {
 
@@ -323,23 +515,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
             }
 
-
-
-            // debug
-            this.talk('player data session');
-            this.talk(player.dataSession);
-            this.talk('node.game.pairIndexList');
-            console.log(node.game.pairIndexList);
-            this.talk('player shuffled Index list');
-            console.log(player.shuffled.pairIndexList);
-            this.talk('node.game.correctAnswerList');
-            console.log(node.game.correctAnswerList);
-            this.talk('player shuffled correct answer list');
-            console.log(player.shuffled.correctAnswerList);
-            this.talk('player given answer list');
-            console.log(player.givenAnswerList);
-            this.talk('STARTING PLAYER PAIR INDEX: ' + player.cpx);
-            this.talk('STARTING PLAYER PAIR NUMBER: ' + player.shuffled.pairIndexList[player.cpx]);
 
         }
 
@@ -368,9 +543,6 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
 
 
-
-
-
         // ------------------------------------------- //
         // ------- TEST PHASE HELPER FUNCTIONS ------- //
         // ------------------------------------------- //
@@ -379,12 +551,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // on the current index
         node.game.updateCurrentIndex = function(player) {
 
-            this.introFunction('updateCurrentIndex')
-            this.talk('player.cpx old: ' + player.cpx);
-
             player.cpx++;
-
-            this.talk('player.cpx current (updated): ' + player.cpx);
 
         }
 
@@ -392,17 +559,33 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // sends these as a data object to player through LOGIC-nextPicture
         node.game.nextPicture = function(player) {
 
-            var currentIndex = player.shuffled.pairIndexList[player.cpx];
-            var currentCorrectAnswer = player.shuffled.correctAnswerList[player.cpx];
+            can.talk('NEXT picture to be sent')
+            can.talk('index/counter -> ' + player.cpx);
+            // console.table(player.pairList[player.cpx-1])
+            console.table(player.pairList[player.cpx])
+
 
             var data = {
-                total: player.shuffled.pairIndexList.length,
                 listIndex: player.cpx,
-                index: currentIndex,
-                correctAnswer: currentCorrectAnswer
+                pairList: player.pairList
             }
 
+            node.game.talk('');
+            node.game.talk('SENDING data to player.js')
+            node.game.talk('');
             node.say('LOGIC-nextPicture', player.id, data);
+
+            // var currentIndex = player.shuffled.pairIndexList[player.cpx];
+            // var currentCorrectAnswer = player.shuffled.correctAnswerList[player.cpx];
+            //
+            // var data = {
+            //     total: player.shuffled.pairIndexList.length,
+            //     listIndex: player.cpx,
+            //     index: currentIndex,
+            //     correctAnswer: currentCorrectAnswer
+            // }
+            //
+            // node.say('LOGIC-nextPicture', player.id, data);
 
         }
 
@@ -416,24 +599,39 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
             this.talk('Checking if photos are finished');
 
-            var size = node.game.pairIndexList.length;
+            // var size = node.game.pairIndexList.length;
+            var size = player.pairList.length;
 
             this.talk('current index: ' + player.cpx);
-            this.talk('size: ' + size);
+            this.talk('list length: ' + player.pairList.length);
 
-            if(player.cpx >= size) {
-
-                this.talk('DONE WITH FACE TEST');
-
-                return true;
-
-            } else {
+            if(player.cpx < player.pairList.length) {
 
                 this.talk('CONTINUE WITH FACE TEST');
 
                 return false;
 
+            } else {
+
+                this.talk('DONE WITH FACE TEST');
+
+                return true;
+
             }
+
+            // if(player.cpx >= player.pairList.length) {
+            //
+            //     this.talk('DONE WITH FACE TEST');
+            //
+            //     return true;
+            //
+            // } else {
+            //
+            //     this.talk('CONTINUE WITH FACE TEST');
+            //
+            //     return false;
+            //
+            // }
 
         }
 
@@ -451,21 +649,64 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
 
         // ----------------------------------------------------------- //
-        // ----------------- TEST PHASE MAIN FUNCTIONS --------------- //
+        // -----------------        LISTENERS          --------------- //
         // ----------------------------------------------------------- //
 
+        node.game.totalNumberOfPairs = node.game.pairIndexList.length;
 
-        node.on.data('CLIENT-answer-LOGIC', (paket) => {
+        node.on.data('requestTotalNumberOfPairs', (msg) => {
 
-            this.introFunction('node.on.data(CLIENT-answer-LOGIC)');
+            let player = node.game.pl.get(msg.from);
+
+            var total = node.game.totalNumberOfPairs + 4;
+
+            node.say('totalNumberOfPairs', player.id, total);
+
+        })
+
+
+        node.on.data('updatePlayerTime', (msg) => {
+
+            this.introFunction('node.on.data(updatePlayerTime)');
+            this.talk(' -- Time data received for ' + msg.data.section + ' section -- ')
+            console.table(msg.data);
 
             // get player
-            let player = node.game.pl.get(paket.from);
+            let player = node.game.pl.get(msg.from);
+
+            var section = msg.data.section;
+
+            player.time[section] = msg.data.duration;
+
+            console.table(player.time);
+
+        })
+
+
+        node.on.data('CLIENT-answer-LOGIC', (msg) => {
+
+            this.introFunction('node.on.data(CLIENT-answer-LOGIC)');
+            this.talk('Answer given is : ' + msg.data);
+
+            // get player
+            let player = node.game.pl.get(msg.from);
+
+            var myPair = player.pairList[player.cpx];
 
             // record player's answer for the current index
-            player.givenAnswerList[player.cpx] = paket.data;
+            myPair.answerGiven = msg.data.answer;
+            myPair.confidence = msg.data.confidence;
 
-            this.talk('Answer given is : ' + paket.data);
+            if(helper.isCorrect(myPair)) {
+                can.talk('ANSWER IS CORRECT');
+                console.table(myPair);
+            } else {
+                can.talk('ANSWER IS WRONG');
+                console.table(myPair);
+            }
+
+            // record player's answer for the current index
+            // player.givenAnswerList[player.cpx] = msg.data;
 
             // update the index (increment)
             node.game.updateCurrentIndex(player);
@@ -492,38 +733,46 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
             let player = node.game.pl.get(msg.from);
 
-            this.talk('CALCULATING THE SCORE FOR PLAYER ' + player.count);
+            this.talk('Calculating the score for player ' + player.count);
 
-            var size = player.shuffled.correctAnswerList.length;
+            player.score = helper.calculateScore(player);
 
-            var score = 0;
+            this.talk('Player final score -> ' + player.score);
 
-            for(var i = 0; i < size; i++) {
+            can.space(2);
+            console.table(player.pairList);
+            can.space(2);
 
-                // debug
-                this.talk('Index: ' + i);
-                this.talk('Correct Answer: ' + player.shuffled.correctAnswerList[i]);
-                this.talk('Given Answer: ' + player.givenAnswerList[i]);
+            // var size = player.shuffled.correctAnswerList.length;
 
-
-                var correct = (player.shuffled.correctAnswerList[i] === player.givenAnswerList[i]);
-
-                player.shuffled.correctDecisionList[i] = correct;
-
-                if(correct) {
-                    score++;
-                }
-
-            }
-
-            player.score = score;
-
-            // debug
-            this.talk('PLAYER FINAL SCORE: ' + player.score);
-            this.talk(player.shuffled.pairIndexList);
-            this.talk(player.givenAnswerList);
-            this.talk(player.shuffled.correctAnswerList);
-            this.talk(player.shuffled.correctDecisionList);
+            // var score = 0;
+            //
+            // for(var i = 0; i < size; i++) {
+            //
+            //     // debug
+            //     this.talk('Index: ' + i);
+            //     this.talk('Correct Answer: ' + player.shuffled.correctAnswerList[i]);
+            //     this.talk('Given Answer: ' + player.givenAnswerList[i]);
+            //
+            //
+            //     var correct = (player.shuffled.correctAnswerList[i] === player.givenAnswerList[i]);
+            //
+            //     player.shuffled.correctDecisionList[i] = correct;
+            //
+            //     if(correct) {
+            //         score++;
+            //     }
+            //
+            // }
+            //
+            // player.score = score;
+            //
+            // // debug
+            // this.talk('PLAYER FINAL SCORE: ' + player.score);
+            // this.talk(player.shuffled.pairIndexList);
+            // this.talk(player.givenAnswerList);
+            // this.talk(player.shuffled.correctAnswerList);
+            // this.talk(player.shuffled.correctDecisionList);
 
         })
 
@@ -535,10 +784,82 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
             let player = node.game.pl.get(msg.from);
 
-            // TO DO: add here also the total number of questions and send it with score info
-            let score = player.score;
+            // WARNING - UNCOMMENT THIS FOR THE FULL GAME !!!
+            // helper.forceDebugDurationData(player, {
+            //     tutorial: 30000,
+            //     experiment: 90000,
+            //     survey1: 12000,
+            //     survey2: 6000
+            // })
 
-            node.say('LOGIC-results', player.id, score);
+            var pPay = node.game.settings.participationPayment;
+            var bRate = node.game.settings.bonusRate;
+            var bPay = bRate * player.score;
+            var tPay = pPay + bPay;
+
+            can.talk('participation payment: ' + pPay);
+            can.talk('bonus rate: ' + bRate);
+            can.talk('bonus payment: ' + bPay);
+            can.talk('total payment: ' + tPay);
+
+            var data = {
+                score: player.score,
+                total: player.pairList.length,
+                pPay: pPay,
+                bRate: bRate,
+                bPay: bPay,
+                tPay: tPay,
+                tutoTime: player.time.tutorial,
+                expTime: player.time.experiment,
+                s1Time: player.time.survey1,
+                s2Time: player.time.survey2
+            };
+
+            node.say('LOGIC-results', player.id, data);
+
+            player.payment.base = pPay;
+            player.payment.bonus = bPay;
+            player.payment.total = tPay;
+
+        })
+
+        // listens client to return player's payment results
+        node.on.data('calculateBonus-LOGIC', function(msg) {
+
+            this.introFunction('node.on.data(calculateBonus-LOGIC)');
+
+            let player = node.game.pl.get(msg.from);
+
+            can.talk('player s payment');
+            console.table(player.payment);
+
+            node.say('LOGIC-calculateBonus', player.id, player.payment);
+
+        })
+
+        node.on.data('isBonusStored', function(msg) {
+
+            this.introFunction('node.on.data(isBonusStored)');
+
+            let player = node.game.pl.get(msg.from);
+            can.talk('current player pay object');
+            console.table(player.payment);
+
+            player.payment.isStoredInMemory = true;
+
+            can.talk('bonus is stored, boolean is updated');
+            console.table(player.payment);
+
+
+        })
+
+
+        // sends exit code to html upon request
+        node.on.data('getExitCode', function(msg) {
+
+            let player = node.game.pl.get(msg.from);
+
+            node.say('HTML-exitCode', player.id, node.game.settings.exitCode);
 
         })
 
@@ -560,23 +881,39 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 this.talk('PLAYER RECONNECTED: LAST UNANSWERED INDEX IS REQUESTED FROM CLIENT TO LOGIC SIDE');
             }
 
-            var currentIndex = player.shuffled.pairIndexList[player.cpx];
-            var currentCorrectAnswer = player.shuffled.correctAnswerList[player.cpx];
-
             var data = {
-                total: player.shuffled.pairIndexList.length,
                 listIndex: player.cpx,
-                index: currentIndex,
-                correctAnswer: currentCorrectAnswer
+                pairList: player.pairList
             }
 
-            this.talk('CURRENT INDEX IS: ' + currentIndex);
-            this.talk('CORRECT ANSWER IS: ' + currentCorrectAnswer);
+            can.talk('first/next picture to be sent')
+            can.talk('index/counter must be 0 if no reconnection -> ' + data.listIndex)
+            // console.table(data.pairList)
 
-            this.talk('Data to be sent');
-            console.log(data);
-
+            node.game.talk('');
+            node.game.talk('SENDING data to player.js')
+            node.game.talk('');
             node.say('LOGIC-firstPicture', player.id, data);
+
+
+
+            // var currentIndex = player.shuffled.pairIndexList[player.cpx];
+            // var currentCorrectAnswer = player.shuffled.correctAnswerList[player.cpx];
+            //
+            // var data = {
+            //     total: player.shuffled.pairIndexList.length,
+            //     listIndex: player.cpx,
+            //     index: currentIndex,
+            //     correctAnswer: currentCorrectAnswer
+            // }
+            //
+            // this.talk('CURRENT INDEX IS: ' + currentIndex);
+            // this.talk('CORRECT ANSWER IS: ' + currentCorrectAnswer);
+            //
+            // this.talk('Data to be sent');
+            // console.log(data);
+            //
+            // node.say('LOGIC-firstPicture', player.id, data);
 
         })
 
@@ -637,10 +974,14 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
             header: [
                 'player',
+                'treatment',
                 'pairIndex',
+                'pairRace',
+                'pairGender',
+                'pairType',
                 'answer',
-                'confidence',
                 'correct',
+                'confidence',
                 'xCoor',
                 'yCoor',
                 'tCoor',
@@ -663,6 +1004,17 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
 
+        // saving bonus payment data
+        memory.view('playerBonus').save('playerBonus.csv', {
+
+            header: [
+                'player',
+                'playerBonus'
+            ],
+
+            keepUpdated: true
+
+        })
 
         // saving subject survey data
         memory.view('gender').save('survey.csv', {
@@ -697,19 +1049,12 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
 
-
-
         // Feedback.
         memory.view('feedback').save('feedback.csv', {
-            header: [ 'time', 'timestamp', 'player', 'feedback' ],
+            header: ['player', 'feedback' ],
             keepUpdated: true
         });
 
-        // Email.
-        memory.view('email').save('email.csv', {
-            header: [ 'timestamp', 'player', 'email' ],
-            keepUpdated: true
-        });
 
 
         // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
@@ -732,18 +1077,12 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             node.game.talk('Lists: ' + player.listsGenerated);
             node.game.talk(' -- Decision Duration Time -- ');
             node.game.talk(player.dtd);
-            node.game.talk(' -- Button Top -- ');
-            node.game.talk(player.buttonTop);
             node.game.talk(' -- Current Pair Index -- ');
             node.game.talk(player.cpx);
-            node.game.talk(' -- Shuffled Pair Index List -- ');
-            node.game.talk(player.shuffled.pairIndexList);
-            node.game.talk(' -- Shuffled Correct Answer List -- ');
-            node.game.talk(player.shuffled.correctAnswerList);
-            node.game.talk(' -- Random Number -- ');
-            node.game.talk(player.randomNumber);
             node.game.talk('-- node.game.settings.dataSession --');
             node.game.talk(node.game.settings.dataSession);
+            node.game.space(1)
+            console.table(player.pairList);
             node.game.space(2)
 
         }
@@ -924,7 +1263,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
 
     stager.setOnGameOver(function() {
-        // Something to do.
+        can.talk('THE GAME HAS ENDED!')
     });
 
 };

@@ -26,34 +26,70 @@
 
                 <div class='frame-A-0' id='frame-0'>
 
+                    <div class='text topSection'>
+
+                        You have correctly identified <span id=score></span>
+                        out of <span id=total></span> facial image pairs.
+
+                    </div>
+
                     <div class='frame-A-0-0' id='frame-0-0'>
 
-                        <p class='text'>
+                        <div class='generalSection paymentSection  text'>
 
-                            You have correctly identified <span id=score>18</span>
-                            out of 30 facial image pairs.
-
-                            <span style='display:block;margin-top:55px;'>
-                                You will receive <span id=payment>18</span>
-                                Euros for your performance.
-                                <span style='display:block;margin-top:10px;font-style:italic; font-size:30px;'>
-                                    (or its beer equivalent)
-                                </span>
+                            <span class=titleText>Payment</span>
+                            <br />
+                            <br />
+                            <span id=payment></span> (<span id=rate></span>x<span id=correct></span>)
+                            USD for your performance.
+                            <br />
+                            <span id=base></span> USD for your participation.
+                            <br />
+                            <br />
+                            <br />
+                            In total, you will be paid <span id=totalPay></span> USD.
+                            <span class=beerInfo>
+                                (or its beer equivalent)
                             </span>
 
-                            <span style='display:block;margin-top:55px;font-size:30px;opacity:0;transition:2s;' class='okInstruction'>
-                                Please click OK to proceed
-                            </span>
-
-                        </p>
-
-                    </div>
-
-                    <div class=buttonWrap>
-                        <div class=button id=doneWithResults>
-                            OK
                         </div>
+
+                        <div class='generalSection timeSection text'>
+
+                            <span class=titleText>Time Spent</span>
+                            <br />
+                            <br />
+                            ~<span id=tutoTime></span> minutes in the tutorial section
+                            <br />
+                            ~<span id=expTime></span> minutes in the face evaluation rounds
+                            <br />
+                            ~<span id=s1s2Time></span> (<span id=s1Time></span> + <span id=s2Time></span>) minutes in the survey sections
+                            <br />
+                            <br />
+                            In total, you have spent <span id=totalTime></span> minutes.
+
+                        </div>
+
                     </div>
+
+                    <div class='bottomSection text'>
+
+                        Given the above information, your hourly wage is ~<span id=hourlyWage></span> USD/hour.
+
+                    </div>
+
+                    <div class='button-text-container'>
+                        <div class=buttonWrap>
+                            <div class=button id=doneWithResults>
+                                OK
+                            </div>
+                        </div>
+
+                        <span style='display:block;margin-top:-14px;font-size:14px;opacity:0;transition:2s;' class='okInstruction'>
+                            Please click OK to finish the experiment
+                        </span>
+                    </div>
+
 
                 </div>
 

@@ -1,28 +1,82 @@
 
-window.onload = function() {
+// window.onload = function() {
 
     var node = parent.node;
+    var W = parent.W;
+    W.adjustFrameHeight();
+
+    $('.buttonWrap, .okInstruction').css({'transition':'0s', 'transform':'scale(0)'});
+
+    var s2m = (s) => {
+
+        console.log('seconds received ', s);
+
+        var m = s / 60;
+        m = shorten(m, 2);
+
+        console.log('minutes returned ', m);
+
+        return m;
+
+    }
+
+    var shorten = (number, precision) => {
+        if(number != undefined) {
+            return parseFloat((number).toFixed(precision));
+        } else {
+            return 'N/A';
+        }
+    }
 
     node.on('results-HTML', function(msg) {
 
-        $('#score').html(msg);
+        console.log('data received from PLAYER.JS');
+        console.table(msg);
 
-        var cents = msg * 10;
-        var euros = cents / 100;
+        $('#score').html(msg.score);
+        $('#total').html(msg.total);
+        $('#base').html(msg.pPay);
+        $('#payment').html(msg.bPay);
+        $('#correct').html(msg.score);
+        $('#rate').html(msg.bRate);
+        $('#totalPay').html(msg.tPay);
 
-        $('#payment').html(euros);
+        var tutoTime = s2m(msg.tutoTime);
+        var expTime = s2m(msg.expTime);
+        var s1Time = s2m(msg.s1Time);
+        var s2Time = s2m(msg.s2Time);
+        var sTotalTime = s1Time + s2Time;
+        var totalTime = tutoTime + expTime + sTotalTime;
+
+        $('#tutoTime').html(tutoTime);
+        $('#expTime').html(expTime);
+        $('#s1s2Time').html(sTotalTime);
+        $('#s1Time').html(s1Time);
+        $('#s2Time').html(s2Time);
+        $('#totalTime').html(totalTime);
+
+        var hourlyWage = shorten(((msg.tPay / totalTime) * 60), 1);
+
+        $('#hourlyWage').html(hourlyWage);
+
 
         setTimeout(()=>{
             $('.text').css({'opacity':'1'});
         }, 500)
 
         setTimeout(()=>{
-            $('.buttonWrap, .okInstruction').css({'opacity':'1'});
+            $('.buttonWrap, .okInstruction').css({'transform':'scale(1)', 'opacity':'0'});
+        }, 1000)
+        setTimeout(()=>{
+            $('.buttonWrap, .okInstruction').css({'transition':'2s', 'opacity':'1'});
+            W.adjustFrameHeight();
         }, 3000)
 
     })
 
     node.emit('HTML-results');
+
+    node.emit('HTML-calculateBonus');
 
     $('#doneWithResults').click(function() {
 
@@ -30,4 +84,4 @@ window.onload = function() {
 
     })
 
-}
+// }
