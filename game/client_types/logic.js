@@ -472,7 +472,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 // can.talk(' -------------------------------------------- ');
                 // can.space(1);
                 // can.talk('WARNING! overriding generated data with debug data')
-                helper.forceDebugData(player, [1,20]);
+                // helper.forceDebugData(player, [1,20]);
                 // can.talk('debug  player.pairIndexList:');
                 // can.talk(player.pairIndexList);
                 // can.space(1);
