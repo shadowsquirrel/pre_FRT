@@ -29,6 +29,21 @@ picture.correctAnswer = undefined;
 button.answer = undefined;
 
 
+// ------  MOUSE TRACKING GLOBALS ----- //
+
+var x = [];
+var y = [];
+var t = [];
+var firstTime = true;
+var translated = false;
+var t0 = undefined;
+var t1 = undefined;
+var prevT = undefined;
+var dt = undefined;
+
+// ------------------------------------ //
+
+
 // window.onload = function() {
 
     var node = parent.node;
@@ -519,6 +534,10 @@ button.answer = undefined;
 
         isTimeUp = isTimeUp === undefined ? false : isTimeUp;
 
+        timer.getFinalTime();
+
+        timer.stopLoopRecordLast();
+
         if(!button.isClicked) {
 
             // disable button
@@ -544,13 +563,17 @@ button.answer = undefined;
             data.yCoor = mouseData.yCoor;
             data.tCoor = mouseData.tCoor;
             data.responseTime = mouseData.responseTime;
+            data.totalResponseTime = timer.totalResponseTime;
+            data.velocity = mouseData.velocity;
 
             // send decision data to client.js
             if(isTimeUp) {
+
                 data.confidence = -1; // -1 when no answer is given no conf is asked
                 var cloneData = help.clone(data);
                 console.log(data);
                 node.emit('HTML-answer-CLIENT', cloneData);
+
             } else {
 
                 transitionTo.step2();
@@ -598,13 +621,43 @@ button.answer = undefined;
     // --------------------------------------------------------------------- //
     // --------------------------------------------------------------------- //
 
-    $('#go').click(function() {
+    $('#go').click(function(e) {
 
         go.isClicked = true;
 
         go.hide();
 
         timer.start();
+
+        timer.getfirstTime();
+
+        // -------------------------- //
+        if(firstTime) {
+
+            firstTime = false;
+
+            console.log('START AUTO RECORDING');
+            console.log('e.pageX', e.pageX);
+            console.log('e.pageY', e.pageY);
+
+
+            var area = $('.all');
+            var offset = area.offset();
+            area.height();
+            area.width();
+
+            var rawX = e.pageX;
+            var rawY = e.pageY;
+            var newX = rawX - (offset.left + ((area.width() + 11)/2));
+            var newY = (offset.top + area.height() - 1) - rawY;
+            t0 = e.timeStamp;
+
+            x.push(newX);
+            y.push(newY);
+            t.push(0)
+            timer.startLoopRecordLast(newX, newY, 0);
+
+        }
 
     })
 
@@ -766,20 +819,41 @@ button.answer = undefined;
     // construct and initiate the new timer
     timer.initiate();
 
+    // ---------------------------------------- //
+    // --- Additional Response Time Measure --- //
+    // ---------------------------------------- //
+
+    timer.firstTime = undefined;
+
+    timer.getfirstTime = () => {
+
+        timer.firstTime = new Date();
+
+        console.log('First time is recorded', timer.firstTime);
+
+    }
+
+    timer.finalTime = undefined;
+
+    timer.totalResponseTime = undefined;
+
+    timer.getFinalTime = () => {
+
+        timer.finalTime = new Date();
+
+        console.log('Final time is recorded', timer.finalTime);
+
+        timer.totalResponseTime = timer.finalTime - timer.firstTime;
+
+        console.log('Response time is calculated', timer.totalResponseTime);
+
+    }
 
     // --------------------------------------- //
     // ------------ MOUSE TRACKING ----------- //
     // --------------------------------------- //
 
-    var x = [];
-    var y = [];
-    var t = [];
-    var firstTime = true;
-    var translated = false;
-    var t0 = undefined;
-    var t1 = undefined;
-    var prevT = undefined;
-    var dt = undefined;
+
 
     var resetSwitches = () => {
 
@@ -791,6 +865,8 @@ button.answer = undefined;
         y = [];
         t = [];
 
+        timer.myVelocityList = [];
+
     }
 
     var getLast = (array)=>{
@@ -801,9 +877,14 @@ button.answer = undefined;
         return array[0];
     }
 
+
+
     $('.all').mousemove(function(e) {
 
         if(go.isClicked && !button.isClicked) {
+
+            // kill timeout loop
+            timer.stopLoopRecordLast();
 
             if(firstTime) {
                 console.log('START RECORDING');
@@ -819,6 +900,10 @@ button.answer = undefined;
 
             t1 = e.timeStamp - t0;
             dt = t1 - prevT;
+
+            console.log('e.timeStamp', e.timeStamp);
+            console.log('t0', t0);
+            console.log('t1', t1);
 
 
             var area = $('.all');
@@ -840,6 +925,16 @@ button.answer = undefined;
             $('#timeS').html(getLast(t));
             $('#deltaT').html(dt);
 
+            var myLastX = newX;
+            var myLastY = newY;
+            var myLastTime = t1;
+            console.log('my last time', myLastTime);
+
+            // start timeout loop
+            // if no move in the next 500ms push newX and newY from the lat entry
+            // again with t1 + 500 as the new time
+            timer.startLoopRecordLast(myLastX, myLastY, myLastTime);
+
         }
 
     })
@@ -848,16 +943,106 @@ button.answer = undefined;
 
         var responseTime = getLast(t) - getFirst(t);
 
+        var velocityList = timer.generateVelocityList();
+
         let mtData = {
             xCoor: x,
             yCoor: y,
             tCoor: t,
             responseTime: responseTime,
+            velocity: velocityList,
         }
 
         return mtData;
 
     }
 
+    timer.loopTimeout = undefined;
+
+    timer.loopTimeInterval = 100;
+
+    timer.startLoopRecordLast = (myX, myY, myT) => {
+
+        timer.loopTimeout = setTimeout(()=> {
+
+            console.log('');
+            console.log('-----------');
+            console.log('LOOP RECORD');
+            console.log('-----------');
+            console.log('');
+
+            console.log(myT);
+            console.log(typeof myT);
+
+            var newTime = myT + timer.loopTimeInterval;
+
+            console.log('new time', newTime);
+            console.log('new X', myX);
+            console.log('newY', myY);
+
+            x.push(myX);
+            y.push(myY);
+            t.push(newTime);
+
+            timer.startLoopRecordLast(myX, myY, newTime)
+
+        }, timer.loopTimeInterval)
+
+    }
+
+    timer.stopLoopRecordLast = () => {
+
+        console.log('');
+        console.log('******     *****');
+        console.log('STOP LOOP RECORD');
+        console.log('******     *****');
+        console.log('');
+
+        clearTimeout(timer.loopTimeout);
+
+    }
+
+    timer.myVelocityList = [];
+
+    timer.generateVelocityList = () => {
+
+        x.forEach((elt,index)=> {
+            if(index === 0) {
+                timer.myVelocityList.push(0);
+            } else {
+                var currentVelocity = timer.calculateVelocity(index);
+                timer.myVelocityList.push(currentVelocity);
+            }
+        })
+
+        return timer.myVelocityList;
+
+    }
+
+    var some = {};
+
+    timer.calculateVelocity = (index) => {
+
+        some.x0 = x[index-1];
+        some.y0 = y[index-1];
+        some.t0 = t[index-1];
+        some.x1 = x[index];
+        some.y1 = y[index];
+        some.t1 = t[index];
+
+        some.dx = Math.abs(some.x0 - some.x1);
+        some.dy = Math.abs(some.y0 - some.y1);
+        some.dt = Math.abs(some.t0 - some.t1);
+        some.dt = some.dt / 1000;
+
+        some.distance = Math.sqrt((some.dx ** 2) + (some.dy ** 2));
+
+        some.velocity = some.distance / some.dt;
+
+        // console.table(some)
+
+        return some.velocity;
+
+    }
 
 // }

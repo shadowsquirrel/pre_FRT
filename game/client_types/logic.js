@@ -985,7 +985,9 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 'xCoor',
                 'yCoor',
                 'tCoor',
-                'responseTime'
+                'responseTime',
+                'velocity',
+                'totalResponseTime',
             ],
 
             keepUpdated: true

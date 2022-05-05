@@ -601,13 +601,15 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             // this.talk(data.xCoor)
             // this.talk(data.yCoor)
             // this.talk(data.tCoor)
-            this.talk('response time: ' + data.responseTime)
+            this.talk('response time: ' + data.responseTime);
+            this.talk('total response time (alternative to reponse time): ' + data.totalResponseTime);
             this.talk('------------')
             this.talk('')
 
             var xList = node.game.clone(data.xCoor);
             var yList = node.game.clone(data.yCoor);
             var tList = node.game.clone(data.tCoor);
+            var vList = node.game.clone(data.velocity);
 
             // node.game.someList.push(xList[10])
             // node.game.someList.push(xList[11])
@@ -629,6 +631,8 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 yCoor: yList,
                 tCoor: tList,
                 responseTime: data.responseTime,
+                velocity: vList,
+                totalResponseTime: data.totalResponseTime,
             })
 
             node.say('CLIENT-answer-LOGIC', 'SERVER', data);
