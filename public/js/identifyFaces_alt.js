@@ -114,7 +114,7 @@ var dt = undefined;
         // show the buttons
         setTimeout(()=>{
             button.show();
-            node.emit('startTimer');
+            // node.emit('startTimer');
         }, 100)
 
     }
@@ -162,6 +162,10 @@ var dt = undefined;
     // ---------------------------------------------------- //
 
     timer.activeTimeout = undefined;
+
+    timer.warnMainTimeout = undefined;
+    timer.warnTimeout = undefined;
+    timer.warnTimeoutSide = undefined
 
     timer.initiate = () => {
 
@@ -215,9 +219,13 @@ var dt = undefined;
 
         })
 
+        timer.warnMainTimeout = setTimeout(()=>{
+            timer.warn(5);
+        }, 6000)
+
         timer.activeTimeout = setTimeout(()=>{
             timer.timeUp();
-        }, 7500)
+        }, 12000)
 
     }
 
@@ -227,12 +235,13 @@ var dt = undefined;
         node.game.visualTimer.hide();
         clearTimeout(timer.activeTimeout);
 
+        timer.killWarn();
+
     }
 
     timer.timeUp = () => {
 
-        node.game.visualTimer.hide();
-        timer.hide();
+        // console.log('no answer is given proceeding the with timer.timeup function');
 
         if(!button.isClicked) {
 
@@ -249,6 +258,52 @@ var dt = undefined;
 
     }
 
+    timer.warn = (times) => {
+
+        if(times > 0) {
+
+            times--;
+
+            $('.myTimer').css({
+                'transition':'0.65s',
+                'color':'red',
+                'transform':'scale(1.2)'
+            })
+
+            timer.warnTimeoutSide = setTimeout(()=>{
+                $('.myTimer').css({
+                    'transition':'0.65s',
+                    'color':'black',
+                    'transform':'scale(1)'
+                })
+            }, 650)
+
+            timer.warnTimeout = setTimeout(()=>{
+                timer.warn(times);
+            }, 1200)
+
+        } else {
+
+            $('.myTimer').css({
+                'transition':'0.6s',
+                'color':'black',
+                'transform':'scale(1)'
+            })
+
+            // console.log('asdasd');
+
+        }
+
+    }
+
+    timer.killWarn = () => {
+
+        clearTimeout(timer.warnTimeout);
+        clearTimeout(timer.warnTimeoutSide);
+        clearTimeout(timer.warnMainTimeout);
+
+    }
+
 
     // ---------------------------------------------------- //
     // -----------------  TIMER MUTATION  ----------------- //
@@ -259,8 +314,8 @@ var dt = undefined;
         helper.timer.mutate.target = document.getElementById('myTimer').children[0].children[1].children[0];
         helper.timer.mutate.config = { attributes: true, childList: true, subtree: true };
 
-        console.log('target found');
-        console.log(helper.timer.mutate.target);
+        // console.log('target found');
+        // console.log(helper.timer.mutate.target);
 
     }
 
@@ -901,9 +956,9 @@ var dt = undefined;
             t1 = e.timeStamp - t0;
             dt = t1 - prevT;
 
-            console.log('e.timeStamp', e.timeStamp);
-            console.log('t0', t0);
-            console.log('t1', t1);
+            // console.log('e.timeStamp', e.timeStamp);
+            // console.log('t0', t0);
+            // console.log('t1', t1);
 
 
             var area = $('.all');
@@ -928,7 +983,7 @@ var dt = undefined;
             var myLastX = newX;
             var myLastY = newY;
             var myLastTime = t1;
-            console.log('my last time', myLastTime);
+            // console.log('my last time', myLastTime);
 
             // start timeout loop
             // if no move in the next 500ms push newX and newY from the lat entry
@@ -965,20 +1020,20 @@ var dt = undefined;
 
         timer.loopTimeout = setTimeout(()=> {
 
-            console.log('');
-            console.log('-----------');
-            console.log('LOOP RECORD');
-            console.log('-----------');
-            console.log('');
-
-            console.log(myT);
-            console.log(typeof myT);
+            // console.log('');
+            // console.log('-----------');
+            // console.log('LOOP RECORD');
+            // console.log('-----------');
+            // console.log('');
+            //
+            // console.log(myT);
+            // console.log(typeof myT);
 
             var newTime = myT + timer.loopTimeInterval;
 
-            console.log('new time', newTime);
-            console.log('new X', myX);
-            console.log('newY', myY);
+            // console.log('new time', newTime);
+            // console.log('new X', myX);
+            // console.log('newY', myY);
 
             x.push(myX);
             y.push(myY);
@@ -992,11 +1047,11 @@ var dt = undefined;
 
     timer.stopLoopRecordLast = () => {
 
-        console.log('');
-        console.log('******     *****');
-        console.log('STOP LOOP RECORD');
-        console.log('******     *****');
-        console.log('');
+        // console.log('');
+        // console.log('******     *****');
+        // console.log('STOP LOOP RECORD');
+        // console.log('******     *****');
+        // console.log('');
 
         clearTimeout(timer.loopTimeout);
 
