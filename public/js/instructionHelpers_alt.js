@@ -1673,4 +1673,11 @@ window.onload = function() {
     }
 
 
+    // -------- SKIP TUTO -------- //
+
+    $('#skipTuto').click(function() {
+        node.done();
+    })
+
+
 }
