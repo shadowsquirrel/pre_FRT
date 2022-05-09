@@ -12,6 +12,7 @@
 module.exports = function(stager, settings) {
 
     stager
+    .next('consent')
     .next('pickSession')
     .next('instructions')
     .next('identifyFaces')
@@ -23,6 +24,7 @@ module.exports = function(stager, settings) {
 
     // Modify the stager to skip one stage.
     stager.skip([
+        // 'consent',
         // 'pickSession',
         // 'instructions',
         // 'identifyFaces',

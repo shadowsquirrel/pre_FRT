@@ -1199,6 +1199,34 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
     });
 
+
+    stager.extendStep('consent', {
+
+        reconnect: function(player, reconOpts) {
+
+            node.game.disconnected.yusufAtilgan(player, reconOpts);
+
+        },
+
+
+        init: function() {
+
+            console.log();
+            console.log();
+            console.log('********************************');
+            console.log('********************************');
+            console.log('*******    CONSENT PAGE   ******');
+            console.log('********************************');
+            console.log('********************************');
+            console.log();
+            console.log();
+
+        },
+
+
+    });
+
+
     stager.extendStep('pickSession', {
 
         reconnect: function(player, reconOpts) {

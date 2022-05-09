@@ -767,12 +767,19 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
     });
 
+    stager.extendStep('consent', {
+
+        // frame: 'consent.htm',
+        widget: 'Consent',
+
+
+    });
+
     stager.extendStep('pickSession', {
 
         frame: 'pickSession.htm',
 
     });
-
 
     stager.extendStep('instructions', {
 

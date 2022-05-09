@@ -1,0 +1,110 @@
+<!doctype html>
+<link rel="stylesheet" href="/lib/bootstrap/bootstrap.min.css" />
+<link rel='stylesheet' href='/stylesheets/nodegame.css'></link>
+<link rel="stylesheet" href="css/nodegame_mod.css"></link>
+<link rel="stylesheet" href="css/canConsent.css"></link>
+<style>
+#consent h3 { color: chocolate };
+</style>
+<body>
+    <div id="container">
+
+        <div id="notAgreed" style="display: none; margin-top: 30px; font-size: 24px;">
+            <p>
+                You have chosen to <strong>not participate</strong> in this study,
+                therefore you have been disconnected and you can now return the HIT.
+            </p>
+            <p>
+                Thank you for your interest, we hope to have you as a participant in our
+                future studies.
+            </p>
+            <button class="btn" id="show-consent">Show Consent Form</button>
+        </div>
+
+        <div id="consent">
+
+            <div class='can-consent'>
+
+
+
+                <p>
+                    <strong>
+                        You must be at least 18 years old to participate
+                        in these experiments.
+                    </strong>
+                </p>
+
+                <p>
+                    <strong>
+                        The decision to participate in this research
+                        project is voluntary.
+                    </strong>
+                    You do not have to
+                    participate. Even if you begin the web-based experiment, you
+                    can stop at any time by closing your browser.
+                </p>
+
+                <p>
+                    <strong>
+                        There are no foreseeable risks or discomforts to you
+                        for taking part in this study.
+                    </strong>
+                    We anticipate that
+                    it will take about
+                    ~15 minutes</em>
+                    to complete this
+                    task. However, you will only be rewarded for completing
+                    the task, not for the length of time you participate.
+                </p>
+
+                <p>
+                    You will be compensated for good faith participation in this
+                    experiment a minimum of <strong>2</strong>$ and a maximum of <strong>7</strong>$.
+                    Submissions will be <strong>rejected</strong>
+                    if they are completed in a manner that appears to be random,
+                    incomplete, or otherwise negligent.
+                </p>
+
+                <p>
+                    <strong>
+                        Your part in this study is anonymized to the
+                        researchers.
+                    </strong>
+                    Researchers may have access to anonymized experimental research
+                    records. However, because of the nature of electronic
+                    systems, it is possible that respondents could be
+                    identified by some electronic record associated with the
+                    response. Neither the researcher nor anyone involved with
+                    this study will be capturing those data. Any reports or
+                    publications based on this research will use only group
+                    data and will not identify you or any individual as being
+                    affiliated with this project.
+                </p>
+
+                <p>
+                    <strong>
+                        This study has been reviewed and approved by the
+                        {IRB_APPROVAL}.
+                    </strong>
+                </p>
+
+                <p>
+                    <strong>
+                        By clicking
+                        below you are indicating that you consent to participate in this study. Please print out
+                        a copy of this consent form for your records.
+                    </strong>
+                </p>
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+
+</body>
+
+
+<script src='js/consentModifier.js'></script>
