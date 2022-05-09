@@ -1,0 +1,84 @@
+.container-0
+{
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 600px;
+}
+.container-1
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+.session-1
+{
+    height: 100px;
+    width: 100px;
+    background: aliceblue;
+    box-shadow: 0px 1px 2px 1px black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    cursor:pointer;
+}
+.session-1:hover
+{
+    background-color:darkgoldenrod;
+    color:white;
+}
+.session-1:active
+{
+    box-shadow:0px 0px 1px 0px black;
+    transform: translateY(1px);
+}
+.session-2
+{
+    height: 100px;
+    width: 100px;
+    background: aliceblue;
+    box-shadow: 0px 1px 2px 1px black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    cursor:pointer;
+}
+.session-2:hover
+{
+    background-color:darkgoldenrod;
+    color:white;
+}
+.session-2:active
+{
+    box-shadow:0px 0px 1px 0px black;
+    transform: translateY(1px);
+}
+.session-3
+{
+    height: 100px;
+    width: 100px;
+    background: aliceblue;
+    box-shadow: 0px 1px 2px 1px black;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    cursor:pointer;
+}
+.session-3:hover
+{
+    background-color:darkgoldenrod;
+    color:white;
+}
+.session-3:active
+{
+    box-shadow:0px 0px 1px 0px black;
+    transform: translateY(1px);
+}
+.text
+{
+    font-size:40px;
+}

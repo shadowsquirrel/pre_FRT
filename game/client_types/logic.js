@@ -529,11 +529,66 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         }
 
+        // for debug purposes to select a data session prior the experiment
+        node.game.reInitPlayer = (player, session) => {
+
+            helper.setDataSession(session);
+            // node.game.dataSession = session;
+
+            if(node.game.dataSession === 1) {
+
+                node.game.talk('DATA SESSION - 1');
+
+                node.game.pairIndexList = [
+                    1,4,7,10,11,16,20,26,28,31,35,39,40,43,46,49,52,55,58,61,64,67,70,98,73,76,79,82,85,88,91,94
+                ]
+
+            }
+
+            if(node.game.dataSession === 2) {
+
+                node.game.talk('DATA SESSION - 2');
+
+                node.game.pairIndexList = [
+                    2,5,8,13,14,17,21,23,25,30, 36,38,  41,44,47,50,53,56,59, 62,65,68,96,  71,74,77,80,83, 86,89,92,95
+                ]
+
+            }
+
+            if(node.game.dataSession === 3) {
+
+                node.game.talk('DATA SESSION - 3');
+
+                node.game.pairIndexList = [
+                    3,6,9,12,16,18,19,22,27,29,33,34,37,42,45,48,51,54,57,60,63,66,69,97,72,75,78,81,84,87,90,93
+                ]
+
+            }
+
+            player.listsGenerated = undefined;
+            node.game.initPlayerLists(player);
+
+        }
+
+
+        node.on.data('pickSession-LOGIC', function(msg) {
+
+            this.introFunction('node.on.data(pickSession-LOGIC)');
+
+            let player = node.game.pl.get(msg.from);
+
+            var mySession = msg.data;
+            this.talk('Session picked: ' + mySession)
+
+            node.game.reInitPlayer(player, mySession);
+
+        })
+
 
         // Listener to initiate the player parameters
         node.on.data('init-LOGIC', function(msg) {
 
-            this.introFunction('node.on(init-LOGIC)')
+            this.introFunction('node.on.data(init-LOGIC)');
 
             let player = node.game.pl.get(msg.from);
 
@@ -1144,6 +1199,31 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
     });
 
+    stager.extendStep('pickSession', {
+
+        reconnect: function(player, reconOpts) {
+
+            node.game.disconnected.yusufAtilgan(player, reconOpts);
+
+        },
+
+
+        init: function() {
+
+            console.log();
+            console.log();
+            console.log('********************************');
+            console.log('********************************');
+            console.log('*******    PICK SESSION   ******');
+            console.log('********************************');
+            console.log('********************************');
+            console.log();
+            console.log();
+
+        },
+
+
+    });
 
 
     stager.extendStep('instructions', {
