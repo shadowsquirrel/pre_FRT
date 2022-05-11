@@ -1100,4 +1100,13 @@ var dt = undefined;
 
     }
 
+
+    // -------- SKIP -------- //
+
+    $('#skipTuto').click(function() {
+        node.done();
+    })
+
+
+
 // }

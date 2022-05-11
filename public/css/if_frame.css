@@ -22,7 +22,27 @@
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome, Edge, Opera and Firefox */
 }
-
+.skipTutoContainer
+{
+    right: 24px;
+    position: absolute;
+    background: aliceblue;
+    cursor: pointer;
+    box-shadow: 0px 1px 2px 1px black;
+    padding: 10px;
+    border-radius: 50px;
+    font-size: 13px;
+}
+.skipTutoContainer:hover
+{
+    background-color:darkgoldenrod;
+    color:white;
+}
+.skipTutoContainer:active
+{
+    box-shadow:0px 0px 1px 0px black;
+    transform: translateY(1px);
+}
 /*--------------------------------*/
 
 .frame-A
