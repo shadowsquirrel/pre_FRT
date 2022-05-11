@@ -67,7 +67,7 @@ ageDecisionList.forEach(i => {
 
 // location buttons
 let locationDecisionList = [
-    'urban', 'suburban', 'rural', 'remote'
+    'large', 'small', 'village', 'remote'
 ];
 
 locationDecisionList.forEach(i => {
