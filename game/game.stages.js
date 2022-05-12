@@ -25,15 +25,15 @@ module.exports = function(stager, settings) {
 
     // Modify the stager to skip one stage.
     stager.skip([
-        'consent',
+        // 'consent',
         // 'pickSession',
-        'firstSurvey',
-        'instructions',
+        // 'firstSurvey',
+        // 'instructions',
         // 'identifyFaces',
-        'survey2',
-        'survey1',
-        'results',
-        'end'
+        // 'survey2',
+        // 'survey1',
+        // 'results',
+        // 'end'
     ]);
 
 
