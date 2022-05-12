@@ -494,8 +494,12 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 // initiate score
                 player.score = undefined;
 
+                // initiate self reported skill
+                player.selfReportedSkill = undefined;
+
                 // initiate time object
                 player.time = {
+                    firstSurvey: undefined,
                     tutorial: undefined,
                     experiment: undefined,
                     survey1: undefined,
@@ -727,6 +731,32 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
 
+        node.on.data('PLAYER-askSkill', (msg) => {
+
+            this.introFunction('node.on.data(PLAYER-askSkill)');
+
+            // get player
+            let player = node.game.pl.get(msg.from);
+
+            var data = player.selfReportedSkill;
+
+            node.say('LOGIC-getSkill', player.id, data);
+
+        })
+
+        node.on.data('LOGIC-firstSurveyResult', (msg) => {
+
+            this.introFunction('node.on.data(LOGIC-firstSurveyResult)');
+
+            // get player
+            let player = node.game.pl.get(msg.from);
+
+            player.selfReportedSkill = msg.data.skill;
+
+            this.talk('Skill reported: ' + player.selfReportedSkill);
+            console.table(msg.data);
+
+        })
 
         node.on.data('updatePlayerTime', (msg) => {
 
@@ -874,6 +904,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 tPay: tPay,
                 tutoTime: player.time.tutorial,
                 expTime: player.time.experiment,
+                s0Time: player.time.firstSurvey,
                 s1Time: player.time.survey1,
                 s2Time: player.time.survey2
             };
@@ -1016,6 +1047,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
                 header: [
                     'player',
+                    'firstSurveyTime',
                     'tutoTime',
                     'expTime',
                     'surveyTime',
@@ -1094,6 +1126,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 'education',
                 'eduFocus',
                 'location',
+                'skill'
             ],
 
             keepUpdated: true
@@ -1261,6 +1294,41 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
     });
 
+    stager.extendStep('firstSurvey', {
+
+        reconnect: function(player, reconOpts) {
+
+            console.log();
+            console.log();
+            console.log(' ---------------------------------------- ');
+            console.log(' ---------------------------------------- ');
+            console.log(' -------- INSIDE RECONNECT OPT ---------- ');
+            console.log(' ---------------------------------------- ');
+            console.log(' ---------------------------------------- ');
+            console.log();
+            console.log();
+
+            // node.game.disconnected.reIntroduce(player);
+
+        },
+
+
+        init: function() {
+
+            console.log();
+            console.log();
+            console.log('********************************');
+            console.log('********************************');
+            console.log('*******    FIRST SURVEY   ******');
+            console.log('********************************');
+            console.log('********************************');
+            console.log();
+            console.log();
+
+        },
+
+
+    });
 
     stager.extendStep('instructions', {
 

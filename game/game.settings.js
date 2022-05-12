@@ -26,21 +26,8 @@ module.exports = {
     // If the `treatments` object is missing a treatment named _standard_
     // will be created automatically, and will contain all variables.
 
-    CONSENT: {
-
-        EXP_TITLE: 'Identify Faces',
-
-        EXP_PURPOSE: 'The purpose of the study is xyz.',
-
-        EXP_DESCR: 'You will do xyz.',
-        
-        EXP_TIME: '12',
-
-        EXP_MONEY: '$1.5 USD'
-    },
-
-    participationPayment: 1.5,
-    bonusRate: 0.15,
+    participationPayment: 2,
+    bonusRate: 0.1,
     exitCode: 'XYZ123',
 
     treatments: {

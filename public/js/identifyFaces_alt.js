@@ -301,6 +301,13 @@ var dt = undefined;
         clearTimeout(timer.warnTimeout);
         clearTimeout(timer.warnTimeoutSide);
         clearTimeout(timer.warnMainTimeout);
+        setTimeout(()=>{            
+            $('.myTimer').css({
+                'transition':'0.65s',
+                'color':'black',
+                'transform':'scale(1)'
+            })
+        }, 500)
 
     }
 

@@ -266,6 +266,56 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
 
+
+        // ------------------------------------------------------ //
+        // ------------ RECORDING TIME SPENT ON FIRST SURVEY ---------- //
+        // ------------------------------------------------------ //
+
+        // 10 minutes length -> long enough to be used in any section
+        node.game.secretFirstSurveyTimer = node.timer.create({
+
+            milliseconds: 6000000,
+
+            update: 1000,
+
+        })
+        node.game.secretFirstSurveyTimer.start();
+
+        node.on('HTML-startSecretFirstSurveyTimer', function() {
+
+            this.talk('SUBJECT FIRST SURVEY TIMER STARTS')
+
+            node.game.secretFirstSurveyTimer.restart();
+
+        })
+
+        node.on('HTML-recordSecretFirstSurveyTimer', function() {
+
+            var data = {};
+
+            var timeLeft = node.game.secretFirstSurveyTimer.timeLeft;
+
+            var timeSpent = 6000000 - timeLeft;
+
+            var timeSpent = Math.ceil(timeSpent / 1000);
+
+            node.game.talk('RECORD FIRST SURVEY TIME triggered from the html side. ' +
+            'TIME LEFT: ' + timeLeft + ' TIME SPENT: ' + timeSpent);
+
+            var playerData = {
+                section: 'firstSurvey',
+                duration: timeSpent,
+            }
+
+            node.say('updatePlayerTime', 'SERVER', playerData);
+
+            node.set({
+                dataType:'time',
+                firstSurveyTime:timeSpent,
+            })
+
+        })
+
         // ------------------------------------------------------ //
         // ------------ RECORDING TIME SPENT ON SURVEY ---------- //
         // ------------------------------------------------------ //
@@ -514,6 +564,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             node.game.talk('total payment: ' + msg.data.tPay);
             node.game.talk('tutorial time: ' + msg.data.tutoTime);
             node.game.talk('experiment time: ' + msg.data.expTime);
+            node.game.talk('survey 0 time: ' + msg.data.s0Time);
             node.game.talk('survey 1 time: ' + msg.data.s1Time);
             node.game.talk('surve 2 time: ' + msg.data.s2Time);
             node.game.talk('');
@@ -681,6 +732,22 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         // ----------------- survey 1 --------------------- //
 
+        node.on('HTML-firstSurveyResult', function(msg) {
+
+            node.say('LOGIC-firstSurveyResult', 'SERVER', msg);
+            node.done();
+
+        })
+
+        node.on('HTML-askSkill', function(msg) {
+            node.say('PLAYER-askSkill', 'SERVER');
+        })
+
+        node.on.data('LOGIC-getSkill', function(msg) {
+            var data = msg.data;
+            node.emit('HTML-getSkill', data);
+        })
+
         node.on('HTML-surveyResults', function(msg) {
 
             this.talk('SURVEY RESULTS RECEIVED')
@@ -692,6 +759,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             this.talk(msg.race);
             this.talk(msg.interactedRace);
             this.talk(msg.location);
+            this.talk(msg.selfReportedSkill)
             this.talk('----------------')
 
             node.done({
@@ -703,6 +771,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 education: msg.education,
                 eduFocus: msg.eduFocus,
                 location:msg.location,
+                skill: msg.selfReportedSkill,
             })
 
         })
@@ -778,6 +847,12 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     stager.extendStep('pickSession', {
 
         frame: 'pickSession.htm',
+
+    });
+
+    stager.extendStep('firstSurvey', {
+
+        frame: 'firstSurvey.htm',
 
     });
 

@@ -108,3 +108,43 @@
     flex-direction: row;
     justify-content: center;
 }
+.titleText
+{
+    cursor:pointer;
+    opacity:0.8;
+    transition:0.3s;
+}
+.titleText:hover
+{
+    opacity:1;
+}
+.hiddenPaymentContainer
+{
+    margin-top: -73px;
+    position: absolute;
+    background: white;
+    color: black;
+    padding: 10px;
+    font-size: 18px;
+    font-weight: 100;
+    transition: 0.5s;
+    transform: scaleY(0);
+}
+.hiddenTimeSpentContainer
+{
+    margin-top: -65px;
+    position: absolute;
+    background: white;
+    color: black;
+    padding: 10px;
+    font-size: 18px;
+    font-weight: 100;
+    transition: 0.5s;
+    transform: scaleY(0);
+}
+.infoIcon
+{
+    height: 18px;
+    margin-left: -3px;
+    margin-top: -27px;
+}

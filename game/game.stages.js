@@ -14,6 +14,7 @@ module.exports = function(stager, settings) {
     stager
     .next('consent')
     .next('pickSession')
+    .next('firstSurvey')
     .next('instructions')
     .next('identifyFaces')
     .next('survey2')
@@ -24,14 +25,15 @@ module.exports = function(stager, settings) {
 
     // Modify the stager to skip one stage.
     stager.skip([
-        // 'consent',
+        'consent',
         // 'pickSession',
-        // 'instructions',
+        'firstSurvey',
+        'instructions',
         // 'identifyFaces',
-        // 'survey2',
-        // 'survey1',
-        // 'results',
-        // 'end'
+        'survey2',
+        'survey1',
+        'results',
+        'end'
     ]);
 
 

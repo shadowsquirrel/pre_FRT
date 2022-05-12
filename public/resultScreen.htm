@@ -37,14 +37,10 @@
 
                         <div class='generalSection paymentSection  text'>
 
-                            <span class=titleText>Payment</span>
-                            <br />
-                            <br />
-                            <span id=payment></span> (<span id=rate></span>x<span id=correct></span>)
-                            USD for your performance.
-                            <br />
-                            <span id=base></span> USD for your participation.
-                            <br />
+                            <span class='titleText textPayment'>
+                                Payment
+                                <img id='paymentInfo' class='infoIcon' src='images/info.png'/>
+                            </span>
                             <br />
                             <br />
                             In total, you will be paid <span id=totalPay></span> USD.
@@ -52,21 +48,36 @@
                                 (or its beer equivalent)
                             </span>
 
+                            <div class='hiddenPaymentContainer'>
+
+                                <span id=payment></span> (<span id=rate></span>x<span id=correct></span>)
+                                USD for your performance.
+                                <br />
+                                <span id=base></span> USD for your participation.
+
+                            </div>
+
                         </div>
 
                         <div class='generalSection timeSection text'>
 
-                            <span class=titleText>Time Spent</span>
-                            <br />
-                            <br />
-                            ~<span id=tutoTime></span> minutes in the tutorial section
-                            <br />
-                            ~<span id=expTime></span> minutes in the face evaluation rounds
-                            <br />
-                            ~<span id=s1s2Time></span> (<span id=s1Time></span> + <span id=s2Time></span>) minutes in the survey sections
+                            <span class='titleText textTime'>
+                                Time Spent
+                                <img id='timeInfo' class='infoIcon' src='images/info.png'/>
+                            </span>
                             <br />
                             <br />
                             In total, you have spent <span id=totalTime></span> minutes.
+
+                            <div class='hiddenTimeSpentContainer'>
+
+                                ~<span id=tutoTime></span> minutes in the tutorial section
+                                <br />
+                                ~<span id=expTime></span> minutes in the face evaluation rounds
+                                <br />
+                                ~<span id=s1s2Time></span> (<span id=s0Time></span> + <span id=s1Time></span> + <span id=s2Time></span>) minutes in the survey sections
+
+                            </div>
 
                         </div>
 

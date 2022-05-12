@@ -43,14 +43,16 @@
 
         var tutoTime = s2m(msg.tutoTime);
         var expTime = s2m(msg.expTime);
+        var s0Time = s2m(msg.s0Time);
         var s1Time = s2m(msg.s1Time);
         var s2Time = s2m(msg.s2Time);
-        var sTotalTime = s1Time + s2Time;
+        var sTotalTime = s0Time + s1Time + s2Time;
         var totalTime = tutoTime + expTime + sTotalTime;
 
         $('#tutoTime').html(tutoTime);
         $('#expTime').html(expTime);
         $('#s1s2Time').html(sTotalTime);
+        $('#s0Time').html(s0Time);
         $('#s1Time').html(s1Time);
         $('#s2Time').html(s2Time);
         $('#totalTime').html(totalTime);
@@ -83,5 +85,24 @@
         node.emit('HTML-endResults');
 
     })
+
+
+    $('.textPayment').hover(
+        function() {
+            $('.hiddenPaymentContainer').css({'transform':'scaleY(1)'});
+        },
+        function() {
+            $('.hiddenPaymentContainer').css({'transform':'scaleY(0)'});
+        }
+    )
+
+    $('.textTime').hover(
+        function() {
+            $('.hiddenTimeSpentContainer').css({'transform':'scaleY(1)'});
+        },
+        function() {
+            $('.hiddenTimeSpentContainer').css({'transform':'scaleY(0)'});
+        }
+    )
 
 // }

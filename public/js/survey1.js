@@ -18,6 +18,13 @@ window.onload = function() {
     }, 2000)
 
     experiment.generate();
+    
+
+    node.on('HTML-getSkill', function(msg) {
+        decision.selfReportedSkill = msg;
+    })
+
+    node.emit('HTML-askSkill')
 
     // ----------------------- //
     // ---- SAVE DECISION ---- //
