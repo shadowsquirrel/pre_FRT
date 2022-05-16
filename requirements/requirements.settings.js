@@ -67,22 +67,22 @@ module.exports = {
      *
      * @see https://github.com/faisalman/ua-parser-js
      */
-//     browserDetect: {
-//         cb: function(ua, params) {
-//             if (ua.device.model || ua.device.type) {
-//                 return {
-//                     success: false,
-//                     errors: [ 'It seems you are using a mobile or tablet ' +
-//                               'device. You can participate to this game ' +
-//                               'only from a desktop or laptop computer ' +
-//                               'with a keyboard and a mouse. If you ' +
-//                               'can, try with another browser or device.' ]
-//                 };
-//             }
-//
-//             return { success: true };
-//         }
-//     },
+    browserDetect: {
+        cb: function(ua, params) {
+            if (ua.device.model || ua.device.type) {
+                return {
+                    success: false,
+                    errors: [ 'It seems you are using a mobile or tablet ' +
+                              'device. You can participate to this game ' +
+                              'only from a desktop or laptop computer ' +
+                              'with a keyboard and a mouse. If you ' +
+                              'can, try with another browser or device.' ]
+                };
+            }
+
+            return { success: true };
+        }
+    },
 
     /**
      * ## cookieSupport
@@ -103,7 +103,7 @@ module.exports = {
      *
      * Default: FALSE
      */
-    // ES6Support: true
+    ES6Support: true,
 
     /**
      * ## nextRoom

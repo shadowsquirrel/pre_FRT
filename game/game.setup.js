@@ -16,12 +16,29 @@ module.exports = function(settings, stages) {
     var setup;
     setup = {};
 
-    setup.debug = true;
+    // setup.debug = true;
+
+    // production setup is false
+    setup.debug = false;
 
     // setup.verbosity = 1;
 
+    // production setup is 0
+    setup.verbosity = 0;
+
     setup.window = {
-        promptOnleave: !setup.debug
+
+        // this is dynamic so we can leave it but for educational purposes we comment it
+        // and rewrite it below for the production setup
+        promptOnleave: !setup.debug,
+
+        // production setup
+        // Block right-clicking.
+        disableRightClick: true,
+        // Display a message if a user tries to close the browser.
+        promptOnleave: true,
+        // Disable the back button.
+        disableBackButton: true
     };
 
     // Metadata.

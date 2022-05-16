@@ -28,6 +28,8 @@ module.exports = {
 
     participationPayment: 2,
     bonusRate: 0.1,
+
+    // IMPORTANT!! - WE DEFINED EXITCODE IN AUTH.JS
     exitCode: 'XYZ123',
 
     treatments: {

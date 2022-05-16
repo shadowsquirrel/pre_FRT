@@ -59,7 +59,7 @@ module.exports = {
      *
      * Set of custom options applying only to player server
      *
-     * If string, it will be interpreted as the name oof the server
+     * If string, it will be interpreted as the name of the server
      * endpoint for socket.io player connections.
      *
      * If object, the endpoint must be specified in the _endpoint_ property.
@@ -194,7 +194,8 @@ module.exports = {
      *
      * Default: TRUE
      */
-    // sioQuery: false,
+     // production setup is false for building use true
+    sioQuery: false,
 
     /**
      * ### defaultChannel (boolean) Optional

@@ -24,6 +24,16 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
     // Must implement the stages here.
     stager.setOnInit(function() {
 
+        // production setup
+        // This is called when a new tab is open (but not on a new window).
+        // need to find under which object we have W
+        // var W = parent.W;
+        // W.onFocusOut(function() {
+        //     // For example, if this is a lab experimenter:
+        //     alert("Go back to the experiment's tab. " +
+        //     "If unsure how to do it contact the experimenter.");
+        // });
+
         // ------------------------------------ //
         // -------- SOME DEBUG METHODS -------- //
         // ------------------------------------ //
@@ -519,6 +529,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
             }
 
+            console.log(player);
 
         }
 

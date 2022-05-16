@@ -1,11 +1,11 @@
 /**
- * # Authorization functions
- * Copyright(c) 2021 Can Celebi <cnelebi@gmail.com>
- * MIT Licensed
- *
- * http://www.nodegame.org
- * ---
- */
+* # Authorization functions
+* Copyright(c) 2021 Can Celebi <cnelebi@gmail.com>
+* MIT Licensed
+*
+* http://www.nodegame.org
+* ---
+*/
 module.exports = function(auth) {
 
     // The auth object contains a number of callbacks that specify
@@ -48,6 +48,7 @@ module.exports = function(auth) {
     //         validSessionCookie: TRUE if the channel session is matched
     //      }
     //
+
     function authPlayers(channel, info) {
         // TRUE, means client is authorized.
         return true;
@@ -64,6 +65,7 @@ module.exports = function(auth) {
     //
     // @see ServerChannel.registry.generateClientId
     //
+
     function idGen(channel, info) {
         // Returns a valid client ID (string) or undefined.
         return;
@@ -86,7 +88,46 @@ module.exports = function(auth) {
     //
     // In this example the type of browser is added.
     //
+
     function decorateClientObj(clientObj, info) {
+        console.log('decorateClientObj');
+        console.log(info);
         if (info.headers) clientObj.userAgent = info.headers['user-agent'];
     }
+
+
+
+    // ----------------------------------------------------- //
+
+    // // Reject connections without the PROLIFIC_ID field.
+    // function authPlayers(channel, info) {
+    //
+    //     console.log('function auth players inside auth.js');
+    //     console.log(info.query);
+    //
+    //     if (!info.query.PROLIFIC_PID) return false;
+    //     return true;
+    // }
+    //
+    // // Use the Prolific player Id in nodeGame.
+    // function idGen(channel, info) {
+    //     return info.query.PROLIFIC_PID;
+    // }
+    //
+    // // Add information to the client object.
+    // function decorateClientObj(clientObj, info) {
+    //     // PROLIFIC Exit code, same for all participants, as provided by
+    //     // Prolific. Make sure you show this code at the end of the experiment.
+    //     clientObj.ExitCode = 'exit_code_to_be_defined_in_auth.js';
+    //     // Information about player ID and session (as provided by Prolific).
+    //     // clientObj.PROLIFIC_STUDY = info.query.STUDY_ID;
+    //     // clientObj.PROLIFIC_SESSION = info.query.SESSION_ID;
+    // }
+    //
+    // // Enable the three callbacks for the player server.
+    // auth.authorization('player', authPlayers);
+    // auth.clientIdGenerator('player', idGen);
+    // auth.clientObjDecorator('player', decorateClientObj);
+
+
 };
