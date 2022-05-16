@@ -34,7 +34,7 @@ module.exports = function(settings, stages) {
 
         // production setup
         // Block right-clicking.
-        disableRightClick: true,
+        // disableRightClick: true,
         // Display a message if a user tries to close the browser.
         promptOnleave: true,
         // Disable the back button.
