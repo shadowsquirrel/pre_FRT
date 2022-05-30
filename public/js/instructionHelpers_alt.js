@@ -59,6 +59,50 @@ window.onload = function() {
 
 
 
+    node.on('buttonPosition', (msg) => {
+
+        console.log('');
+        console.log('');
+        console.log('button position received:', msg);
+        console.log('');
+        console.log('');
+
+        button.setButtonPosition(msg);
+
+    })
+
+    node.emit('askButtonPosition');
+
+    button.setButtonPosition = (position) => {
+
+        // left same - right different
+        if(position === '10') {
+            $('.rightButton').css({'margin-right':'50px', 'margin-left':'8px'});
+            $('.leftButton').css({'margin-left':'70px', 'margin-right':'-5px'});
+            $('.rightButtonExplanation').css({'margin-left':'-113px'});
+            $('.leftButtonExplanation').css({'margin-left':'47px'});
+            $('.frame-B-0-0').css({
+                'justify-content':'space-evenly',
+                'flex-direction':'row-reverse'
+            });
+        }
+
+        // left different - right same
+        if(position === '01') {
+            $('.rightButton').css({'margin-left':'125px', 'margin-right':'-13px'});
+            $('.leftButton').css({'margin-right':'125px', 'margin-left':'0px'});
+            $('.rightButtonExplanation').css({'margin-left':'175px'});
+            $('.leftButtonExplanation').css({'margin-left':'-310px'});
+            $('.frame-B-0-0').css({
+                'justify-content':'center',
+                'flex-direction':'row'
+            });
+        }
+
+    }
+
+
+
     bbox.up = () => {
         var div = document.getElementById('boxbox-B');
         var style = div.style;
@@ -417,6 +461,7 @@ window.onload = function() {
         $('#lB, #rB').css({'transition':'0s', 'transform':'scale(1)'})
         setTimeout(()=>{
             $('#lB, #rB').css({'transition':myDelay, 'opacity':'1'})
+            $('.leftButtonExplanation, .rightButtonExplanation').css({'opacity':'0.6'});
         }, 10)
 
         console.log('');
@@ -454,7 +499,7 @@ window.onload = function() {
         setTimeout(()=>{
             helper.slider.animateSpeed = 1;
             helper.slider.counter = 0;
-            helper.slider.cycle = 2.9;
+            helper.slider.cycle = 0.9;
             helper.slider.animate(JSON.parse(helper.slider.div.value), 'right');
         }, 1000)
 
@@ -462,7 +507,7 @@ window.onload = function() {
 
         setTimeout(()=>{
             box.button.show('B-501');
-        }, 4750)
+        }, 2750)
 
     }
 
@@ -1391,23 +1436,23 @@ window.onload = function() {
 
     $('#lB').hover(
         function() {
-            $(this).css({'transition':'0.1s', 'filter':'brightness(0.5)'});
-            $('.leftButtonExplanation').css({'transition':'0.3', 'opacity':'1'});
+            $(this).css({'transition':'0.1s', 'opacity':'0.9'});
+            $('.leftButtonExplanation').css({'transition':'0.1s', 'opacity':'0.9'});
         },
         function() {
-            $(this).css({'transition':'0.1s', 'filter':'brightness(1)'});
-            $('.leftButtonExplanation').css({'transition':'0.3', 'opacity':'0'});
+            $(this).css({'transition':'0.1s', 'opacity':'1'});
+            $('.leftButtonExplanation').css({'transition':'0.2s', 'opacity':'0.5'});
         }
     )
 
     $('#rB').hover(
         function() {
-            $(this).css({'transition':'0.1s', 'filter':'brightness(0.5)'});
-            $('.rightButtonExplanation').css({'transition':'0.3', 'opacity':'1'});
+            $(this).css({'transition':'0.1s', 'opacity':'0.9'});
+            $('.rightButtonExplanation').css({'transition':'0.1s', 'opacity':'0.9'});
         },
         function() {
-            $(this).css({'transition':'0.1s', 'filter':'brightness(1)'});
-            $('.rightButtonExplanation').css({'transition':'0.3', 'opacity':'0'});
+            $(this).css({'transition':'0.1s', 'opacity':'1'});
+            $('.rightButtonExplanation').css({'transition':'0.2s', 'opacity':'0.5'});
         }
     )
 

@@ -9,7 +9,9 @@ var data = {
     yCoor: undefined,
     tCoor: undefined,
     // confidence
-    confidence: undefined
+    confidence: undefined,
+    // button position
+    buttonPosition: undefined
 }
 var picture = {};
 var button = {};
@@ -252,7 +254,7 @@ var dt = undefined;
             var timeIsUp = true;
 
             button.answer = noAnswer;
-            button.click(timeIsUp);
+            // button.click(timeIsUp);
 
         }
 
@@ -301,7 +303,7 @@ var dt = undefined;
         clearTimeout(timer.warnTimeout);
         clearTimeout(timer.warnTimeoutSide);
         clearTimeout(timer.warnMainTimeout);
-        setTimeout(()=>{            
+        setTimeout(()=>{
             $('.myTimer').css({
                 'transition':'0.65s',
                 'color':'black',
@@ -520,6 +522,52 @@ var dt = undefined;
     // -------------- MATCH / NO MATCH HELPERS ------------- //
     // ----------------------------------------------------- //
 
+    node.on('buttonPosition', (msg) => {
+
+        console.log('');
+        console.log('');
+        console.log('button position received:', msg);
+        console.log('');
+        console.log('');
+
+        button.setButtonPosition(msg);
+
+    })
+
+    node.emit('askButtonPosition');
+
+    button.myPosition = undefined
+
+    button.setButtonPosition = (position) => {
+
+        data.buttonPosition = position;
+
+        // left same - right different
+        if(position === '10') {
+            $('.rightButton').css({'margin-right':'125px', 'margin-left':'7px'});
+            $('.leftButton').css({'margin-left':'78px', 'margin-right':'-6px'});
+            $('.rightButtonExplanation').css({'margin-left':'-181px'});
+            $('.leftButtonExplanation').css({'margin-left':'25px'});
+            $('.frame-B-0-0').css({
+                'justify-content':'space-evenly',
+                'flex-direction':'row-reverse'
+            });
+        }
+
+        // left different - right same
+        if(position === '01') {
+            $('.rightButton').css({'margin-left':'125px', 'margin-right':'-8px'});
+            $('.leftButton').css({'margin-right':'235px', 'margin-left':'0px'});
+            $('.rightButtonExplanation').css({'margin-left':'0px'});
+            $('.leftButtonExplanation').css({'margin-left':'-205px'});
+            $('.frame-B-0-0').css({
+                'justify-content':'center',
+                'flex-direction':'row'
+            });
+        }
+
+    }
+
     button.isClicked = false;
 
     button.hide = function(side) {
@@ -583,7 +631,8 @@ var dt = undefined;
             $('#lB, #rB').css({
                 'transition':'0.1s',
                 'opacity':'1'
-            })
+            });
+            $('.leftButtonExplanation, .rightButtonExplanation').css({'opacity':'0.6'});
         }, 10)
 
         console.log('');
@@ -748,23 +797,23 @@ var dt = undefined;
 
     $('#lB').hover(
         function() {
-            $(this).css({'transition':'0.1s', 'filter':'brightness(0.5)'});
-            $('.leftButtonExplanation').css({'transition':'0.3', 'opacity':'1'});
+            $(this).css({'transition':'0.1s', 'opacity':'0.9'});
+            $('.leftButtonExplanation').css({'transition':'0.1s', 'opacity':'0.9'});
         },
         function() {
-            $(this).css({'transition':'0.1s', 'filter':'brightness(1)'});
-            $('.leftButtonExplanation').css({'transition':'0.3', 'opacity':'0'});
+            $(this).css({'transition':'0.1s', 'opacity':'1'});
+            $('.leftButtonExplanation').css({'transition':'0.2s', 'opacity':'0.5'});
         }
     )
 
     $('#rB').hover(
         function() {
-            $(this).css({'transition':'0.1s', 'filter':'brightness(0.5)'});
-            $('.rightButtonExplanation').css({'transition':'0.3', 'opacity':'1'});
+            $(this).css({'transition':'0.1s', 'opacity':'0.9'});
+            $('.rightButtonExplanation').css({'transition':'0.1s', 'opacity':'0.9'});
         },
         function() {
-            $(this).css({'transition':'0.1s', 'filter':'brightness(1)'});
-            $('.rightButtonExplanation').css({'transition':'0.3', 'opacity':'0'});
+            $(this).css({'transition':'0.1s', 'opacity':'1'});
+            $('.rightButtonExplanation').css({'transition':'0.2s', 'opacity':'0.5'});
         }
     )
 

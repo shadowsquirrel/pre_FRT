@@ -26,11 +26,15 @@ module.exports = {
     // If the `treatments` object is missing a treatment named _standard_
     // will be created automatically, and will contain all variables.
 
-    participationPayment: 2,
-    bonusRate: 0.1,
+    participationPayment: 1.75,
+    bonusRate: 0.05,
 
     // IMPORTANT!! - WE DEFINED EXITCODE IN AUTH.JS
     exitCode: 'XYZ123',
+
+
+    buttonPosition: '10',
+    // buttonPosition: '01',
 
     treatments: {
 

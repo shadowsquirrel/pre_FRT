@@ -742,6 +742,19 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
 
+        node.on.data('requestButtonPosition', (msg) => {
+
+            let player = node.game.pl.get(msg.from);
+
+            player.buttonPosition = node.game.settings.buttonPosition;
+
+            node.say('LOGIC-buttonPosition', player.id, player.buttonPosition);
+
+        })
+
+
+
+
         node.on.data('PLAYER-askSkill', (msg) => {
 
             this.introFunction('node.on.data(PLAYER-askSkill)');
@@ -1050,6 +1063,68 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         // ------------------------ //
 
         // saving time memory
+        memory.view('firstSurveyTime').save('firstSurveyTime.csv', {
+
+            header: [
+                'player',
+                'firstSurveyTime'
+            ],
+
+            keepUpdated: true
+
+        })
+
+        // tutorial time recording to memory
+        memory.view('tutoTime').save('tutoTime.csv', {
+
+            header: [
+                'player',
+                'tutoTime'
+            ],
+
+            keepUpdated: true
+
+        })
+
+        // experiment time recording to memory
+        memory.view('expTime').save('expTime.csv', {
+
+            header: [
+                'player',
+                'expTime'
+            ],
+
+            keepUpdated: true
+
+        })
+
+        // irrelevant survey time recording to memory
+        memory.view('surveyTime2').save('surveyTime2.csv', {
+
+            header: [
+                'player',
+                'surveyTime2'
+            ],
+
+            keepUpdated: true
+
+        })
+
+        // survey time recording to memory
+        memory.view('surveyTime').save('surveyTime.csv', {
+
+            header: [
+                'player',
+                'surveyTime'
+            ],
+
+            keepUpdated: true
+
+        })
+
+
+
+
         node.on.data('saveTimeMemory', function() {
 
             memory
@@ -1094,6 +1169,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 'responseTime',
                 'velocity',
                 'totalResponseTime',
+                'buttonPosition',
             ],
 
             keepUpdated: true
@@ -1144,6 +1220,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
         })
 
+        // will not be used in the production
         // saving subject experiment experience survey data
         memory.view('buttonPlacement').save('survey2.csv', {
 

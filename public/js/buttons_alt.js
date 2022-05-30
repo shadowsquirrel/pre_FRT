@@ -114,7 +114,7 @@ $('#btn-B-2').click(function() {
         $('.frame-B-0').css({'transition':'0.5s', 'opacity':'1'});
         $('#rB').css({'transition':'0s', 'transform':'scale(1)'});
         setTimeout(()=>{
-            $('#rB').css({'transition':'1s', 'opacity':'1'});
+            $('#rB, .rightButtonExplanation').css({'transition':'1s', 'opacity':'1'});
         }, 750)
     }, 400)
 
@@ -135,7 +135,7 @@ $('#btn-B-3').click(function() {
 
     $('#lB').css({'transition':'0s', 'transform':'scale(1)'});
     setTimeout(()=>{
-        $('#lB').css({'transition':'1s', 'opacity':'1'});
+        $('#lB, .leftButtonExplanation').css({'transition':'1s', 'opacity':'1'});
     }, 750)
 
     setTimeout(()=>{

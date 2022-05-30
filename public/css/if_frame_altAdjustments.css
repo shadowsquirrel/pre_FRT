@@ -27,8 +27,8 @@
 {
     opacity:0;
     position: absolute;
-    color: #e63333;
-    font-size: 45px;
+    color: black;
+    font-size: 33px;
     /* top: 26px; */
     /* margin-left: 150px; */
     margin-left: -241px;
@@ -40,8 +40,8 @@
 {
     opacity:0;
     position: absolute;
-    color: #6ac258;
-    font-size: 45px;
+    color: black;
+    font-size: 33px;
     /* top: 26px; */
     /* margin-left: -328px; */
     margin-left:28px;

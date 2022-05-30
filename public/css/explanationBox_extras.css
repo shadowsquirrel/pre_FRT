@@ -38,9 +38,9 @@
 /*--------------*/
 .leftButtonExplanation
 {
-    opacity:0;
+    opacity:0.6;
     position: absolute;
-    color: #e63333;
+    color: black;
     font-size: 45px;
     top: 48px;
     margin-left: -275px;
@@ -50,13 +50,13 @@
 
     text-align: right;
     margin-left: -310px;
-    margin-top: -45px;
+    margin-top: -40px;
 }
 .rightButtonExplanation
 {
-    opacity:0;
+    opacity:0.6;
     position: absolute;
-    color: #6ac258;
+    color: black;
     font-size: 45px;
     top: 48px;
     margin-left: 100px;

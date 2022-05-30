@@ -213,7 +213,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             node.say('updatePlayerTime', 'SERVER', playerData);
 
             node.set({
-                dataType:'time',
+                // dataType:'time',
                 tutoTime:timeSpent,
             })
 
@@ -260,7 +260,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             node.say('updatePlayerTime', 'SERVER', playerData);
 
             node.set({
-                dataType:'time',
+                // dataType:'time',
                 expTime:timeSpent,
             })
 
@@ -310,7 +310,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             node.say('updatePlayerTime', 'SERVER', playerData);
 
             node.set({
-                dataType:'time',
+                // dataType:'time',
                 firstSurveyTime:timeSpent,
             })
 
@@ -359,7 +359,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             node.say('updatePlayerTime', 'SERVER', playerData);
 
             node.set({
-                dataType:'time',
+                // dataType:'time',
                 surveyTime:timeSpent,
             })
 
@@ -408,7 +408,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             node.say('updatePlayerTime', 'SERVER', playerData);
 
             node.set({
-                dataType:'time',
+                // dataType:'time',
                 surveyTime2:timeSpent,
             })
 
@@ -610,6 +610,13 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
         })
 
 
+        node.on.data('LOGIC-buttonPosition', (msg) => {
+            let position = msg.data;
+            node.emit('buttonPosition', position);
+        })
+
+
+
         // ------------------------------------------------------------------ //
         // ------------------------------------------------------------------ //
         // -------------------                          --------------------- //
@@ -622,6 +629,10 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
 
             node.say('requestTotalNumberOfPairs', 'SERVER');
 
+        })
+
+        node.on('askButtonPosition', () => {
+            node.say('requestButtonPosition', 'SERVER');
         })
 
         node.game.clone = (arr) => {
@@ -654,6 +665,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
             // this.talk(data.tCoor)
             this.talk('response time: ' + data.responseTime);
             this.talk('total response time (alternative to reponse time): ' + data.totalResponseTime);
+            this.talk('button position: ' + data.buttonPosition);
             this.talk('------------')
             this.talk('')
 
@@ -684,6 +696,7 @@ module.exports = function(treatmentName, settings, stager, setup, gameRoom) {
                 responseTime: data.responseTime,
                 velocity: vList,
                 totalResponseTime: data.totalResponseTime,
+                buttonPosition: data.buttonPosition,
             })
 
             node.say('CLIENT-answer-LOGIC', 'SERVER', data);

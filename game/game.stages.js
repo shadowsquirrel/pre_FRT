@@ -30,7 +30,7 @@ module.exports = function(stager, settings) {
         // 'firstSurvey',
         // 'instructions',
         // 'identifyFaces',
-        // 'survey2',
+        'survey2',
         // 'survey1',
         // 'results',
         // 'end'
